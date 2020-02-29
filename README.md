@@ -2,7 +2,9 @@
 
 deliverables
 --------------------
+
 These are the files sumbitted to Canvas.
+
   proposal_submission
   -------------------
   
