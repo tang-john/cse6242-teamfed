@@ -1,14 +1,8 @@
 # CSE-6242 Team Fed Project Repository
 
-deliverables
+deliverables/proposal_submission
 --------------------
-
-These are the files sumbitted to Canvas.
-
-  proposal_submission
-  -------------------
-  
-  These files were submitted as part of the Proposal assignement which was due on 2/29/2020 with 2 day grace period.
+These files were submitted as part of the Proposal assignement which was due on 2/29/2020 with 2 day grace period.
 
 spark_scala_importer 
 ---------------------
