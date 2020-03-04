@@ -25,26 +25,29 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
-        <schema name="main" object-types="table" />
+        <schema name="main" object-types="column, constraint, index, table, dataset trigger, view" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
-      <console name="Connection" type="STANDARD" schema="main" session="Main">delete from &quot;HouseHoldDebtByState&quot;;
-delete from &quot;HouseHoldDebtByCounty&quot;;
-delete from &quot;StateFips&quot;;
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[-- delete from "HouseHoldDebtByState";
+-- delete from "HouseHoldDebtByCounty";
+-- delete from "StateFips";
 
-delete from &quot;AreaFips&quot;;
-delete from &quot;Fed10Year&quot;;
-delete from &quot;Fed1Month&quot;;
-delete from &quot;Fed1Year&quot;;
-delete from &quot;Fed30Year&quot;;
-delete from &quot;Fed3Month&quot;;
-delete from &quot;FedEffFundsRate&quot;;
-delete from &quot;Gdp&quot;&quot;;
+-- delete from "AreaFips";
+-- delete from "Fed10Year";
+-- delete from "Fed1Month";
+-- delete from "Fed1Year";
+-- delete from "Fed30Year";
+-- delete from "Fed3Month";
+-- delete from "FedEffFundsRate";
+-- delete from "Gdp"";
+-- commit;
 
-commit;</console>
+
+select * from "AreaFips";]]></console>
+      <console name="TeamFed" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -54,19 +57,28 @@ commit;</console>
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed30Year" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed3Month" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Gdp" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed1Year" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.UrbanConsumerRent" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.HouseHoldDebtByState" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.FedEffFundsRate" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.ProducerPriceIndex" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed1Month" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.ConsumerPriceIndex" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.AutoLoan" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.AreaFips" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed30Year" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.AutoDealerSales" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Gdp" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed1Year" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.CaseShillerIndex" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.CreditCardRate" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.HouseHoldDebtByCounty" active-filter-id="EMPTY_FILTER">
       <filter id="dfd359b2-8c5c-4b5f-9092-1a603a4a1cf6" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
     </filter-actions>
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed1Month" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.MedianHomeSalesPrice" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed10Year" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.StateFips" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.AreaFips" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.StudentLoan" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -106,7 +118,7 @@ commit;</console>
           <port value="1234" />
           <database value="database" />
           <files>
-            <file path="C:\Users\jtang\e-learning\GeorgiaTech\CSE_6242\project\teamfed_repo\src\main\resources\db\teamfed.db" schema="main" />
+            <file path="C:\Users\jtang\e-learning\GeorgiaTech\CSE_6242\project\teamfed_repo\spark_scala_importer\src\main\resources\db\teamfed.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

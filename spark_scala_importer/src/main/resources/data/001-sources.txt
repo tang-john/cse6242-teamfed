@@ -30,8 +30,6 @@ Consumer Price Index           CPIAUCSL.csv                                     
 
 Automobile Loans               CARACBW027SBOG.csv                                       https://fred.stlouisfed.org/series/CARACBW027SBOG
 
-Used Automobile Sales          B140RC1Q027SBEA.csv                                      https://fred.stlouisfed.org/series/B140RC1Q027SBEA
-
 Auto Dealer Sales              MRTSSM4411USN.csv                                        https://fred.stlouisfed.org/series/MRTSSM4411USN
 
 Median Home Prices             MSPUS.csv                                                https://fred.stlouisfed.org/series/MSPUS

@@ -4,7 +4,8 @@ import org.apache.spark.sql.types.{DoubleType, LongType, StringType, StructField
 
 object ImportRunner extends App {
 
-  var baseDir = "C:\\Users\\jtang\\e-learning\\GeorgiaTech\\CSE_6242\\project\\teamfed_repo\\src\\main";
+
+  var baseDir = "C:\\Users\\jtang\\e-learning\\GeorgiaTech\\CSE_6242\\project\\teamfed_repo\\spark_scala_importer\\src\\main";
   val dbFile = baseDir + "\\resources\\db\\teamfed.db";
   val importer = new Importer(dbFile);
 
@@ -15,9 +16,7 @@ object ImportRunner extends App {
     StructField("rate", DoubleType)
   ));
 
-  importFedEffFundsRate
   importFed1Year
-  importFed10Year
   importFed30Year
   importFed1Month
   importFed3Month
@@ -26,6 +25,34 @@ object ImportRunner extends App {
   importAreaFips
   importStateFips
   importGdp
+
+
+  /*
+  importAreaFips
+  importFedEffFundsRate
+
+  importFed10Year
+
+  importFed1Year
+
+  importFed30Year
+  importFed1Month
+  importFed3Month
+  importHouseHoldDebtByCounty
+  importHouseHoldDebtByState
+  importAreaFips
+  importStateFips
+  importGdp
+  importCreditCardRate
+  importStudentLoan
+  importPPI
+  importCPI
+  importAutoLoan
+  importAutoDealersSales
+  importMedianHomeSalesPrice
+  importCaseShillerIndex
+  importUrbanConsumerRent
+*/
 
   def importFedEffFundsRate(): Unit = {
     val csvFile = baseDir + "\\resources\\data\\DFF.csv";
@@ -128,7 +155,6 @@ object ImportRunner extends App {
     this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
   }
 
-
   def importStateFips(): Unit = {
     val schema = StructType(Array(
       StructField("stname", StringType),
@@ -143,7 +169,6 @@ object ImportRunner extends App {
     this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
   }
 
-
   def importGdp(): Unit = {
     val schema = StructType(Array(
       StructField("date", StringType),
@@ -157,7 +182,135 @@ object ImportRunner extends App {
     this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
   }
 
+  def importCreditCardRate(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("rate", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\TERMCBCCALLNS.csv";
+    val table = "CreditCardRate";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, rate REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
 
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importStudentLoan(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("sloas", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\SLOAS.csv";
+    val table = "StudentLoan";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, sloas REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importPPI(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("ppi", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\PPIACO.csv";
+    val table = "ProducerPriceIndex";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, ppi REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importCPI(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("cpi", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\CPIAUCSL.csv";
+    val table = "ConsumerPriceIndex";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, cpi REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importAutoLoan(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("loanamt", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\CPIAUCSL.csv";
+    val table = "AutoLoan";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, loanamt REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importAutoDealersSales(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("salesamt", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\MRTSSM4411USN.csv";
+    val table = "AutoDealerSales";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, salesamt REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importMedianHomeSalesPrice(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("salesamt", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\MSPUS.csv";
+    val table = "MedianHomeSalesPrice";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, salesamt REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importCaseShillerIndex(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("indexvalue", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\CSUSHPISA.csv";
+    val table = "CaseShillerIndex";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, indexvalue REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importRentalVacancy(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("vacancyrate", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\RRVRUSQ156N.csv";
+    val table = "RentalVacancy";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, vacancyrate REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importUrbanConsumerRent(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("rent", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\CUSR0000SAS2RS.csv";
+    val table = "UrbanConsumerRent";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, rent REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
 
 }
 
