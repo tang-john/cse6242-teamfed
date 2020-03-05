@@ -22,6 +22,7 @@
 	</style>
 </head>
 <body>
+Use scroll wheel to change maps.
 <script>
 
 
@@ -62,16 +63,30 @@
 		return dNew;
 	}
 	
+	var eqMap2 = {};
+	var rowConvert2 = function(d) {
+				dNew = {};
+		for(var x in d) {
+			var val = d[x].trim();
+			if(x.trim()!="state")
+				val = parseFloat(val);
+			dNew[x.trim()] = val;
+		}
+		eqMap2[dNew.state] = dNew;
+		return dNew;
+	}
+	
 	var stateMap = {}
 	var stateMapper = function(d) {
 		stateMap[d.stname] = d.stusps;
 		return d;
 	}
 
-	var promises = [d3.json("states-10m.json"),d3.csv('student_loans.csv',rowConvert),d3.csv('state_fips.csv',stateMapper)];
+	var promises = [d3.json("states-10m.json"),d3.csv('student_loans.csv',rowConvert),d3.csv('student_loan_delinq.csv',rowConvert2),d3.csv('state_fips.csv',stateMapper)];
 	
-	Promise.all(promises).then(function([us,loans,states]) {
+	Promise.all(promises).then(function([us,loans,loans_delinq,states]) {
 		console.log(loans);
+		console.log(loans_delinq)
 		console.log(us);
 		console.log(states);
 		
@@ -82,7 +97,7 @@
 		loans = loans.filter(d=>d.state!="DC");
 		
 		var scaleLoans = d3.scaleLog()
-						.domain(d3.extent(loans,d=>d["Q4_2019"])).rangeRound([0,buckets])
+						.domain(d3.extent(loans,d=>d["Q4_2019"])).rangeRound([0,buckets-1])
 		
 		var hues = d3.schemeBlues[buckets];
 
@@ -99,8 +114,9 @@
 	var tip = d3.tip().attr("class","tip").html(renderTip);
 		
 
-      svg.append("g")
+      var states = svg.append("g")
       .attr("class", "states")
+		.attr("id","states")
 	  .selectAll("path")
       .data(m).enter()
 	  .append("path")
@@ -114,8 +130,48 @@
 	  .on('mouseover',tip.show)
 	  .on('mouseout',tip.hide);
 		
-	svg.select(".Alaska").attr("transform",`translate(${width*0.2},${height*0.85}),scale(0.5)`);
-	svg.select(".Hawaii").attr("transform",`translate(${width*0.75},${height*0.35})`);
+		
+		
+		//delinquincies
+			var m2 = topojson.feature(us,us.objects.states).features;
+		m2 = m2.filter(d=>eqMap2[stateMap[d.properties.name]]!=null);
+		console.log(m2);
+		
+		var buckets2 = 5;
+		
+		var scaleDelinq = d3.scaleLog().domain(d3.extent(loans_delinq,d=>d["Q4_2019"])).rangeRound([0,buckets2-1]);
+		var hues2 = d3.schemeReds[buckets2];
+		
+					var renderTip2 = function(d) {
+				d = eqMap2[stateMap[d.properties.name]];
+		return `State: ${d.state}<br/>Stu. Debt Delinq.: ${d['Q4_2019']}%`;
+	}
+	
+	var tip2 = d3.tip().attr("class","tip").html(renderTip2);
+		
+		
+		svg.append("g")
+		.attr("class","states")
+		.attr("id","states2")
+		.selectAll("path")
+		.data(m2).enter()
+		.append("path")
+		.attr("fill",d=>{
+		  var q = eqMap2[stateMap[d.properties.name]];
+		  return hues2[scaleDelinq(q["Q4_2019"])];
+					  })
+	  .attr("class",d=>d.properties.name)
+	  .attr("d",path)
+	  .call(tip2)
+	  .on('mouseover',tip2.show)
+	  .on('mouseout',tip2.hide);
+	
+		
+	svg.selectAll(".Alaska").attr("transform",`translate(${width*0.2},${height*0.85}),scale(0.5)`);
+	svg.selectAll(".Hawaii").attr("transform",`translate(${width*0.75},${height*0.35})`);
+		
+		svg.select("#states2").style("display","none");
+	
 		
 		
 	
@@ -128,15 +184,33 @@
 		.attr("font-size","14pt")
 		.text("Student Loans");
 		
-	
+		var subtitle = 	svg.append("text")
+		.attr("text-anchor","middle")
+		.attr("x",width/2)
+		.attr("y",75)
+		.attr("font-size","12pt")
+		.text("Student Loan Debt per Capita");
 		
+		var showMap = 0;
+		
+	
+		document.body.onwheel = function(e) {
+			showMap = (showMap+1) % 2;
+			var hide = showMap==0 ? "#states2" : "#states";
+			var show = showMap==0 ? "#states" : "#states2";
+			svg.select(hide).style("display","none");
+			svg.select(show).style("display","block");
+			var st = showMap == 0 ? "Student Loan Debt per Capita" : "Student Loan Delinquency Rate";
+			subtitle.text(st);
+			
+		}
 			
 		
 	});
 	
 	
 	
-	
+
 
 
 </script>
