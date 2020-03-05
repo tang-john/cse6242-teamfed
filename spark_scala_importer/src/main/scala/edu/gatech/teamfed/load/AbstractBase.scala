@@ -10,7 +10,7 @@ abstract class AbstractBase(val dbPath: String)  {
 
 
   val spark = SparkSession.builder()
-    .appName("Import House Hold Debt By County")
+    .appName("Import Team Fed Data")
     .config("spark.master", "local")
     .getOrCreate();
 
@@ -28,16 +28,17 @@ abstract class AbstractBase(val dbPath: String)  {
     val df = this.getDF();
     val conn = getConnection;
     val st = conn.createStatement();
-    var success = createTable(st);
+    val success = createTable(st);
     if(success) {
       insertData(st, df);
+      df.show(10,false);
+      //df.printSchema();
+    } else {
+      System.out.println("Failure");
     }
 
     st.close();
     conn.close();
-
-    df.show(10,false);
-    //df.printSchema();
 
   }
 
@@ -87,7 +88,7 @@ abstract class AbstractBase(val dbPath: String)  {
 
 
   def insertData(statement: Statement, df: DataFrame): Boolean = {
-    var result = true;
+    val result = true;
     val prop = new Properties
     prop.put("jdbcUrl", this.jdbcURL)
     df.write
