@@ -1,0 +1,67 @@
+.indexes
+
+create index AreaFipsId on AreaFips(id);
+create index AreaFipsAreaFips on AreaFips(area_fips);
+
+create index AutoDealerSalesId on AutoDealerSales(id);
+create index AutoDealerSalesDate on AutoDealerSales(date);
+
+create index AutoLoanId on AutoLoan(id);
+create index AutoLoanDate on AutoLoan(date);
+
+create index CaseShillerIndexId on CaseShillerIndex(id);
+create index CaseShillerIndexDate on CaseShillerIndex(date);
+
+create index ConsumerPriceIndexId on ConsumerPriceIndex(id);
+create index ConsumerPriceIndexDate on ConsumerPriceIndex(date);
+
+create index CreditCardRateId on CreditCardRate(id);
+create index CreditCardRateDate on CreditCardRate(date);
+
+create index CreditCardRateId on CreditCardRate(id);
+create index CreditCardRateDate on CreditCardRate(date);
+
+create index Fed10YearId on Fed10Year(id);
+create index Fed10YearDate on Fed10Year(date);
+
+create index Fed1MonthId on Fed1Month(id);
+create index Fed1MonthDate on Fed1Month(date);
+
+create index Fed1YearId on Fed1Year(id);
+create index Fed1YearDate on Fed1Year(date);
+
+create index Fed30YearId on Fed30Year(id);
+create index Fed30YearDate on Fed30Year(date);
+
+create index Fed3MonthId on Fed3Month(id);
+create index Fed3MonthDate on Fed3Month(date);
+
+
+create index FedEffFundsRateId on FedEffFundsRate(id);
+create index FedEffFundsRateDate on FedEffFundsRate(date);
+
+create index GdpId on Gdp(id);
+create index GdpDate on Gdp(date);
+
+create index HouseHoldDebtByCountyId on HouseHoldDebtByCounty(id);
+create index HouseHoldDebtByCountyAreaFips on HouseHoldDebtByCounty(area_fips);
+
+create index HouseHoldDebtByStateId on HouseHoldDebtByState(id);
+create index HouseHoldDebtByStateStateFips on HouseHoldDebtByState(state_fips);
+
+create index MedianHomeSalesPriceId on MedianHomeSalesPrice(id);
+create index MedianHomeSalesPriceDate on MedianHomeSalesPrice(date);
+
+create index ProducerPriceIndexId on ProducerPriceIndex(id);
+create index ProducerPriceIndexDate on ProducerPriceIndex(date);
+
+create index StateFipsId on StateFips(id);
+create index StateFipsSt on StateFips(st);
+
+create index StudentLoanId on StudentLoan(id);
+create index StudentLoanDate on StudentLoan(date);
+
+create index UrbanConsumerRentId on UrbanConsumerRent(id);
+create index UrbanConsumerRentDate on UrbanConsumerRent(date);
+
+commit;

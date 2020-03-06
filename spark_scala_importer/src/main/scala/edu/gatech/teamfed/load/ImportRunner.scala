@@ -4,11 +4,9 @@ import org.apache.spark.sql.types.{DoubleType, LongType, StringType, StructField
 
 object ImportRunner extends App {
 
-
   var baseDir = "C:\\Users\\jtang\\e-learning\\GeorgiaTech\\CSE_6242\\project\\teamfed_repo\\spark_scala_importer\\src\\main";
   val dbFile = baseDir + "\\resources\\db\\teamfed.db";
   val importer = new Importer(dbFile);
-
 
   //Fed schema
   val schemaFed = StructType(Array(
@@ -16,33 +14,22 @@ object ImportRunner extends App {
     StructField("rate", DoubleType)
   ));
 
-  importFed1Year
-  importFed30Year
-  importFed1Month
-  importFed3Month
-  importHouseHoldDebtByCounty
-  importHouseHoldDebtByState
-  importAreaFips
-  importStateFips
-  importGdp
-
+  importFedEffFundsRate
 
   /*
   importAreaFips
+  importStateFips
   importFedEffFundsRate
-
-  importFed10Year
-
   importFed1Year
-
+  importFed10Year
   importFed30Year
   importFed1Month
   importFed3Month
   importHouseHoldDebtByCounty
   importHouseHoldDebtByState
-  importAreaFips
-  importStateFips
   importGdp
+  importHouseHoldDebtByCounty
+  importHouseHoldDebtByState
   importCreditCardRate
   importStudentLoan
   importPPI

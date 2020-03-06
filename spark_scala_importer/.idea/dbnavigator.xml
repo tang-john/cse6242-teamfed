@@ -25,28 +25,31 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
-        <schema name="main" object-types="column, constraint, index, table, dataset trigger, view" />
+        <schema name="main" object-types="table, view, constraint, column, index, dataset trigger" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[-- delete from "HouseHoldDebtByState";
--- delete from "HouseHoldDebtByCounty";
--- delete from "StateFips";
+      <console name="Connection" type="STANDARD" schema="main" session="Main">-- delete from &quot;HouseHoldDebtByState&quot;;
+-- delete from &quot;HouseHoldDebtByCounty&quot;;
+-- delete from &quot;StateFips&quot;;
 
--- delete from "AreaFips";
--- delete from "Fed10Year";
--- delete from "Fed1Month";
--- delete from "Fed1Year";
--- delete from "Fed30Year";
--- delete from "Fed3Month";
--- delete from "FedEffFundsRate";
--- delete from "Gdp"";
+-- delete from &quot;AreaFips&quot;;
+-- delete from &quot;Fed10Year&quot;;
+-- delete from &quot;Fed1Month&quot;;
+-- delete from &quot;Fed1Year&quot;;
+-- delete from &quot;Fed30Year&quot;;
+-- delete from &quot;Fed3Month&quot;;
+-- delete from &quot;FedEffFundsRate&quot;;
+-- delete from &quot;Gdp&quot;&quot;;
 -- commit;
 
 
-select * from "AreaFips";]]></console>
+-- select * from &quot;AreaFips&quot;;
+
+create index AreaFipsId on AreaFips(id);
+create index AreaFipsAreaFips on AreaFips(area_fips);</console>
       <console name="TeamFed" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
@@ -83,6 +86,9 @@ select * from "AreaFips";]]></console>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
   </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/sql/index.sql" connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" session-id="MAIN" current-schema="main" />
+  </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
     <execution-history>
@@ -99,7 +105,9 @@ select * from "AreaFips";]]></console>
     <filters />
   </component>
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces />
+    <recently-used-interfaces>
+      <mapping database-type="SQLITE" interface-id="DEFAULT" />
+    </recently-used-interfaces>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>

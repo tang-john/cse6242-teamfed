@@ -1,0 +1,1 @@
+sqlite3 teamfed.db < index.txt > index.out.txt
