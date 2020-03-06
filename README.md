@@ -14,7 +14,7 @@ Requirements:
   * Add park_scala_importer\winutils\ to your Windows PATH. Linux OS does not need this file. This is to trick Spark that Haddop is installed on your computer.
   * Add Scala support when installing IntelliJ. You can also install it using step below.
   * Add plugins by selecting from the menu bar: File -> Settings -> Plugins. Type in a plugin name in the search bar.
-  * Add "Databse Navigator" plugin
+  * Add "Database Navigator" plugin
   * Add "CSV Plugin"
   * Add "Rainbow Plugin"
   * Add "AWS Toolkit" plugin if you want to work on AWS
