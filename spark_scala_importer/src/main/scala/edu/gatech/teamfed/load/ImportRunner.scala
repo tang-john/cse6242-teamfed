@@ -14,7 +14,7 @@ object ImportRunner extends App {
     StructField("rate", DoubleType)
   ));
 
-  importFedEffFundsRate
+  importUnemploymentRate
 
   /*
   importAreaFips
@@ -294,6 +294,19 @@ object ImportRunner extends App {
     val csvFile = baseDir + "\\resources\\data\\CUSR0000SAS2RS.csv";
     val table = "UrbanConsumerRent";
     val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, rent REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importUnemploymentRate(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("unemployment_rate", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\Unemployment_Rate.csv";
+    val table = "UnemploymentRate";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, unemployment_rate REAL)";
     val sqlDrop = "DROP TABLE IF EXISTS " + table;
 
     this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
