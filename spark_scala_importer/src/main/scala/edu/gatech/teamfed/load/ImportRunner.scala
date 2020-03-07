@@ -1,6 +1,6 @@
 package edu.gatech.teamfed.load
 
-import org.apache.spark.sql.types.{DoubleType, LongType, StringType, StructField, StructType}
+import org.apache.spark.sql.types.{DoubleType, IntegerType, LongType, StringType, StructField, StructType}
 
 object ImportRunner extends App {
 
@@ -14,7 +14,7 @@ object ImportRunner extends App {
     StructField("rate", DoubleType)
   ));
 
-  importUnemploymentRate
+
 
   /*
   importAreaFips
@@ -39,7 +39,11 @@ object ImportRunner extends App {
   importMedianHomeSalesPrice
   importCaseShillerIndex
   importUrbanConsumerRent
+  importUnemploymentRate
 */
+
+  importTotalNonFarmEmployment
+
 
   def importFedEffFundsRate(): Unit = {
     val csvFile = baseDir + "\\resources\\data\\DFF.csv";
@@ -311,6 +315,25 @@ object ImportRunner extends App {
 
     this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
   }
+
+  //series_id,year,period,value,footnote_codes
+  def importTotalNonFarmEmployment(): Unit = {
+    val schema = StructType(Array(
+      StructField("series_id", StringType),
+      StructField("year", IntegerType),
+      StructField("period", StringType),
+      StructField("value", IntegerType),
+      StructField("footnote_codes", StringType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\TotalNonFarm.Employment.csv";
+    val table = "TotalNonFarmEmployment";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, series_id TEXT, year INTEGER, period TEXT, value INTEGER, footnote_codes TEXT)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+
 
 }
 
