@@ -40,9 +40,11 @@ Rental Vacancy                 RRVRUSQ156N.csv                                  
 
 Urban Consumer Rent            CUSR0000SAS2RS.csv                                       https://fred.stlouisfed.org/series/CUSR0000SAS2RS
 
-Unemployment Rate              Unemployment_Rate.csv                                    Need from Khwala
+Unemployment Rate              Unemployment_Rate.csv                                     https://fred.stlouisfed.org/series/UNRATE/
 
 Non Farm Employmment (NFE)     TotalNonFarmEmployment.csv                               https://download.bls.gov/pub/time.series/ce/ce.data.00a.TotalNonfarm.Employment
 
+Total Employee Compensation    total_compensation.csv                                   https://data.bls.gov/pdq/SurveyOutputServlet
 
+Employee Cost Index            employee_cost_index.csv                                  https://data.bls.gov/cgi-bin/surveymost?bls
 
