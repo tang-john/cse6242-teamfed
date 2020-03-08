@@ -8,7 +8,7 @@
 	<script src="../lib/d3-simple-slider.min.js"></script>
 	<script src="../lib/d3-tip.min.js"></script>
 	<style>
-	.states {
+	.states path {
   stroke: #000;
   stroke-linejoin: round;
 }
@@ -42,11 +42,10 @@ Use scroll wheel to change maps.
 	
 		var path = d3.geoPath().projection(projection);
 	
-	var svg = d3.select("body").append("svg")
+	var base = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-	.attr("class","quakeMap")
- 	.append("g")
+ 	var svg = base.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	
 	var eqMap = {};
@@ -92,12 +91,12 @@ Use scroll wheel to change maps.
 		
 
 			
-			var buckets = 6;
+			var buckets = 5;
 		
 		loans = loans.filter(d=>d.state!="DC");
 		
 		var scaleLoans = d3.scaleLog()
-						.domain(d3.extent(loans,d=>d["Q4_2019"])).rangeRound([0,buckets-1])
+						.domain(d3.extent(loans,d=>d["Q4_2019"])).range([0,buckets-1])
 		
 		var hues = d3.schemeBlues[buckets];
 
@@ -116,19 +115,30 @@ Use scroll wheel to change maps.
 
       var states = svg.append("g")
       .attr("class", "states")
-		.attr("id","states")
-	  .selectAll("path")
+		.attr("id","states");
+	  
+	states.selectAll("path")
       .data(m).enter()
 	  .append("path")
 	  .attr("fill",d=>{
 		  var q = eqMap[stateMap[d.properties.name]];
-		  return hues[scaleLoans(q["Q4_2019"])];
+		  return hues[Math.floor(scaleLoans(q["Q4_2019"]))];
 					  })
 	  .attr("class",d=>d.properties.name)
 	  .attr("d",path)
 	  .call(tip)
 	  .on('mouseover',tip.show)
 	  .on('mouseout',tip.hide);
+		
+		var legend = states.append("g").attr("transform",`translate(${width/2},${height-200})`);
+		for(var i = 0;i<buckets;i++) {
+			legend.append("rect").attr("x",i*50).attr("y",50).attr("width",50).attr("height",10)
+			.attr("fill",hues[i]);
+			legend.append("text").attr("x",i*50).attr("y",70).attr("font-size","10pt").attr("text-anchor","middle")
+			.text((i==0?"$":"")+scaleLoans.invert(i).toFixed(0));
+		}
+		
+		
 		
 		
 		
@@ -137,9 +147,9 @@ Use scroll wheel to change maps.
 		m2 = m2.filter(d=>eqMap2[stateMap[d.properties.name]]!=null);
 		console.log(m2);
 		
-		var buckets2 = 5;
+		var buckets2 = 6;
 		
-		var scaleDelinq = d3.scaleLog().domain(d3.extent(loans_delinq,d=>d["Q4_2019"])).rangeRound([0,buckets2-1]);
+		var scaleDelinq = d3.scaleLinear().domain(d3.extent(loans_delinq,d=>d["Q4_2019"])).range([0,buckets2-1]);
 		var hues2 = d3.schemeReds[buckets2];
 		
 					var renderTip2 = function(d) {
@@ -150,21 +160,31 @@ Use scroll wheel to change maps.
 	var tip2 = d3.tip().attr("class","tip").html(renderTip2);
 		
 		
-		svg.append("g")
+	var states2 = 	svg.append("g")
 		.attr("class","states")
-		.attr("id","states2")
-		.selectAll("path")
+		.attr("id","states2");
+		
+		states2.selectAll("path")
 		.data(m2).enter()
 		.append("path")
 		.attr("fill",d=>{
 		  var q = eqMap2[stateMap[d.properties.name]];
-		  return hues2[scaleDelinq(q["Q4_2019"])];
+		  return hues2[Math.floor(scaleDelinq(q["Q4_2019"]))];
 					  })
 	  .attr("class",d=>d.properties.name)
 	  .attr("d",path)
 	  .call(tip2)
 	  .on('mouseover',tip2.show)
 	  .on('mouseout',tip2.hide);
+		
+		var legend2 = states2.append("g").attr("transform",`translate(${width/2},${height-200})`);
+		for(var i = 0;i<buckets2;i++) {
+			legend2.append("rect").attr("x",i*50).attr("y",50).attr("width",50).attr("height",10)
+			.attr("fill",hues2[i]);
+			legend2.append("text").attr("x",i*50).attr("y",70).attr("font-size","10pt").attr("text-anchor","middle")
+			.text(scaleDelinq.invert(i).toFixed(2)+(i==0?"%":""));
+		}
+		
 	
 		
 	svg.selectAll(".Alaska").attr("transform",`translate(${width*0.2},${height*0.85}),scale(0.5)`);
@@ -193,7 +213,7 @@ Use scroll wheel to change maps.
 		
 		var showMap = 0;
 		
-	
+		
 		document.body.onwheel = function(e) {
 			showMap = (showMap+1) % 2;
 			var hide = showMap==0 ? "#states2" : "#states";

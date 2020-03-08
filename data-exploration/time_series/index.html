@@ -1,0 +1,173 @@
+<html>
+<head>
+	<meta charset='utf-8' />
+	<title>Student Loans</title>
+	<script src="../lib/d3.v5.min.js"></script>
+	<script src="../lib/topojson.v2.min.js"></script>
+	<script src="../lib/d3-scale-chromatic.v1.min.js"></script>
+	<script src="../lib/d3-simple-slider.min.js"></script>
+	<script src="../lib/d3-tip.min.js"></script>
+	<style>
+	.states {
+  stroke: #000;
+  stroke-linejoin: round;
+}
+		
+		.tip {
+			background-color: aliceblue;
+			padding: 1px;
+			border-radius: 5px;
+		}
+		
+	</style>
+</head>
+<body>
+<script>
+
+
+	
+	var margin = {top: 50, right: 100, bottom: 50, left: 75};
+	var width = 1024 - margin.left - margin.right,
+    height = 700 - margin.top - margin.bottom;
+	
+	
+	
+	
+
+	
+	var dateParse = d3.timeParse("%Y-%m-%d");
+	
+	var gdpParse = function(d) {
+		d.date = dateParse(d.date);
+		d.gdp = parseFloat(d.gdp);
+		return d;
+		
+	}
+	
+	
+
+	var promises = [d3.csv('data/gdp.csv',gdpParse)];
+	
+	Promise.all(promises).then(function([gdp]) {
+		console.log(gdp);
+
+		var base = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+	.style("display","block")
+	.style("cursor","none")
+
+		
+	var xScale,yScale
+	var gdp_filt = gdp;
+		
+		var genLine = function() {
+	var svg	= base
+ 	.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			
+		
+		
+		xScale = d3.scaleTime().domain(d3.extent(gdp_filt,d=>d.date)).range([0,width]);
+		var years = d3.extent(gdp_filt,d=>d.date.getFullYear());
+			yScale = years[1]-years[0]<=20 ? d3.scaleLinear() : d3.scaleLog();
+			yScale.domain(d3.extent(gdp_filt,d=>d.gdp)).range([height,0]);
+			
+		
+	
+	
+		
+			var line = d3.line()
+		.x(function(d, i) { return xScale(d.date); }) // set the x values for the line generator
+		.y(function(d) { return yScale(d.gdp); }) // set the y values for the line generator 
+		.curve(d3.curveMonotoneX) // apply smoothing to the line
+		
+		svg.append("path")
+		.attr("class","line")
+		.attr("stroke","black")
+		.attr("fill","none")
+		.datum(gdp_filt) // 10. Binds data to the line 
+		.attr("d", line); // 11. Calls the line generator 
+		
+		svg.append("g").call(d3.axisLeft(yScale).tickFormat(d3.format(",.0f")));
+	svg.append("g")
+		.attr("transform", "translate(0," + height + ")")
+		.call(d3.axisBottom(xScale));
+			
+			
+		return svg;
+	}
+		
+		var svg = genLine();
+		
+		
+		base.append("circle")
+		.attr("class","pointer")
+		.attr("fill","red")
+		.attr("stroke","red")
+		.attr("r",4)
+		
+		var info = base.append("g")
+		.attr("class","info");
+		
+		info.append("text").attr("class","t1");
+		info.append("text").attr("class","t2");
+		
+						var scanChart = function(e) {
+			var date = xScale.invert(e.x-margin.left)
+			var yearData = gdp_filt.filter(d=>d.date.getFullYear()==date.getFullYear());
+				if(yearData.length==0) return;
+			var mDiff = yearData.map(d=>Math.abs(d.date.getMonth()-date.getMonth()));
+
+			var minDiff = mDiff.reduce((a,b)=>Math.min(a,b));
+			var pointIndex = mDiff.indexOf(minDiff);
+			var point = yearData[pointIndex];
+			var prevPoint = gdp_filt[gdp_filt.indexOf(point)-1];
+			console.log(prevPoint);
+			
+						console.log(point);
+							var x = xScale(point.date)+margin.left;
+							var y = yScale(point.gdp)+margin.top;
+			base.select(".pointer").attr("cx",x).attr("cy",y);
+			base.select(".t1").attr("x",x+25).attr("y",y).text("GDP: "+point.gdp);
+		}
+		
+			base.node().onmousemove = scanChart;
+
+		
+		
+		var startYear = d3.min(gdp,d=>d.date).getFullYear();
+		var endYear = d3.max(gdp,d=>d.date).getFullYear();
+		var minYear = startYear;
+		
+			
+		var wheelDelta = 0;
+		
+		document.body.onwheel = function(e) {
+			if(minYear==startYear && e.deltaY > 0) return;
+			if(minYear==endYear && e.deltaY < 0) return;
+			wheelDelta += e.deltaY;
+			if(Math.abs(wheelDelta)<3) return;
+		svg.remove();
+		var dir = -Math.sign(wheelDelta);
+			wheelDelta = 0;
+			var jumpSize = Math.max(Math.floor(Math.log1p(endYear-minYear)),1);
+		minYear = Math.min(Math.max(startYear,minYear+dir*jumpSize),endYear);
+		gdp_filt = gdp.filter(d=>d.date.getFullYear()>=minYear);
+		svg = genLine();
+			
+	}
+		
+		
+	});
+	
+	
+	
+	
+	
+
+
+
+</script>
+</body>
+</html>
