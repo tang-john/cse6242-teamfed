@@ -23,11 +23,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
-        <schema name="main" object-types="table, view, column, index, constraint, dataset trigger" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
@@ -62,9 +58,12 @@ create index AreaFipsAreaFips on AreaFips(area_fips);]]></console>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed3Month" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.UrbanConsumerRent" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.EmployeeCostIndex" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.HouseHoldDebtByState" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.FedEffFundsRate" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.TotalEmpComp" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.ProducerPriceIndex" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.TotalNonFarmEmployment" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed1Month" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.ConsumerPriceIndex" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.AutoLoan" active-filter-id="EMPTY_FILTER" />

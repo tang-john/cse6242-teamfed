@@ -40,10 +40,10 @@ object ImportRunner extends App {
   importCaseShillerIndex
   importUrbanConsumerRent
   importUnemploymentRate
-*/
-
   importTotalNonFarmEmployment
-
+  importTotalEmployeeCompensation
+*/
+  importEmployeeCostIndex
 
   def importFedEffFundsRate(): Unit = {
     val csvFile = baseDir + "\\resources\\data\\DFF.csv";
@@ -316,7 +316,7 @@ object ImportRunner extends App {
     this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
   }
 
-  //series_id,year,period,value,footnote_codes
+
   def importTotalNonFarmEmployment(): Unit = {
     val schema = StructType(Array(
       StructField("series_id", StringType),
@@ -333,7 +333,39 @@ object ImportRunner extends App {
     this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
   }
 
+  //year,period,estimate_value,relative_standard_error
+  def importTotalEmployeeCompensation(): Unit = {
+    val schema = StructType(Array(
+      StructField("year", IntegerType),
+      StructField("period", StringType),
+      StructField("estimate_value", DoubleType),
+      StructField("relative_standard_error", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\total_compensation.csv";
+    val table = "TotalEmpComp";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, period TEXT, estimate_value REAL, relative_standard_error REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+  def importEmployeeCostIndex(): Unit = {
+    val schema = StructType(Array(
+      StructField("year", IntegerType),
+      StructField("period", StringType),
+      StructField("estimate_value", DoubleType),
+      StructField("relative_standard_error", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\employee_cost_index.csv";
+    val table = "EmployeeCostIndex";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, period TEXT, estimate_value REAL, relative_standard_error REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
 
 
 }
+
 
