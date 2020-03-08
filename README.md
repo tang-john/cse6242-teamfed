@@ -1,5 +1,20 @@
 # CSE-6242 Team Fed Project Repository
 
+
+dataset
+--------------------
+These data files were imported into SQLite using the custom Scala Spark code.
+
+| Description           | FIle               | Source
+|-----------------------|--------------------|-------------------------------------------------
+| Automobile Loans      | CARACBW027SBOG.csv | https://fred.stlouisfed.org/series/CARACBW027SBOG
+| Auto Dealer Sales     | MRTSSM4411USN.csv  | https://fred.stlouisfed.org/series/MRTSSM4411USN
+
+| Consumer Price Index  | CPIAUCSL.csv       | https://fred.stlouisfed.org/series/CPIAUCSL
+| 
+| Median Home Prices    | MSPUS.csv          | https://fred.stlouisfed.org/series/MSPUS
+
+
 deliverables/proposal_submission
 --------------------
 These files were submitted as part of the Proposal assignement which was due on 2/29/2020 with 2 day grace period.
