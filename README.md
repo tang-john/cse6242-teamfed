@@ -3,7 +3,7 @@
 
 dataset
 --------------------
-These data files were imported into SQLite using the custom Scala Spark code.
+These data files were imported into SQLite using the custom Scala Spark code under the spark_scala_importer folder
 
 | Description              | FIle                           | Source
 |--------------------------|--------------------------------|-------------------------------------------------
