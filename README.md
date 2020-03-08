@@ -29,7 +29,6 @@ These data files were imported into SQLite using the custom Scala Spark code.
 | State Codes              | state_fips.csv								         | https://www.bls.gov/respondents/mwr/electronic-data-interchange/appendix-d-usps-state-abbreviations-and-fips-codes.htm
 | Student Loans            | SLOAS.csv                      | https://fred.stlouisfed.org/series/SLOAS 
 | Total Employee Compensation | total_compensation.csv      | https://data.bls.gov/pdq/SurveyOutputServlet
-
 | Unemployment Rate        | Unemployment_Rate.csv          | https://fred.stlouisfed.org/series/UNRATE/
 | Urban Consumer Rent      | CUSR0000SAS2RS.csv             | https://fred.stlouisfed.org/series/CUSR0000SAS2RS
 | U.S. GDP                 | GDP.csv                        | https://fred.stlouisfed.org/series/GDP
