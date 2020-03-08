@@ -17,6 +17,7 @@ These data files were imported into SQLite using the custom Scala Spark code.
 | Consumer Price Index     | CPIAUCSL.csv                   | https://fred.stlouisfed.org/series/CPIAUCSL
 | County Codes             | area_fips.csv                  | https://data.bls.gov/cew/doc/titles/area/area_titles.htm
 | Credit Card Rate         | TERMCBCCALLNS.csv              | https://fred.stlouisfed.org/series/TERMCBCCINTNS
+| Employee Cost Index      | employee_cost_index.csv        | https://data.bls.gov/cgi-bin/surveymost?bls
 | Fed Effective Funds Rate | DFF.csv                        | https://fred.stlouisfed.org/series/DFF
 | Household Debt By County | household-debt-by-county.csv   | https://www.federalreserve.gov/releases/z1/dataviz/household_debt/
 | Household Debt By State  | household-debt-by-state.csv    | https://www.federalreserve.gov/releases/z1/dataviz/household_debt/
@@ -27,6 +28,8 @@ These data files were imported into SQLite using the custom Scala Spark code.
 | S&P/Case-Shiller Index   | CSUSHPISA.csv                  | https://fred.stlouisfed.org/series/CSUSHPISA
 | State Codes              | state_fips.csv								         | https://www.bls.gov/respondents/mwr/electronic-data-interchange/appendix-d-usps-state-abbreviations-and-fips-codes.htm
 | Student Loans            | SLOAS.csv                      | https://fred.stlouisfed.org/series/SLOAS 
+| Total Employee Compensation | total_compensation.csv      | https://data.bls.gov/pdq/SurveyOutputServlet
+
 | Unemployment Rate        | Unemployment_Rate.csv          | https://fred.stlouisfed.org/series/UNRATE/
 | Urban Consumer Rent      | CUSR0000SAS2RS.csv             | https://fred.stlouisfed.org/series/CUSR0000SAS2RS
 | U.S. GDP                 | GDP.csv                        | https://fred.stlouisfed.org/series/GDP
