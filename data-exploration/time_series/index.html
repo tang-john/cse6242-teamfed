@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset='utf-8' />
-	<title>Student Loans</title>
+	<title>GDP</title>
 	<script src="../lib/d3.v5.min.js"></script>
 	<script src="../lib/topojson.v2.min.js"></script>
 	<script src="../lib/d3-scale-chromatic.v1.min.js"></script>
@@ -22,11 +22,12 @@
 	</style>
 </head>
 <body>
+	<span class="description">Use the scroll wheel to zoom.</span>
 <script>
 
 
 	
-	var margin = {top: 50, right: 100, bottom: 50, left: 75};
+	var margin = {top: 50, right: 150, bottom: 100, left: 75};
 	var width = 1024 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
 	
@@ -51,7 +52,7 @@
 	Promise.all(promises).then(function([gdp]) {
 		console.log(gdp);
 
-		var base = d3.select("body").append("svg")
+		var base = d3.select("body").insert("svg",".description")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
 	.style("display","block")
@@ -63,7 +64,7 @@
 		
 		var genLine = function() {
 	var svg	= base
- 	.append("g")
+ 	.insert("g",".info")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 			
 		
@@ -98,38 +99,50 @@
 		return svg;
 	}
 		
-		var svg = genLine();
+
 		
 		
-		base.append("circle")
-		.attr("class","pointer")
-		.attr("fill","red")
-		.attr("stroke","red")
-		.attr("r",4)
+	
 		
 		var info = base.append("g")
-		.attr("class","info");
+		.attr("class","info").style("display","none");
 		
+			info.append("circle")
+		.attr("class","pointer")
+		.attr("fill","rgba(255,0,0,0.6)")
+		.attr("stroke","none")
+		.attr("r",4).attr("cx",0).attr("cy",0);
+		
+		info.append("rect").attr("x",4).attr("y",0).attr("width",200).attr("height",75).attr("fill","rgba(255,255,255,0.85)");
 		info.append("text").attr("class","t1");
 		info.append("text").attr("class","t2");
+		info.append("text").attr("class","t3");
+		
+				var svg = genLine();
 		
 						var scanChart = function(e) {
 			var date = xScale.invert(e.x-margin.left)
-			var yearData = gdp_filt.filter(d=>d.date.getFullYear()==date.getFullYear());
-				if(yearData.length==0) return;
-			var mDiff = yearData.map(d=>Math.abs(d.date.getMonth()-date.getMonth()));
+			var yearData = gdp_filt.filter(d=>Math.abs(d.date.getFullYear()-date.getFullYear())<=1);
+			if(yearData.length==0) return;
+			var mDiff = yearData.map(d=>Math.abs(d.date.valueOf()-date.valueOf()));
 
 			var minDiff = mDiff.reduce((a,b)=>Math.min(a,b));
 			var pointIndex = mDiff.indexOf(minDiff);
 			var point = yearData[pointIndex];
-			var prevPoint = gdp_filt[gdp_filt.indexOf(point)-1];
+			var prevPoint = gdp[gdp.indexOf(point)-1];
 			console.log(prevPoint);
 			
 						console.log(point);
 							var x = xScale(point.date)+margin.left;
 							var y = yScale(point.gdp)+margin.top;
-			base.select(".pointer").attr("cx",x).attr("cy",y);
-			base.select(".t1").attr("x",x+25).attr("y",y).text("GDP: "+point.gdp);
+
+			base.select(".info").style("display","block").attr("transform",`translate(${x},${y})`)
+			base.select(".t1").attr("x",5).attr("y",20).text(
+				`GDP: $${Math.round(point.gdp).toLocaleString()}`);
+			base.select(".t2").attr("x",5).attr("y",35).text(
+			`Date: ${d3.timeFormat("%B %Y")(point.date)}`);
+			base.select(".t3").attr("x",5).attr("y",50).text("Qtr. Change: "+(prevPoint?
+			`${((point.gdp-prevPoint.gdp)/prevPoint.gdp*100).toFixed(2)}%`:"N/A"));
 		}
 		
 			base.node().onmousemove = scanChart;
@@ -155,6 +168,7 @@
 		minYear = Math.min(Math.max(startYear,minYear+dir*jumpSize),endYear);
 		gdp_filt = gdp.filter(d=>d.date.getFullYear()>=minYear);
 		svg = genLine();
+					scanChart(e);
 			
 	}
 		
