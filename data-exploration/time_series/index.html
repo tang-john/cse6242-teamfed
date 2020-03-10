@@ -8,21 +8,17 @@
 	<script src="../lib/d3-simple-slider.min.js"></script>
 	<script src="../lib/d3-tip.min.js"></script>
 	<style>
-	.states {
+	.states path {
   stroke: #000;
   stroke-linejoin: round;
 }
 		
-		.tip {
-			background-color: aliceblue;
-			padding: 1px;
-			border-radius: 5px;
-		}
+	
 		
 	</style>
 </head>
 <body>
-	<span class="description">Use the scroll wheel to zoom.</span>
+	<span class="description">Use the scroll wheel to zoom. Use A/D to move along the line.</span>&nbsp;&nbsp;&nbsp;"Real" GDP in 1984 $ <input id="gdpCheck" type="checkbox" onchange="gdpToggle(event)"/>
 <script>
 
 
@@ -36,21 +32,28 @@
 	
 
 	
-	var dateParse = d3.timeParse("%Y-%m-%d");
+	var dateParse = d3.timeParse("%m/%d/%Y");
 	
 	var gdpParse = function(d) {
 		d.date = dateParse(d.date);
 		d.gdp = parseFloat(d.gdp);
+		d.real_gdp = parseFloat(d.real_gdp);
+		d.cpi = parseFloat(d.cpi);
 		return d;
 		
 	}
 	
+
+	
 	
 
-	var promises = [d3.csv('data/gdp.csv',gdpParse)];
+	var promises = [d3.csv('data/real_gdp.csv',gdpParse)];
+	var gdpToggle = null;
 	
 	Promise.all(promises).then(function([gdp]) {
 		console.log(gdp);
+		
+		var real = document.getElementById("gdpCheck").checked;
 
 		var base = d3.select("body").insert("svg",".description")
     .attr("width", width + margin.left + margin.right)
@@ -72,7 +75,7 @@
 		xScale = d3.scaleTime().domain(d3.extent(gdp_filt,d=>d.date)).range([0,width]);
 		var years = d3.extent(gdp_filt,d=>d.date.getFullYear());
 			yScale = years[1]-years[0]<=20 ? d3.scaleLinear() : d3.scaleLog();
-			yScale.domain(d3.extent(gdp_filt,d=>d.gdp)).range([height,0]);
+			yScale.domain(d3.extent(gdp_filt,d=>real?d.real_gdp:d.gdp)).range([height,0]);
 			
 		
 	
@@ -80,7 +83,7 @@
 		
 			var line = d3.line()
 		.x(function(d, i) { return xScale(d.date); }) // set the x values for the line generator
-		.y(function(d) { return yScale(d.gdp); }) // set the y values for the line generator 
+		.y(function(d) { return yScale(real?d.real_gdp:d.gdp); }) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
 		
 		svg.append("path")
@@ -120,6 +123,27 @@
 		
 				var svg = genLine();
 		
+		var infoIndex = 0;
+		
+		var updateInfo = function() {
+			var point = gdp[infoIndex];
+			var prevPoint = gdp[infoIndex-1];
+			console.log(prevPoint);
+			
+						console.log(point);
+							var x = xScale(point.date)+margin.left;
+							var y = yScale(real?point.real_gdp:point.gdp)+margin.top;
+
+			base.select(".info").style("display","block").attr("transform",`translate(${x},${y})`)
+			base.select(".t1").attr("x",5).attr("y",20).text(
+				`GDP: $${Math.round(real?point.real_gdp:point.gdp).toLocaleString()}B`);
+			base.select(".t2").attr("x",5).attr("y",35).text(
+			`Date: ${d3.timeFormat("%B %Y")(point.date)}`);
+			var type = real ? "real_gdp" : "gdp";				
+			base.select(".t3").attr("x",5).attr("y",50).text("Qtr. Change: "+(prevPoint?
+			`${((point[type]-prevPoint[type])/prevPoint[type]*100).toFixed(2)}%`:"N/A"));
+		}
+		
 						var scanChart = function(e) {
 			var date = xScale.invert(e.x-margin.left)
 			var yearData = gdp_filt.filter(d=>Math.abs(d.date.getFullYear()-date.getFullYear())<=1);
@@ -129,20 +153,8 @@
 			var minDiff = mDiff.reduce((a,b)=>Math.min(a,b));
 			var pointIndex = mDiff.indexOf(minDiff);
 			var point = yearData[pointIndex];
-			var prevPoint = gdp[gdp.indexOf(point)-1];
-			console.log(prevPoint);
-			
-						console.log(point);
-							var x = xScale(point.date)+margin.left;
-							var y = yScale(point.gdp)+margin.top;
-
-			base.select(".info").style("display","block").attr("transform",`translate(${x},${y})`)
-			base.select(".t1").attr("x",5).attr("y",20).text(
-				`GDP: $${Math.round(point.gdp).toLocaleString()}`);
-			base.select(".t2").attr("x",5).attr("y",35).text(
-			`Date: ${d3.timeFormat("%B %Y")(point.date)}`);
-			base.select(".t3").attr("x",5).attr("y",50).text("Qtr. Change: "+(prevPoint?
-			`${((point.gdp-prevPoint.gdp)/prevPoint.gdp*100).toFixed(2)}%`:"N/A"));
+			infoIndex = gdp.indexOf(point);
+			updateInfo();
 		}
 		
 			base.node().onmousemove = scanChart;
@@ -156,28 +168,51 @@
 			
 		var wheelDelta = 0;
 		
+		var zoom = function(dir) {
+			svg.remove();
+			var jumpSize = Math.max(Math.floor(Math.log1p(endYear-minYear)),1);
+		minYear = Math.min(Math.max(startYear,minYear+dir*jumpSize),endYear);
+		gdp_filt = gdp.filter(d=>d.date.getFullYear()>=minYear);
+		svg = genLine();
+		}
+		
 		document.body.onwheel = function(e) {
 			if(minYear==startYear && e.deltaY > 0) return;
 			if(minYear==endYear && e.deltaY < 0) return;
 			wheelDelta += e.deltaY;
 			if(Math.abs(wheelDelta)<3) return;
-		svg.remove();
 		var dir = -Math.sign(wheelDelta);
 			wheelDelta = 0;
-			var jumpSize = Math.max(Math.floor(Math.log1p(endYear-minYear)),1);
-		minYear = Math.min(Math.max(startYear,minYear+dir*jumpSize),endYear);
-		gdp_filt = gdp.filter(d=>d.date.getFullYear()>=minYear);
-		svg = genLine();
+		zoom(dir);
 					scanChart(e);
 			
 	}
+		
+		document.body.onkeypress = function(e) {
+			if(infoIndex > 0 && (e.keyCode==37 || e.key=='a')) {
+				infoIndex--;
+				if(gdp[infoIndex].date.getFullYear() < minYear) zoom(-1);
+				updateInfo();
+			}
+			else if(infoIndex < gdp.length-1  && (e.keyCode==39 || e.key=='d')) {
+				infoIndex++;
+				updateInfo();
+			}
+		}
+		
+	 gdpToggle = function(e) {
+			real = e.target.checked;
+		 	svg.remove();
+			svg = genLine();
+			updateInfo();
+		}
+	
 		
 		
 	});
 	
 	
-	
-	
+		
 	
 
 
