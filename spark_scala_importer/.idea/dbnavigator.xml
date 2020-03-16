@@ -56,32 +56,33 @@ create index AreaFipsAreaFips on AreaFips(area_fips);]]></console>
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.ProducerPriceIndex" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.MasterTable" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.TotalNonFarmEmployment" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed1Month" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed30Year" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.AutoDealerSales" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.UnemploymentRate" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.HouseHoldDebtByCounty" active-filter-id="EMPTY_FILTER">
+      <filter id="dfd359b2-8c5c-4b5f-9092-1a603a4a1cf6" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.StateFips" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.StudentLoan" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed3Month" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.UrbanConsumerRent" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.EmployeeCostIndex" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.HouseHoldDebtByState" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.FedEffFundsRate" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.TotalEmpComp" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.ProducerPriceIndex" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.TotalNonFarmEmployment" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed1Month" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.ConsumerPriceIndex" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.AutoLoan" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.AreaFips" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed30Year" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.AutoDealerSales" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Gdp" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed1Year" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.CaseShillerIndex" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.UnemploymentRate" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.CreditCardRate" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.HouseHoldDebtByCounty" active-filter-id="EMPTY_FILTER">
-      <filter id="dfd359b2-8c5c-4b5f-9092-1a603a4a1cf6" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
-    </filter-actions>
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.MedianHomeSalesPrice" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.Fed10Year" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.StateFips" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" dataset="main.StudentLoan" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

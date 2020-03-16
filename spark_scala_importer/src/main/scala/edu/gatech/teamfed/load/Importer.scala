@@ -3,12 +3,11 @@ package edu.gatech.teamfed.load
 import java.sql.Statement
 import java.util.Properties
 
+import edu.gatech.teamfed.base.{AbstractBase, AbstractLoader}
 import org.apache.spark.sql.types._
-import org.apache.spark.sql.{DataFrame, SaveMode}
 
-//"areafips","areatitle"
-class Importer(override val dbPath: String)  extends AbstractBase(dbPath)   {
 
+class Importer(override val dbPath: String)  extends AbstractLoader(dbPath)   {
 
   var csvFile:String = null;
   var sqlCreate:String = null;
