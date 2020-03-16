@@ -1,0 +1,33 @@
+{
+  "name": "team-fed",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "node server.js",
+    "build": "ng build --prod",
+    "test": "ng test",
+    "lint": "ng lint",
+    "postinstall": "npm run copy-libs",
+    "copy-libs": "cpx \"node_modules/**/*\" src/lib -C"
+  },
+  "private": true,
+  "dependencies": {
+    "cpx": "^1.5.0",
+    "express": "^4.17.1",
+    "http-server": "^0.12.1"
+  },
+  "devDependencies": {
+    "angular": "1.5.8",
+    "angular-animate": "1.5.8",
+    "angular-bootstrap-calendar": "^0.28.3",
+    "angular-bootstrap-colorpicker": "^3.0.26",
+    "angular-chart.js": "^1.0.3",
+    "angular-cookies": "1.5.8",
+    "angular-route": "1.6.1",
+    "angular-sanitize": "1.6.1",
+    "angular-ui-router": "^0.3.1",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.1"
+  }
+}

@@ -1,0 +1,163 @@
+<nav id="mainNav" class="navbar navbar-default homepage">
+    <div class="container nav-container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" ng-click="goToUserProfile()">Trust Secured</a>
+        </div>
+        <form ng-show="$root.loggedIn" class="navbar-form nav-search">
+            <div class="form-group nav-search-group">
+
+                <!--<a class="dropdown-toggle" data-toggle="dropdown">-->
+                    <input data-toggle="dropdown" ng-disabled="!mainUser.profilePictureUrl" type="text" ng-model="search" class="form-control nav-search-input" placeholder="Search">
+                <!--</a>-->
+                <ul class="dropdown-menu search-info">
+                    <div class="list-group" ng-repeat="user in allUsers | filter: { firstname: search }">
+                        <div ng-if="user.profilePictureUrl" class="list-group-item search-user-row" ng-click="visitProfile(user)">
+                            <div class="row-action-primary">
+                                <img class="img-circle" src="{{user.profilePictureUrl}}">
+                            </div>
+                            <div class="row-content" ng-click="">
+                                <h4 class="list-group-item-heading">{{user.firstname}} {{user.lastname}}</h4>
+
+                                <p class="list-group-item-text">{{user.currentTitle}}</p>
+                            </div>
+                        </div>
+                        <div ng-if="user.profilePictureUrl" class="list-group-separator"></div>
+                    </div>
+                </ul>
+            </div>
+        </form>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul ng-show="!$root.loggedIn" class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="page-scroll" ng-click="">Download</a>
+                </li>
+                <li>
+                    <a class="page-scroll" ng-click="loginPage()">Login</a>
+                </li>
+                <li>
+                    <a class="page-scroll"ng-click="registerPage()">Register</a>
+                </li>
+            </ul>
+
+            <ul ng-show="$root.loggedIn" class="nav navbar-nav navbar-right ">
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i data-count="{{connectionRequests.length}}" class="material-icons notification-icon">people_outline</i></a>
+                    <ul class="dropdown-menu connection-request">
+                        <div class="panel">
+                            <div class="panel-heading connection-request-header">
+                                <h3 class="panel-title">Connection Requests</h3>
+                                <h5 ng-if="mainUser.profilePictureUrl" ng-click="goToMyNetwork()" class="panel-title-view-all-messages">My Network</h5>
+                            </div>
+                        </div>
+
+                        <div class="list-group" ng-repeat="cr in connectionRequests | orderBy:'-dateSent'">
+                            <div class="list-group-item connection-request-list">
+                                <div class="row-action-primary">
+                                    <img class="img-responsive circle" src="{{cr.sender.profilePictureUrl}}" width="37" height="37" alt="{{cr.sender.firstname}} {{cr.sender.lastname}}"></a>
+                                </div>
+                                <div class="row-content">
+                                    <div class="connection-request-accept">
+                                        <h4 ng-click="visitProfile(cr.sender)"  class="list-group-item-heading connection-request-sender">{{cr.sender.firstname}} {{cr.sender.lastname}}</h4>
+                                        <button ng-click="acceptConnection(cr)" class="btn btn-info btn-raised connection-request-accept-button">Accept</button>
+                                    </div>
+                                    <p class="list-group-item-text">{{cr.sender.currentTitle}}</p>
+                                    <p ng-if="connectionRequests.length == 0" class="list-group-item-text">No Connection Requests</p>
+                                </div>
+                            </div>
+                            <div class="list-group-separator"></div>
+                        </div>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i data-count="{{unread}}" class="material-icons notification-icon">notifications</i></a>
+                    <ul class="dropdown-menu message-info">
+                        <div class="panel">
+                            <div class="panel-heading message-header">
+                                <h3 class="panel-title">Notifications</h3>
+                            </div>
+                        </div>
+
+                        <div class="list-group" ng-repeat="n in notifications | orderBy:'-dateTimeCreated'">
+                            <div ng-class="{notificationUnread: n.read == false}" class="notification-in-header list-group-item">
+                                <div class="row-action-primary">
+                                    <i class="material-icons">work</i>
+                                </div>
+                                <div class="row-content" ng-click="notificationAction(n)">
+                                    <h4 class="list-group-item-heading">{{n.title}}</h4>
+
+                                    <p class="list-group-item-text">{{n.content}}</p>
+                                </div>
+                            </div>
+                            <div class="list-group-separator"></div>
+                        </div>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i data-count="{{unreadConversations}}" class="material-icons notification-icon">message</i>
+                        </a>
+                    <ul class="dropdown-menu message-info">
+                        <div class="panel">
+                            <div class="panel-heading message-header">
+                                <h3 class="panel-title">Messages</h3>
+                                <h5 ng-if="mainUser.profilePictureUrl" ng-click="goToConversations()" class="panel-title-view-all-messages">View all messages</h5>
+                            </div>
+                        </div>
+
+                        <div class="list-group" ng-repeat="c in conversations | orderBy:'-dateUpdated'">
+                            <div ng-click="goToConversations(c.id)" ng-class="{messageUnread: c.messages[(c.messages.length - 1)].read == false && c.messages[(c.messages.length - 1)].receiver.id == mainUser.id}" class="list-group-item message-list">
+                                <div class="row-action-primary">
+                                    <img ng-if="c.userOne.id===mainUser.id" class="img-responsive circle" src="{{c.userTwo.profilePictureUrl}}" width="37" height="37" alt="{{c.userTwo.firstname}} {{c.userTwo.lastname}}"></a>
+                                    <img ng-if="c.userTwo.id===mainUser.id" class="img-responsive circle" src="{{c.userOne.profilePictureUrl}}" width="37" height="37" alt="{{c.userOne.firstname}} {{c.userOne.lastname}}"></a>
+                                </div>
+                                <div class="row-content">
+                                    <h4 ng-if="c.userOne.id===mainUser.id" class="list-group-item-heading">{{c.userTwo.firstname}} {{c.userTwo.lastname}}</h4>
+                                    <h4 ng-if="c.userTwo.id===mainUser.id" class="list-group-item-heading">{{c.userOne.firstname}} {{c.userOne.lastname}}</h4>
+
+                                    <p class="list-group-item-text">{{c.messages[(c.messages.length - 1)].content}}</p>
+                                    <p ng-if="c.messages.length == 0" class="list-group-item-text">No messages</p>
+                                </div>
+                            </div>
+                            <div class="list-group-separator"></div>
+                        </div>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="btn btn-fab .btn-fab-mini mini-pic dropdown-toggle" data-toggle="dropdown">
+                        <img ng-show="!mainUser.profilePictureUrl" class="img-responsive" src="resources/img/avatar.png" width="37" height="37" alt="{{mainUser.firstname}} {{mainUser.lastname}}">
+                        <img ng-show="mainUser.profilePictureUrl" class="img-responsive" src="{{mainUser.profilePictureUrl}}" width="37" height="37" alt="{{mainUser.firstname}} {{mainUser.lastname}}"></a>
+                    <ul class="dropdown-menu navbar-profile-options">
+                        <div class="panel">
+                            <div class="panel-heading message-header">
+                                <h3 class="panel-title">Account &amp; Settings</h3>
+                            </div>
+                        </div>
+                        <div ng-show="mainUser.profilePictureUrl" class="profile-option">
+                            <div class="profile-option-left">Jobs</div>
+                            <div class="profile-option-right" ng-click="viewJobs()">View Jobs</div>
+                        </div>
+                        <div ng-show="mainUser.profilePictureUrl" class="profile-option">
+                            <div class="profile-option-left">Calendar</div>
+                            <div class="profile-option-right" ng-click="calendar()">View Schedule</div>
+                        </div>
+                        <div ng-show="mainUser.profilePictureUrl" class="profile-option">
+                            <div class="profile-option-left">Job Posting</div>
+                            <div class="profile-option-right" ng-click="jobPosting()">Upload</div>
+                        </div>
+                        <div class="profile-option">
+                            <div class="profile-option-left">{{mainUser.firstname}} {{mainUser.lastname}}</div>
+                            <div class="profile-option-right" ng-click="logout()">Logout</div>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+
+        </ul>
+    </div>
+
+    </div>
+</nav>
