@@ -3,3 +3,10 @@
 <h2>
     John | Khwala | Bemi | Jason | George
 </h2>
+
+<iframe width="1050" height="750" src="resources/js/views/time_series" ng-show="chart=='time_series'"></iframe>
+<iframe width="1050" height="750" src="resources/js/views/student_loans" ng-show="chart=='student_loans'" ></iframe>
+<iframe width="1050" height="750" src="resources/js/views/household_debt" ng-show="chart=='household_debt'"></iframe>
+<div>
+<span ng-show="chart=='time_series'">GDP</span><a ng-hide="chart=='time_series'" ng-click="chart='time_series'">GDP</a> <span ng-show="chart=='student_loans'">Student Loans</span><a ng-click="chart='student_loans'" ng-hide="chart=='student_loans'" >Student Loans</a> <span ng-show="chart=='household_debt'">Household Debt</span><a ng-click="chart='household_debt'" ng-hide="chart=='household_debt'"  >Household Debt</a>
+</div>

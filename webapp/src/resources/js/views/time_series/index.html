@@ -51,7 +51,7 @@
 	var gdpToggle = null;
 	
 	Promise.all(promises).then(function([gdp]) {
-		console.log(gdp);
+
 		
 		var real = document.getElementById("gdpCheck").checked;
 
@@ -98,6 +98,8 @@
 		.attr("transform", "translate(0," + height + ")")
 		.call(d3.axisBottom(xScale));
 			
+			svg.append("text").text("$ (Billions)").attr("x",-50).attr("y",-10).attr("font-size","10pt");
+			
 			
 		return svg;
 	}
@@ -134,9 +136,7 @@
 		var updateInfo = function() {
 			var point = gdp[infoIndex];
 			var prevPoint = gdp[infoIndex-1];
-			console.log(prevPoint);
-			
-						console.log(point);
+		
 							var x = xScale(point.date)+margin.left;
 							var y = yScale(real?point.real_gdp:point.gdp)+margin.top;
 
