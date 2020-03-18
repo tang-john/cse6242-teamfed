@@ -23,7 +23,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
+        <schema name="main" object-types="index, dataset trigger, constraint, table, view, column" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
@@ -44,13 +48,17 @@
 
 -- select * from "AreaFips";
 
-create index AreaFipsId on AreaFips(id);
-create index AreaFipsAreaFips on AreaFips(area_fips);]]></console>
+--create index AreaFipsId on AreaFips(id);
+--create index AreaFipsAreaFips on AreaFips(area_fips);
+
+select distinct year, qtr from "HouseHoldDebtByState"]]></console>
       <console name="TeamFed" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" object-ref="schemas/main/tables/ConsumerPriceIndex" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" />
