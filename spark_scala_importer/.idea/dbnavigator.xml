@@ -51,13 +51,16 @@
 --create index AreaFipsId on AreaFips(id);
 --create index AreaFipsAreaFips on AreaFips(area_fips);
 
-select distinct year, qtr from "HouseHoldDebtByState"]]></console>
+select distinct year, qtr from "HouseHoldDebtByState"
+
+select * from MasterData;]]></console>
       <console name="TeamFed" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
       <object connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" object-ref="schemas/main/tables/ConsumerPriceIndex" />
+      <object connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" object-ref="schemas/main/tables/Fed10Year" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">

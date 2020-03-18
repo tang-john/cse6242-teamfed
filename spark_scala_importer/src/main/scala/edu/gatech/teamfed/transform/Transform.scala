@@ -4,11 +4,13 @@ import java.sql.{Connection, Statement}
 
 import org.apache.spark.sql.functions.{asc, col, concat, expr, lit, round, substring, when}
 import edu.gatech.teamfed.base.AbstractBase
-import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.{DataFrame, SaveMode}
 import org.apache.spark.sql.types.IntegerType
 
 
 class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
+
+  val dataPath = "C:\\Users\\jtang\\e-learning\\GeorgiaTech\\CSE_6242\\project\\teamfed_repo\\spark_scala_importer\\src\\main\\resources\\data";
 
   def model(): Boolean = {
     var result = true
@@ -17,17 +19,21 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
     var df:DataFrame = null;
 
     try {
-      removeTable(st)
+      //removeTable(st)
       //createTable(st)
 
-      val hhdDF = householdDebtByState
-      val ferDF = fedEffRate
-      df = joinDF(hhdDF, ferDF, "householdDebt", "effFundsRate")
 
-      //val cpiDF = cpi
+      //val hhdDF = householdDebtByState
+      //val ferDF = fedEffRate
+      //df = joinDF(hhdDF, ferDF, "householdDebt", "effFundsRate")
+
+      val cpiDF = cpi
+      //val fed10YrDF = fed10Yr
+      //saveData(df)
 
 
       spark.close
+
     } catch {
       case e: Exception => {
         println("*************************************    ERROR    *************************************")
@@ -44,27 +50,30 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
   }
 
   def removeTable(st:Statement): Transform = {
-    val sql = "DROP TABLE IF EXISTS MasterTable";
+    val sql = "DROP TABLE IF EXISTS MasterData";
     st.execute(sql);
     return this;
   }
 
   def createTable(st: Statement) : Transform = {
-    val sql = "CREATE TABLE MasterTable " +
+    val sql = "CREATE TABLE MasterData " +
       "(" +
            " id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+           " yearQtr REAL, " +
+           " year REAL, " +
+           " qtr REAL, " +
+           " householdDebt REAL, " +
+           " effFundsRate REAL, " +
            " auto_loans REAL," +
            " auto_dealer_sales REAL," +
            " case_shiller_index REAL, " +
            " countyCodes TEXT, " +
            " consumer_price_index REAL, " +
            " credit_card_rate REAL, " +
-           " effFundsRate REAL, " +
            " employee_cost_index REAL, " +
            " median_home_price REAL, " +
            " non_farm_employment REAL, " +
            " producer_price_index REAL, " +
-           " householdDebt REAL, " +
            " quarter INTEGER, " +
            " rental_vacancy REAL, " +
            " total_employee_compensation REAL, " +
@@ -110,17 +119,34 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
       )
       .orderBy(asc("yearQtr"))
 
-    df.show()
+    //df.show()
 
     return df;
   }
 
+
+  def readTable(table: String): DataFrame = {
+    val df = spark.read.format("jdbc")
+      .option("url", this.jdbcURL)
+      .option("dbtable", table)
+      .load()
+
+    return df
+  }
+  def saveData(df: DataFrame) = {
+    //Write to Spark Database
+    //df.write.mode(SaveMode.Overwrite).saveAsTable("MasterData")
+
+    //Write to CSV
+    val masterFile = dataPath + "\\master.csv";
+    df.coalesce(1).write.mode(SaveMode.Overwrite).csv(masterFile);
+    //df.write.csv(masterFile);
+    //df.coalesce(1).write.write(SaveMode.Overwrite).json(masterFile)
+  }
+
   def householdDebtByState(): DataFrame = {
 
-    val df = spark.read.format("jdbc")
-        .option("url", this.jdbcURL)
-        .option("dbtable", "HouseholdDebtByState")
-        .load()
+    val df = readTable("HouseholdDebtByState")
 
     //df.show(10)
 
@@ -202,13 +228,16 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
 
   def cpi(): DataFrame = {
 
-    val origDF = spark.read.format("jdbc")
-      .option("url", this.jdbcURL)
-      .option("dbtable", "ConsumerPriceIndex")
-      .load()
+    val origDF = readTable("ConsumerPriceIndex")
+       .withColumn("year", substring(col("date"),0,4).cast(IntegerType))
+       .withColumn("month", substring(col("date"),6, 2).cast(IntegerType))
+       .withColumn("day", substring(col("date"),9, 2).cast(IntegerType))
 
-    //df.show()
+    origDF.show();
 
+    return origDF;
+
+    /*
     val subDF = origDF.withColumnRenamed("rate", "effFundsRate")
       .withColumn("year", substring(col("date"),0,4).cast(IntegerType))
       .withColumn("month", substring(col("date"),6, 2).cast(IntegerType))
@@ -242,6 +271,8 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
     //df.show(10)
 
     return df;
+
+     */
   }
 
 }
