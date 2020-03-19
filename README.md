@@ -21,6 +21,7 @@ These data files were imported into SQLite using the custom Scala Spark code und
 | Fed Effective Funds Rate | DFF.csv                        | https://fred.stlouisfed.org/series/DFF
 | Household Debt By County | household-debt-by-county.csv   | https://www.federalreserve.gov/releases/z1/dataviz/household_debt/
 | Household Debt By State  | household-debt-by-state.csv    | https://www.federalreserve.gov/releases/z1/dataviz/household_debt/
+| Household Debt to GDP    | HDTGPDUSQ163N.csv              | https://fred.stlouisfed.org/series/HDTGPDUSQ163N
 | Median Home Prices       | MSPUS.csv                      | https://fred.stlouisfed.org/series/MSPUS
 | Non Farm Employmment (NFE) | TotalNonFarmEmployment.csv | https://download.bls.gov/pub/time.series/ce/ce.data.00a.TotalNonfarm.Employment
 | Produce Price Index      | PPIACO.csv                     | https://fred.stlouisfed.org/series/PPIACO
