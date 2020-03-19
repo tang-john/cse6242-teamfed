@@ -23,11 +23,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
-        <schema name="main" object-types="index, dataset trigger, constraint, table, view, column" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8">
@@ -58,10 +54,7 @@ select * from MasterData;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" object-ref="schemas/main/tables/ConsumerPriceIndex" />
-      <object connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" object-ref="schemas/main/tables/Fed10Year" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" />

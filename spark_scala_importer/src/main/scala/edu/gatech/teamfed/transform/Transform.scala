@@ -22,15 +22,52 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
       //removeTable(st)
       //createTable(st)
 
+      var df:DataFrame =  null;
+      var df1:DataFrame = null;
+      var df2:DataFrame = null;
 
-      //val hhdDF = householdDebtByState
-      //val ferDF = fedEffRate
-      //df = joinDF(hhdDF, ferDF, "householdDebt", "effFundsRate")
+      df1 = householdDebtByState
+      df2 = fedData("FedEffFundsRate", "rate", "effFundsRate")
 
-      val cpiDF = cpi
-      //val fed10YrDF = fed10Yr
-      //saveData(df)
+      var colNames = Seq("yearQtr1", "year1", "qtr1", "householdDebt", "year2", "qtr2", "effFundsRate")
+      df = joinDF(df1, df2, colNames)
 
+      df1 = fedData("ConsumerPriceIndex", "cpi", "cpi")
+      df = joinDF(df, df1, null)
+
+      df1 = fedData("Fed1Year", "rate", "fed1YearYield")
+      df = joinDF(df, df1, null)
+
+      df1 = fedData("Fed10Year", "rate", "fed10YearYield")
+      df = joinDF(df, df1, null)
+
+      df1 = fedData("Fed30Year", "rate", "fed30YearYield")
+      df = joinDF(df, df1, null)
+
+      df1 = fedData("Fed1Month", "rate", "fed1MonthYield")
+      df = joinDF(df, df1, null)
+
+      df1 = fedData("Fed3Month", "rate", "fed3MonthYield")
+      df = joinDF(df, df1, null)
+
+      df1 = fedData("AutoDealerSales", "salesamt", "autoDealerSales")
+      df = joinDF(df, df1, null)
+
+      df1 = fedData("AutoLoan", "loanamt", "autoLoan")
+      df = joinDF(df, df1, null)
+
+      //df1 = fedData("CreditCardRate", "rate", "creditCardRate")
+      //df = joinDF(df, df1, null)
+
+      df1 = fedData("CaseShillerIndex", "indexvalue", "caseShillerIndex")
+      df = joinDF(df, df1, null)
+
+
+
+
+
+
+      saveData(df)
 
       spark.close
 
@@ -64,11 +101,11 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
            " qtr REAL, " +
            " householdDebt REAL, " +
            " effFundsRate REAL, " +
+           " cpi REAL, " +
            " auto_loans REAL," +
            " auto_dealer_sales REAL," +
            " case_shiller_index REAL, " +
            " countyCodes TEXT, " +
-           " consumer_price_index REAL, " +
            " credit_card_rate REAL, " +
            " employee_cost_index REAL, " +
            " median_home_price REAL, " +
@@ -94,22 +131,37 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
   }
 
 
-  def joinDF(df1:DataFrame, df2:DataFrame, col1:String, col2:String): DataFrame = {
+  def joinDF(df1:DataFrame, df2:DataFrame, colNames:Seq[String]): DataFrame = {
 
     //import spark.implicits._
-    val colNames = Seq("yearQtr1", "year1", "qtr1", col1, "year2", "qtr2", col2)
+    //val colNames = Seq("yearQtr1", "year1", "qtr1", col1, "year2", "qtr2", col2)
 
 
-    val df:DataFrame = df1
+    var tmpDF:DataFrame = df1
       .join(df2, Seq("yearQtr"), "full")
-      .toDF(colNames: _*)
-      .withColumnRenamed("yearQtr1", "yearQtr")
-      .withColumn("year",
-        when(col("year1").isNull, col("year2")).otherwise(col("year1"))
-      )
-      .withColumn("qtr",
-        when(col("qtr1").isNull, col("qtr2")).otherwise(col("qtr1"))
-      )
+
+    if(colNames != null) {
+      tmpDF = tmpDF.toDF(colNames: _*)
+        .withColumnRenamed("yearQtr1", "yearQtr")
+        .withColumn("year",
+          when(col("year1").isNull, col("year2")).otherwise(col("year1"))
+        )
+        .withColumn("qtr",
+          when(col("qtr1").isNull, col("qtr2")).otherwise(col("qtr1"))
+        )
+        .drop("qtr1")
+        .drop("qtr2")
+        .drop("year1")
+        .drop("year2")
+    }
+
+    //tmpDF.show(2)
+
+    val df = tmpDF
+      .drop("year")
+      .drop("qtr")
+      .orderBy(asc("yearQtr"))
+      /*
       .select(
         col("yearQtr"),
         col("year"),
@@ -117,9 +169,11 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
         col(col1),
         col(col2)
       )
-      .orderBy(asc("yearQtr"))
+      *
+       */
 
-    //df.show()
+
+    //df.show(2)
 
     return df;
   }
@@ -139,7 +193,7 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
 
     //Write to CSV
     val masterFile = dataPath + "\\master.csv";
-    df.coalesce(1).write.mode(SaveMode.Overwrite).csv(masterFile);
+    df.coalesce(1).write.option("header", "true").mode(SaveMode.Overwrite).csv(masterFile);
     //df.write.csv(masterFile);
     //df.coalesce(1).write.write(SaveMode.Overwrite).json(masterFile)
   }
@@ -181,6 +235,7 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
     return hhdDF;
   }
 
+  /*
   def fedEffRate(): DataFrame = {
 
     val origDF = spark.read.format("jdbc")
@@ -225,55 +280,39 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
     return df;
   }
 
+   */
 
-  def cpi(): DataFrame = {
+  def fedData(table:String, idxName:String, newIdxName:String): DataFrame = {
 
-    val origDF = readTable("ConsumerPriceIndex")
-       .withColumn("year", substring(col("date"),0,4).cast(IntegerType))
-       .withColumn("month", substring(col("date"),6, 2).cast(IntegerType))
-       .withColumn("day", substring(col("date"),9, 2).cast(IntegerType))
-
-    origDF.show();
-
-    return origDF;
-
-    /*
-    val subDF = origDF.withColumnRenamed("rate", "effFundsRate")
+    val qtr =  List(3, 6, 9, 12)
+    val origDF = readTable(table)
       .withColumn("year", substring(col("date"),0,4).cast(IntegerType))
       .withColumn("month", substring(col("date"),6, 2).cast(IntegerType))
       .withColumn("day", substring(col("date"),9, 2).cast(IntegerType))
+      .select("year", "month", idxName)
+      .filter(col("month").isin(qtr:_*))
+      .filter("day = 1");
 
-    val qtr =  List(3, 6, 9, 12)
-
-    val efrDF = subDF.select(
-      col("year"),
-      col("month"),
-      col("effFundsRate")
-    )
-    .filter(col("month").isin(qtr:_*))
-    .filter("day = 1")
-    .orderBy(asc("year"), asc("month"))
-
-    //efrDF.show(100)
-
-    val df = efrDF.withColumn("qtr",
-      expr(
-        "case when month = 3 then 1 " +
+    val df = origDF
+      .withColumn("qtr",
+        expr(
+          "case when month = 3 then 1 " +
             " when month = 6 then 2 " +
             " when month = 9 then 3 " +
             " else 4 end"
+        )
       )
-    )
-    .withColumn("yearQtr", concat(col("year"), lit("-"), col("qtr") ))
-    .select("yearQtr", "year", "qtr", "effFundsRate")
-    .orderBy(asc("yearQtr"))
+      .withColumn("yearQtr", concat(col("year"), lit("-"), col("qtr")))
+      .select("yearQtr", "year", "qtr", idxName)
+      .withColumnRenamed(idxName, newIdxName)
+      .orderBy(asc("year"));
 
-    //df.show(10)
+    df.show();
 
     return df;
 
-     */
   }
+
 
 }
 
