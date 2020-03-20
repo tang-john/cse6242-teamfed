@@ -32,8 +32,26 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
       var colNames = Seq("yearQtr1", "year1", "qtr1", "householdDebt", "year2", "qtr2", "effFundsRate")
       df = joinDF(df1, df2, colNames)
 
+
+      df1 = fedData("AutoDealerSales", "salesamt", "autoDealerSales")
+      df = joinDF(df, df1, null)
+
+
+      df1 = fedData("AutoLoan", "loanamt", "autoLoan")
+      df = joinDF(df, df1, null)
+
+      df1 = fedData("CaseShillerIndex", "indexvalue", "caseShillerIndex")
+      df = joinDF(df, df1, null)
+
       df1 = fedData("ConsumerPriceIndex", "cpi", "cpi")
       df = joinDF(df, df1, null)
+
+      //df1 = fedData("CreditCardRate", "rate", "creditCardRate")
+      //      //df = joinDF(df, df1, null)
+
+      //df1 = fedData("EmployeeCostIndex", "rate", "employeeCostIndex")
+      //df = joinDF(df, df1, null)
+
 
       df1 = fedData("Fed1Year", "rate", "fed1YearYield")
       df = joinDF(df, df1, null)
@@ -50,24 +68,37 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
       df1 = fedData("Fed3Month", "rate", "fed3MonthYield")
       df = joinDF(df, df1, null)
 
+      df1 = fedData("ProducerPriceIndex", "ppi", "ppi")
+      df = joinDF(df, df1, null)
+
       df1 = fedData("Gdp", "gdp", "gdp")
       df = joinDF(df, df1, null)
 
-      df1 = fedData("AutoDealerSales", "salesamt", "autoDealerSales")
+      df1 = fedData("UrbanConsumerRent", "rent", "consumerRent")
       df = joinDF(df, df1, null)
 
-      df1 = fedData("AutoLoan", "loanamt", "autoLoan")
+      /*
+
+
+      df1 = fedData("HouseHoldDebtToGdp", "debt", "householdDebtToGdp")
       df = joinDF(df, df1, null)
 
-      //df1 = fedData("CreditCardRate", "rate", "creditCardRate")
+      df1 = fedData("MedianHomeSalesPrice", "salesamt", "medianHomePrice")
+      df = joinDF(df, df1, null)
+
+
+      */
+      //df1 = fedData("StudentLoan", "sloas", "studentLoan")
       //df = joinDF(df, df1, null)
 
-      df1 = fedData("CaseShillerIndex", "indexvalue", "caseShillerIndex")
-      df = joinDF(df, df1, null)
+      //df1 = fedData("TotalEmplComp", "xxx", "xxx")
+      //df = joinDF(df, df1, null)
 
+      //df1 = fedData("TotalNonFarmEmployment", "xxx", "xxx")
+      //df = joinDF(df, df1, null)
 
-
-
+      //df1 = fedData("UnemploymentRate", "unemployment_rate", "unemploymentRate")
+      //df = joinDF(df, df1, null)
 
 
       saveData(df)
@@ -310,7 +341,7 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
       .withColumnRenamed(idxName, newIdxName)
       .orderBy(asc("year"));
 
-    df.show();
+    //df.show();
 
     return df;
 

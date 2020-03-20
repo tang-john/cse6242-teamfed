@@ -27,7 +27,6 @@ object ImportRunner extends App {
   importFed3Month
   importHouseHoldDebtByCounty
   importHouseHoldDebtByState
-  importGdp
   importHouseHoldDebtByCounty
   importHouseHoldDebtByState
   importCreditCardRate
@@ -42,8 +41,12 @@ object ImportRunner extends App {
   importUnemploymentRate
   importTotalNonFarmEmployment
   importTotalEmployeeCompensation
-*/
   importEmployeeCostIndex
+  importHouseHoldDebtToGDP
+*/
+
+  importGdp
+
 
   def importFedEffFundsRate(): Unit = {
     val csvFile = baseDir + "\\resources\\data\\DFF.csv";
@@ -133,6 +136,20 @@ object ImportRunner extends App {
   }
 
 
+  def importHouseHoldDebtToGDP(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("debt", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\HDTGPDUSQ163N.csv";
+    val table = "HouseHoldDebtToGdp";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, debt REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
+
   def importAreaFips(): Unit = {
     val schema = StructType(Array(
       StructField("area_fips", StringType),
@@ -165,7 +182,7 @@ object ImportRunner extends App {
       StructField("date", StringType),
       StructField("gdp", DoubleType)
     ));
-    val csvFile = baseDir + "\\resources\\data\\gdp.csv";
+    val csvFile = baseDir + "\\resources\\data\\GDP-mod.csv";
     val table = "Gdp";
     val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, gdp REAL)";
     val sqlDrop = "DROP TABLE IF EXISTS " + table;
