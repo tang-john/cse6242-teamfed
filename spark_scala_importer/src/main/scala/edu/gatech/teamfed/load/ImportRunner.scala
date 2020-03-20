@@ -43,9 +43,10 @@ object ImportRunner extends App {
   importTotalEmployeeCompensation
   importEmployeeCostIndex
   importHouseHoldDebtToGDP
+  importGdp
 */
 
-  importGdp
+  importMedianHomeSalesPrice
 
 
   def importFedEffFundsRate(): Unit = {
@@ -141,7 +142,7 @@ object ImportRunner extends App {
       StructField("date", StringType),
       StructField("debt", DoubleType)
     ));
-    val csvFile = baseDir + "\\resources\\data\\HDTGPDUSQ163N.csv";
+    val csvFile = baseDir + "\\resources\\data\\HDTGPDUSQ163N-mod.csv";
     val table = "HouseHoldDebtToGdp";
     val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, debt REAL)";
     val sqlDrop = "DROP TABLE IF EXISTS " + table;
@@ -208,7 +209,7 @@ object ImportRunner extends App {
       StructField("date", StringType),
       StructField("sloas", DoubleType)
     ));
-    val csvFile = baseDir + "\\resources\\data\\SLOAS.csv";
+    val csvFile = baseDir + "\\resources\\data\\SLOAS-mod.csv";
     val table = "StudentLoan";
     val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, sloas REAL)";
     val sqlDrop = "DROP TABLE IF EXISTS " + table;
@@ -273,7 +274,7 @@ object ImportRunner extends App {
       StructField("date", StringType),
       StructField("salesamt", DoubleType)
     ));
-    val csvFile = baseDir + "\\resources\\data\\MSPUS.csv";
+    val csvFile = baseDir + "\\resources\\data\\MSPUS-mod.csv";
     val table = "MedianHomeSalesPrice";
     val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, salesamt REAL)";
     val sqlDrop = "DROP TABLE IF EXISTS " + table;
@@ -325,7 +326,7 @@ object ImportRunner extends App {
       StructField("date", StringType),
       StructField("unemployment_rate", DoubleType)
     ));
-    val csvFile = baseDir + "\\resources\\data\\Unemployment_Rate.csv";
+    val csvFile = baseDir + "\\resources\\data\\Unemployment_Rate_mod.csv";
     val table = "UnemploymentRate";
     val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, unemployment_rate REAL)";
     val sqlDrop = "DROP TABLE IF EXISTS " + table;

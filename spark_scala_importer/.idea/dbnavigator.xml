@@ -62,9 +62,7 @@ delete from "ProducerPriceIndex" where date < "1980-01-01"]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" object-ref="schemas/main/tables/ProducerPriceIndex" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="dc3c1728-cdeb-42c9-99c3-cd8a89b42dc8" />
