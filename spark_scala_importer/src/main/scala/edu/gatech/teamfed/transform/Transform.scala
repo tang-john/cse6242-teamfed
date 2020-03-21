@@ -97,6 +97,9 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
       df1 = fedData("German10Year", "rate", "german10Yr")
       df = joinDF(df, df1, null)
 
+      df1 = fedData("Fed10YrReal", "rate", "fed10YrReal")
+      df = joinDF(df, df1, null)
+
       //df1 = fedData("TotalEmplComp", "xxx", "xxx")
       //df = joinDF(df, df1, null)
 
