@@ -26,12 +26,17 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
       var df1:DataFrame = null;
       var df2:DataFrame = null;
 
+      /*
       df1 = householdDebtByState
       df2 = fedData("FedEffFundsRate", "rate", "effFundsRate")
 
       var colNames = Seq("yearQtr1", "year1", "qtr1", "householdDebt", "year2", "qtr2", "effFundsRate")
       df = joinDF(df1, df2, colNames)
+      */
 
+      df1 = fedData("HouseHoldDebt", "debt", "householdDebt")
+      df2 = fedData("FedEffFundsRate", "rate", "effFundsRate")
+      df = joinDF(df1, df2, null)
 
       df1 = fedData("AutoDealerSales", "salesamt", "autoDealerSales")
       df = joinDF(df, df1, null)
@@ -88,7 +93,6 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
 
       df1 = fedData("MedianHomeSalesPrice", "salesamt", "medianHomePrice")
       df = joinDF(df, df1, null)
-
 
 
       //df1 = fedData("TotalEmplComp", "xxx", "xxx")
@@ -208,7 +212,6 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
     return df;
   }
 
-
   def readTable(table: String): DataFrame = {
     val df = spark.read.format("jdbc")
       .option("url", this.jdbcURL)
@@ -217,6 +220,7 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
 
     return df
   }
+
   def saveData(df: DataFrame) = {
     //Write to Spark Database
     //df.write.mode(SaveMode.Overwrite).saveAsTable("MasterData")

@@ -44,9 +44,9 @@ object ImportRunner extends App {
   importEmployeeCostIndex
   importHouseHoldDebtToGDP
   importGdp
-*/
-
   importMedianHomeSalesPrice
+*/
+  importHouseHoldDebt
 
 
   def importFedEffFundsRate(): Unit = {
@@ -119,6 +119,20 @@ object ImportRunner extends App {
 
     this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
   }
+
+  def importHouseHoldDebt(): Unit = {
+    val schema = StructType(Array(
+      StructField("date", StringType),
+      StructField("debt", DoubleType)
+    ));
+    val csvFile = baseDir + "\\resources\\data\\hh_debt_trillions_mod.csv";
+    val table = "HouseHoldDebt";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, debt REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
+  }
+
 
   def importHouseHoldDebtByState(): Unit = {
     val schema = StructType(Array(
