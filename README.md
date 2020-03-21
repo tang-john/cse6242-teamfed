@@ -19,8 +19,11 @@ These data files were imported into SQLite using the custom Scala Spark code und
 | Credit Card Rate         | TERMCBCCALLNS.csv              | https://fred.stlouisfed.org/series/TERMCBCCINTNS
 | Employee Cost Index      | employee_cost_index.csv        | https://data.bls.gov/cgi-bin/surveymost?bls
 | Fed Effective Funds Rate | DFF.csv                        | https://fred.stlouisfed.org/series/DFF
-| Household Debt By County | household-debt-by-county.csv   | https://www.federalreserve.gov/releases/z1/dataviz/household_debt/
-| Household Debt By State  | household-debt-by-state.csv    | https://www.federalreserve.gov/releases/z1/dataviz/household_debt/
+| German 10 Year Yield     | IRLTLT01DEM156N.csv            | https://fred.stlouisfed.org/series/IRLTLT01DEM156N
+| Household Debt           | hh_debt_trillions              | https://www.newyorkfed.org/medialibrary/media/research/national_economy/householdcredit/pre2003_data.xlsx  and 
+|                          |                                | https://www.newyorkfed.org/medialibrary/media/research/national_economy/householdcredit/pre2003_data.xlsx
+| Household Debt to Income By County | household-debt-by-county.csv   | https://www.federalreserve.gov/releases/z1/dataviz/household_debt/
+| Household Debt to Income By State  | household-debt-by-state.csv    | https://www.federalreserve.gov/releases/z1/dataviz/household_debt/
 | Household Debt to GDP    | HDTGPDUSQ163N.csv              | https://fred.stlouisfed.org/series/HDTGPDUSQ163N
 | Median Home Prices       | MSPUS.csv                      | https://fred.stlouisfed.org/series/MSPUS
 | Non Farm Employmment (NFE) | TotalNonFarmEmployment.csv | https://download.bls.gov/pub/time.series/ce/ce.data.00a.TotalNonfarm.Employment
