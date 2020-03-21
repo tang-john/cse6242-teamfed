@@ -60,16 +60,24 @@
 	 d.debt_to_inc = parseFloat(d.debt_to_inc)/100;
 	 return d;
  } 
+ 
+ var sloasParse = function(d) {
+	 d.DATE = dateParse(d.DATE)
+	 d.SLOAS = parseFloat(d.SLOAS)/1000;
+	 return d;
+ }
+ 
+
 	
 	
 
 	var promises = [d3.csv('data/hh_debt_trillions.csv',debtParse),d3.csv("data/CMDEBT.csv",cmdebtParse),
-				   d3.csv('data/HDTGPDUSQ163N.csv',debtgdpParse),d3.csv('data/debt_to_inc_oecd.csv',debtIncParse)];
+				   d3.csv('data/HDTGPDUSQ163N.csv',debtgdpParse),d3.csv('data/debt_to_inc_oecd.csv',debtIncParse),
+				   d3.csv('data/SLOAS.csv',sloasParse)];
 
 	
-	Promise.all(promises).then(function([hh_debt,cm_debt,debt_gdp,debt_inc]) {
+	Promise.all(promises).then(function([hh_debt,cm_debt,debt_gdp,debt_inc,sloas]) {
 
-		
 		cm_debt = cm_debt.filter(d=>!isNaN(d.CMDEBT));
 		
 		var base = d3.select("body").insert("svg",".description")
@@ -107,6 +115,13 @@
 		.x(function(d, i) { return xScale(d.Year); }) // set the x values for the line generator
 		.y(function(d) { return y2Scale(d.debt_to_inc); }) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
+					
+		var line_sloas = d3.line()
+		.x(function(d, i) { return xScale(d.DATE); }) // set the x values for the line generator
+		.y(function(d) { return yScale(d.SLOAS); }) // set the y values for the line generator 
+		.curve(d3.curveMonotoneX) // apply smoothing to the line
+		
+			
 		
 		svg.append("path")
 		.attr("class","line")
@@ -124,6 +139,24 @@
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Household Debt")
+		
+		svg.append("path")
+		.attr("class","line")
+		.attr("stroke","black")
+		.attr("fill","none")
+		.datum(sloas) // 10. Binds data to the line 
+		.attr("d", line_sloas); // 11
+		
+			var last_sloas = sloas[sloas.length-1];
+		
+		svg.append("text")
+		.attr("x",xScale(last_sloas.DATE)-10)
+		.attr("y",yScale(last_sloas.SLOAS)-5)
+		.attr("stroke","black")
+		.attr("font-size","10pt")
+		.attr("text-anchor","end")
+		.text("Student Loan Debt")
+
 		
 			/*	svg.append("path")
 		.attr("class","line")
