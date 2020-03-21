@@ -12,6 +12,7 @@ These data files were imported into SQLite using the custom Scala Spark code und
 | 1 Year Treasury          | GS1.CSV                        | https://fred.stlouisfed.org/series/GS10
 | 10 Year Treasury         | GS10.csv                       | https://fred.stlouisfed.org/series/GS10
 | 30 Year Treasury         | GS30.csv                       | https://fred.stlouisfed.org/series/GS30
+| 10 Year Real Rates       | FII10.csv                      | https://fred.stlouisfed.org/series/FII10
 | Automobile Loans         | CARACBW027SBOG.csv             | https://fred.stlouisfed.org/series/CARACBW027SBOG
 | Auto Dealer Sales        | MRTSSM4411USN.csv              | https://fred.stlouisfed.org/series/MRTSSM4411USN
 | Consumer Price Index     | CPIAUCSL.csv                   | https://fred.stlouisfed.org/series/CPIAUCSL
