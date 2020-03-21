@@ -45,9 +45,11 @@ object ImportRunner extends App {
   importHouseHoldDebtToGDP
   importGdp
   importMedianHomeSalesPrice
-*/
+  importGerman10Year
   importHouseHoldDebt
+*/
 
+  importGerman10Year
 
   def importFedEffFundsRate(): Unit = {
     val csvFile = baseDir + "\\resources\\data\\DFF.csv";
@@ -396,6 +398,15 @@ object ImportRunner extends App {
     this.importer.config(csvFile, table, sqlCreate, sqlDrop, schema).load;
   }
 
+  def importGerman10Year(): Unit = {
+    val csvFile = baseDir + "\\resources\\data\\IRLTLT01DEM156N.csv";
+    val table = "German10Year";
+    val sqlCreate = "CREATE TABLE " + table + "(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, rate REAL)";
+    val sqlDrop = "DROP TABLE IF EXISTS " + table;
+
+    this.importer.config(csvFile, table, sqlCreate, sqlDrop, schemaFed).load;
+
+  }
 
 
 }
