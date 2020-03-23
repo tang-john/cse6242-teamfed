@@ -5,7 +5,7 @@ This is an Angular WebApp that is deployed in a Docker Image
 ## Development server (Local Run without Docker)
 
 Run `npm install` to install all the dependencies.  
-Run `npm start` for a dev server. Navigate to `http://localhost/#/landingPage`
+Run `npm start` for a dev server. Navigate to `http://localhost:8080/#/landingPage`
 
 
 ## Docker server (Locally run latest code using Docker)
@@ -13,7 +13,7 @@ Run `npm start` for a dev server. Navigate to `http://localhost/#/landingPage`
 Download the latest Docker from https://www.docker.com/products/docker-desktop.  
 Run `docker build -t teamfed:dev .` to create a docker image from the Dockerfile.   
 Run `docker run -p 8080:8080 <imageId>` to run the image. The imageId is the output from build/creating a docker image.  
-Navigate to `http://localhost/#/landingPage`
+Navigate to `http://localhost:8080/#/landingPage`
 
 ## Deploy to Heroku (Prod Run)
 

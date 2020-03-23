@@ -10,3 +10,10 @@
 <div>
 <span ng-show="chart=='time_series'">GDP</span><a ng-hide="chart=='time_series'" ng-click="chart='time_series'">GDP</a> <span ng-show="chart=='student_loans'">Student Loans</span><a ng-click="chart='student_loans'" ng-hide="chart=='student_loans'" >Student Loans</a> <span ng-show="chart=='household_debt'">Household Debt</span><a ng-click="chart='household_debt'" ng-hide="chart=='household_debt'"  >Household Debt</a>
 </div>
+
+<div>
+    <hr>
+    <input type="submit" class="btn-register"  ng-click="LinReg()" value="LinReg"/>
+    <br>
+    <textarea style="margin: 0px; width: 589px; height: 108px;" ng-model="linRegResponse"></textarea>
+</div>
