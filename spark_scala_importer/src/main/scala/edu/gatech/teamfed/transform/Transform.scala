@@ -51,13 +51,6 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
       df1 = fedData("ConsumerPriceIndex", "cpi", "cpi")
       df = joinDF(df, df1, null)
 
-      //df1 = fedData("CreditCardRate", "rate", "creditCardRate")
-      //      //df = joinDF(df, df1, null)
-
-      //df1 = fedData("EmployeeCostIndex", "rate", "employeeCostIndex")
-      //df = joinDF(df, df1, null)
-
-
       df1 = fedData("Fed1Year", "rate", "fed1YearYield")
       df = joinDF(df, df1, null)
 
@@ -97,11 +90,10 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
       df1 = fedData("German10Year", "rate", "german10Yr")
       df = joinDF(df, df1, null)
 
-      //df1 = fedData("TotalEmplComp", "xxx", "xxx")
-      //df = joinDF(df, df1, null)
+      df1 = fedData("Fed10YrReal", "rate", "fed10YrReal")
+      df = joinDF(df, df1, null)
 
-      //df1 = fedData("TotalNonFarmEmployment", "xxx", "xxx")
-      //df = joinDF(df, df1, null)
+      df = splitYrQtr(df)
 
       saveData(df)
 
@@ -350,5 +342,17 @@ class Transform(override val dbPath: String)  extends AbstractBase(dbPath)   {
   }
 
 
+  def splitYrQtr(df: DataFrame): DataFrame = {
+    val newDF = df.withColumn("year", substring(col("yearQtr"), 0, 4).cast(IntegerType))
+        .withColumn("qtr", substring(col("yearQtr"), 6, 1))
+        .select("yearQtr", "year", "qtr", "householdDebt", "effFundsRate", "autoDealerSales", "autoLoan",
+          "caseShillerIndex", "cpi", "fed1YearYield", "fed10YearYield", "fed30YearYield", "fed1MonthYield",
+          "fed3MonthYield", "ppi", "gdp", "consumerRent", "unemploymentRate", "householdDebtToGdp", "studentLoan",
+          "medianHomePrice", "german10Yr", "fed10YrReal");
+
+    //newDF.show();
+
+    return newDF;
+  }
 }
 
