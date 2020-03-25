@@ -12,8 +12,20 @@
 </div>
 
 <div>
+	<form  ng-submit="LinReg()">
     <hr>
-    <input type="submit" class="btn-register"  ng-click="LinReg()" value="LinReg"/>
-    <br>
+	GDP ($B) <input type="number" min=0 step=0.001 max=100000 ng-model="gdp" required/>
+	<br/> CPI (100=1984 dollars) <input type="number" min=0 max=500 step=0.1 ng-model="cpi" required />
+	<br/> Median Home Price ($) <input type="number" min=0 max=1000000 ng-model="medHome" required />
+	<br/> Fed 10 Year Yield (%) <input type="number" min=-10 max=15 step=0.01 ng-model="fed10Y" required />
+    <br/><input type="submit" class="btn-register" value="LinReg" required/>
+	</form>
+	<span ng-show="badInputs" style="background-color:lightgray">
+		One or more of your inputs were invalid.
+	</span>
+	<div ng-show="respSuccess">
+	Predicted Household Debt: {{result}} ($T)
+	</div>
+	<br>
     <textarea style="margin: 0px; width: 589px; height: 108px;" ng-model="linRegResponse"></textarea>
 </div>
