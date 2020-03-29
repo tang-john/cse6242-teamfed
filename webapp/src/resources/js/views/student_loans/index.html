@@ -7,6 +7,7 @@
 	<script src="../lib/d3-scale-chromatic.v1.min.js"></script>
 	<script src="../lib/d3-simple-slider.min.js"></script>
 	<script src="../lib/d3-tip.min.js"></script>
+	<link rel='stylesheet' href='../../../css/styles.css'>
 	<style>
 	.states path {
   stroke: #000;
@@ -16,20 +17,21 @@
 		.tip {
 			background-color: aliceblue;
 			padding: 1px;
+			color: #000;
 			border-radius: 5px;
 		}
 		
 	</style>
 </head>
 <body>
-Use scroll wheel to change maps.
+<!-- Use scroll wheel to change maps. -->
 <script>
 
 
 	
-	var margin = {top: 50, right: 100, bottom: 50, left: 75};
-	var width = 1024 - margin.left - margin.right,
-    height = 700 - margin.top - margin.bottom;
+	var margin = {top: 20, right: 100, bottom: 30, left: 75};
+	var width = 700 - margin.left - margin.right,
+    height = 650 - margin.top - margin.bottom;
 	
 	
 	

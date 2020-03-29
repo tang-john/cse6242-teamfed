@@ -1,4 +1,4 @@
-<h1>TeamFed Project</h1>
+<!-- <h1>TeamFed Project</h1>
 
 <h2>
     John | Khwala | Bemi | Jason | George
@@ -8,7 +8,9 @@
 <iframe width="1050" height="750" src="resources/js/views/student_loans" ng-show="chart=='student_loans'" ></iframe>
 <iframe width="1050" height="750" src="resources/js/views/household_debt" ng-show="chart=='household_debt'"></iframe>
 <div>
-<span ng-show="chart=='time_series'">GDP</span><a ng-hide="chart=='time_series'" ng-click="chart='time_series'">GDP</a> <span ng-show="chart=='student_loans'">Student Loans</span><a ng-click="chart='student_loans'" ng-hide="chart=='student_loans'" >Student Loans</a> <span ng-show="chart=='household_debt'">Household Debt</span><a ng-click="chart='household_debt'" ng-hide="chart=='household_debt'"  >Household Debt</a>
+<span ng-show="chart=='time_series'">GDP</span><a ng-hide="chart=='time_series'" ng-click="chart='time_series'">GDP</a> 
+<span ng-show="chart=='student_loans'">Student Loans</span><a ng-click="chart='student_loans'" ng-hide="chart=='student_loans'" >Student Loans</a> 
+<span ng-show="chart=='household_debt'">Household Debt</span><a ng-click="chart='household_debt'" ng-hide="chart=='household_debt'"  >Household Debt</a>
 </div>
 
 <div>
@@ -28,4 +30,90 @@
 	</div>
 	<br>
     <textarea style="margin: 0px; width: 589px; height: 108px;" ng-model="linRegResponse"></textarea>
+</div> -->
+
+<div class="container main-container">
+    <div class="row col-md-12 chart-button-row">
+        <div class="col-md-3 well chart-button chart-button-gdp" ng-click="chart='time_series'">
+            <div class="chart-button-row-body">
+                <h2>GDP</h2>
+                <h2>5%</h2>
+            </div>
+        </div>
+        <div class="col-md-3 well chart-button chart-button-student-debt" ng-click="chart='student_loans'">
+            <div class="chart-button-row-body">
+                <h2>Student Debt</h2>
+                <h2>5%</h2>
+            </div>
+        </div>
+        <div class="col-md-3 well chart-button chart-button-household-debt" ng-click="chart='household_debt'">
+            <div class="chart-button-row-body">
+                <h2>Household Debt</h2>
+                <h2>5%)</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12 chart-button-row">
+        <div class="col-md-8 well chart-well">
+            <div class="chart-well-header">
+                <div class="chart-well-head-row">
+                    <div class="chart-well-title">Gross Domestic Product | Chart</div>
+                    <div class="chart-well-tools">
+                        <a href="#" class="btn chart-tool">
+                            <span class="btn-label">
+                                <i class="fa fa-pencil"></i>
+                            </span>
+                            Export
+                        </a>
+                        <a href="#" class="btn chart-tool">
+                            <span class="btn-label">
+                                <i class="fa fa-print"></i>
+                            </span>
+                            Print
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-button-row-body">
+                <iframe width="760" height="650" src="resources/js/views/time_series" ng-show="chart=='time_series'"></iframe>
+                <iframe width="760" height="650" src="resources/js/views/student_loans" ng-show="chart=='student_loans'" ></iframe>
+                <iframe width="760" height="650" src="resources/js/views/household_debt" ng-show="chart=='household_debt'"></iframe>
+            </div>
+        </div>
+        <div class="col-md-3 ">
+            <div class="row well chart-button chart-button-prediction">
+                <div class="chart-button-row-body">
+                    <h2>Prediction</h2>
+                    <h2>{{result}} ($T)</h2>
+                </div>
+            </div>
+            <div class="row well chart-button chart-button-prediction">
+                <div class="input-variable-header">
+                    <h1 class="input-variable-header-title">Input Variables</h1>
+                </div>
+                <div class="row register-form">
+                    <div class="col-md-12">
+                        <div class="form-group input-variable">
+                            <h2>GDP ($B)</h2>
+                            <input ng-model="gdp" type="text" class="form-control" placeholder="GDP *" value="" />
+                        </div>
+                        <div class="form-group input-variable">
+                            <h2>CPI (100=1984 dollars)</h2>
+                            <input ng-model="cpi" type="email" class="form-control" placeholder="CPI *" value="" />
+                        </div>
+                        <div class="form-group input-variable">
+                            <h2>Median Home Price ($)</h2>
+                            <input ng-model="medHome" type="text" class="form-control" placeholder="Median Home Price *" value="" />
+                        </div>
+                        <div class="form-group input-variable">
+                            <h2>Fed 10 Year Yield (%)</h2>
+                            <input ng-model="fed10Y" type="text" class="form-control" placeholder="Fed 10 Year Yield *" value="" />
+                        </div>
+                        <button type="button" ng-click="LinReg()" class="btn btn-block btn-primary">Send</button>
+                    </div>
+            </div>
+        </div>
+        
+    </div>
+
 </div>

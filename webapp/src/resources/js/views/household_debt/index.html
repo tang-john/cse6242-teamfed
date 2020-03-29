@@ -7,9 +7,10 @@
 	<script src="../lib/d3-scale-chromatic.v1.min.js"></script>
 	<script src="../lib/d3-simple-slider.min.js"></script>
 	<script src="../lib/d3-tip.min.js"></script>
+	<link rel='stylesheet' href='../../../css/styles.css'>
 	<style>
 	.states path {
-  stroke: #000;
+  stroke: #ffffff;
   stroke-linejoin: round;
 }
 		
@@ -23,8 +24,8 @@
 
 	
 	var margin = {top: 50, right: 50, bottom: 100, left: 75};
-	var width = 1024 - margin.left - margin.right,
-    height = 700 - margin.top - margin.bottom;
+	var width = 700 - margin.left - margin.right,
+    height = 650 - margin.top - margin.bottom;
 	
 	
 	
@@ -125,7 +126,7 @@
 		
 		svg.append("path")
 		.attr("class","line")
-		.attr("stroke","black")
+		.attr("stroke","white")
 		.attr("fill","none")
 		.datum(hh_debt) // 10. Binds data to the line 
 		.attr("d", line); // 11. Calls the line generator
@@ -135,14 +136,14 @@
 		svg.append("text")
 		.attr("x",xScale(last_hhdebt.Date)-10)
 		.attr("y",yScale(last_hhdebt.HHDebt)+5)
-		.attr("stroke","black")
+		.attr("stroke","white")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Household Debt")
 		
 		svg.append("path")
 		.attr("class","line")
-		.attr("stroke","black")
+		.attr("stroke","white")
 		.attr("fill","none")
 		.datum(sloas) // 10. Binds data to the line 
 		.attr("d", line_sloas); // 11
