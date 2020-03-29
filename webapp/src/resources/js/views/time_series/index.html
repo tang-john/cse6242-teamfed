@@ -37,8 +37,8 @@
 	
 	var gdpParse = function(d) {
 		d.date = dateParse(d.date);
-		d.gdp = parseFloat(d.gdp);
-		d.real_gdp = parseFloat(d.real_gdp);
+		d.gdp = parseFloat(d.gdp)/1000;
+		d.real_gdp = parseFloat(d.real_gdp)/1000;
 		d.cpi = parseFloat(d.cpi);
 		return d;
 		
@@ -94,12 +94,12 @@
 		.datum(gdp_filt) // 10. Binds data to the line 
 		.attr("d", line); // 11. Calls the line generator 
 		
-		svg.append("g").call(d3.axisLeft(yScale).tickFormat(d3.format(",.0f")));
+		svg.append("g").call(d3.axisLeft(yScale).tickFormat(d3.format(",.1f")));
 	svg.append("g")
 		.attr("transform", "translate(0," + height + ")")
 		.call(d3.axisBottom(xScale));
 			
-			svg.append("text").text("$ (Billions)").attr("x",-50).attr("y",-10).attr("font-size","10pt").attr("color","white");
+			svg.append("text").text("$ (Trillions)").attr("x",-50).attr("y",-10).attr("font-size","10pt").attr("color","white");
 			
 			
 		return svg;
@@ -125,7 +125,7 @@
 		.attr("stroke","none")
 		.attr("r",4).attr("cx",0).attr("cy",0);
 		
-		info.append("rect").attr("x",4).attr("y",0).attr("width",200).attr("height",75).attr("fill","rgba(255,255,255,0.85)");
+		info.append("rect").attr("x",4).attr("y",0).attr("width",200).attr("height",75).attr("fill","rgba(0,0,0,0.5)");
 		info.append("text").attr("class","t1");
 		info.append("text").attr("class","t2");
 		info.append("text").attr("class","t3");
@@ -143,7 +143,7 @@
 
 			base.select(".info").style("display","block").attr("transform",`translate(${x},${y})`)
 			base.select(".t1").attr("x",5).attr("y",20).text(
-				`GDP: $${Math.round(real?point.real_gdp:point.gdp).toLocaleString()}B`);
+				`GDP: $${(real?point.real_gdp:point.gdp).toLocaleString()}T`);
 			base.select(".t2").attr("x",5).attr("y",35).text(
 			`Date: ${d3.timeFormat("%B %Y")(point.date)}`);
 			var type = real ? "real_gdp" : "gdp";				

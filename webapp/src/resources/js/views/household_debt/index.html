@@ -153,7 +153,7 @@
 		svg.append("text")
 		.attr("x",xScale(last_sloas.DATE)-10)
 		.attr("y",yScale(last_sloas.SLOAS)-5)
-		.attr("stroke","black")
+		.attr("stroke","white")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Student Loan Debt")
@@ -170,7 +170,7 @@
 		
 								svg.append("path")
 		.attr("class","line")
-		.attr("stroke","blue")
+		.attr("stroke","tan")
 		.attr("fill","none")
 		.datum(debt_gdp) // 10. Binds data to the line 
 		.attr("d", line_debt_gdp); // 11. Calls the line generator 
@@ -180,14 +180,14 @@
 		svg.append("text")
 		.attr("x",xScale(last_debt_gdp.DATE))
 		.attr("y",y2Scale(last_debt_gdp.debt_to_gdp)-20)
-		.attr("stroke","blue")
+		.attr("stroke","tan")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Debt to GDP")
 		
 									svg.append("path")
 		.attr("class","line")
-		.attr("stroke","blue")
+		.attr("stroke","tan")
 		.attr("fill","none")
 		.datum(debt_inc) // 10. Binds data to the line 
 		.attr("d", line_debt_inc); // 11. Calls the line generator 
@@ -197,7 +197,7 @@
 		svg.append("text")
 		.attr("x",xScale(last_debt_inc.Year)-10)
 		.attr("y",y2Scale(last_debt_inc.debt_to_inc)+5)
-		.attr("stroke","blue")
+		.attr("stroke","tan")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Debt to Income")
@@ -209,7 +209,7 @@
 		
 		svg.append("g")
 		.attr("transform",`translate(${width},0)`)
-		.attr("stroke","blue")
+		.attr("stroke","tan")
 		.call(d3.axisRight(y2Scale).ticks(8));
 		
 		svg.append("text")

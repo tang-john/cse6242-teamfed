@@ -49,7 +49,7 @@
         <div class="col-md-3 well chart-button chart-button-household-debt" ng-click="chart='household_debt'">
             <div class="chart-button-row-body">
                 <h2>Household Debt</h2>
-                <h2>5%)</h2>
+                <h2>5%</h2>
             </div>
         </div>
     </div>
@@ -57,7 +57,9 @@
         <div class="col-md-8 well chart-well">
             <div class="chart-well-header">
                 <div class="chart-well-head-row">
-                    <div class="chart-well-title">Gross Domestic Product | Chart</div>
+                    <div class="chart-well-title"><span ng-show="chart=='time_series'">Gross Domestic Product</span>
+						<span ng-show="chart=='student_loans'">Student Loans</span>
+						<span ng-show="chart=='household_debt'">Household Debt</span> | Chart</div>
                     <div class="chart-well-tools">
                         <a href="#" class="btn chart-tool">
                             <span class="btn-label">
@@ -84,7 +86,7 @@
             <div class="row well chart-button chart-button-prediction">
                 <div class="chart-button-row-body">
                     <h2>Prediction</h2>
-                    <h2>{{result}} ($T)</h2>
+                    <h2 ng-hide="result==''" ng-style="resStyle">{{(result*1000000000000) | currency}}</h2>
                 </div>
             </div>
             <div class="row well chart-button chart-button-prediction">
@@ -92,25 +94,27 @@
                     <h1 class="input-variable-header-title">Input Variables</h1>
                 </div>
                 <div class="row register-form">
+					<form ng-submit="LinReg()">
                     <div class="col-md-12">
                         <div class="form-group input-variable">
                             <h2>GDP ($B)</h2>
-                            <input ng-model="gdp" type="text" class="form-control" placeholder="GDP *" value="" />
+                            <input ng-change="dirty()" ng-model="gdp" type="number" min=0 step=0.001 max=100000 required class="form-control" placeholder="GDP *" value="" />
                         </div>
                         <div class="form-group input-variable">
                             <h2>CPI (100=1984 dollars)</h2>
-                            <input ng-model="cpi" type="email" class="form-control" placeholder="CPI *" value="" />
+                            <input ng-change="dirty()" ng-model="cpi" type="number"  min=0 max=500 step=0.1 required class="form-control" placeholder="CPI *" value="" />
                         </div>
                         <div class="form-group input-variable">
                             <h2>Median Home Price ($)</h2>
-                            <input ng-model="medHome" type="text" class="form-control" placeholder="Median Home Price *" value="" />
+                            <input ng-change="dirty()" ng-model="medHome" type="number" min=0 max=1000000 required class="form-control" placeholder="Median Home Price *" value="" />
                         </div>
                         <div class="form-group input-variable">
                             <h2>Fed 10 Year Yield (%)</h2>
-                            <input ng-model="fed10Y" type="text" class="form-control" placeholder="Fed 10 Year Yield *" value="" />
+                            <input ng-change="dirty()" ng-model="fed10Y" type="number" min=-10 max=15 step=0.01 required class="form-control" placeholder="Fed 10 Year Yield *" value="" />
                         </div>
-                        <button type="button" ng-click="LinReg()" class="btn btn-block btn-primary">Send</button>
+                        <input type="submit" class="btn btn-block btn-primary" value="Send">
                     </div>
+					</form>
             </div>
         </div>
         

@@ -4,15 +4,22 @@ angular.module('TeamFed.LandingPageController', []).
 
 	$scope.respSuccess = false;
 	$scope.result = "";
+	$scope.resStyle = "";
 	
 	$scope.gdp = 10000;
 	$scope.cpi = 150;
 	$scope.medHome = 150000;
 	$scope.fed10Y = 5;
+	
+	$scope.dirty = function() {
+		$scope.resStyle = {'font-style':'italic'};
+	}
+	
 
 
       // $scope.linRegResponse = "";
       $scope.LinReg = function () {
+		  
 		  $scope.respSuccess = false;
 	
         // console.log($scope.user);
@@ -28,6 +35,7 @@ angular.module('TeamFed.LandingPageController', []).
                   $scope.linRegResponse = data
 				$scope.respSuccess = true;
 					var res = JSON.parse(data).Results.output1.value.Values[0];
+					$scope.resStyle = {color:'blue','font-weight':'bold','font-size':'12pt'};
 					$scope.result = res[res.length-1];
                 }
             })
