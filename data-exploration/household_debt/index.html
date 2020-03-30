@@ -60,19 +60,26 @@
 	 d.debt_to_inc = parseFloat(d.debt_to_inc)/100;
 	 return d;
  } 
+ 
+ var csParse = function(d) {
+	 d.date = dateParse(d.date);
+	 d.indexvalue = parseFloat(d.indexvalue)/100;
+	 return d;
+ }
 	
 	
 
 	var promises = [d3.csv('data/hh_debt_trillions.csv',debtParse),d3.csv("data/CMDEBT.csv",cmdebtParse),
-				   d3.csv('data/HDTGPDUSQ163N.csv',debtgdpParse),d3.csv('data/debt_to_inc_oecd.csv',debtIncParse)];
+				   d3.csv('data/HDTGPDUSQ163N.csv',debtgdpParse),d3.csv('data/debt_to_inc_oecd.csv',debtIncParse),
+				   d3.csv('data/CSUSHPISA.csv',csParse)];
 
 	
-	Promise.all(promises).then(function([hh_debt,cm_debt,debt_gdp,debt_inc]) {
+	Promise.all(promises).then(function([hh_debt,cm_debt,debt_gdp,debt_inc,csi]) {
 console.log(hh_debt);
 console.log(cm_debt);
 
-		
-		cm_debt = cm_debt.filter(d=>!isNaN(d.CMDEBT));
+		var minDate = d3.min(csi,d=>d.date);
+		cm_debt = cm_debt.filter(d=>!isNaN(d.CMDEBT)).filter(d=>d.DATE.getFullYear()>=minDate.getFullYear());
 		
 		var base = d3.select("body").insert("svg",".description")
     .attr("width", width + margin.left + margin.right)
@@ -84,10 +91,12 @@ console.log(cm_debt);
 		
 	var xScale,yScale,y2Scale;
 		
-		xScale = d3.scaleTime().domain([d3.min(debt_inc,d=>d.Year),d3.max(hh_debt,d=>d.Date)]).range([0,width]);
+		xScale = d3.scaleTime().domain([minDate,d3.max(hh_debt,d=>d.Date)]).range([0,width]);
 		yScale = d3.scaleLinear().domain([0,d3.max(cm_debt,d=>d.CMDEBT)]).range([height,0]);
 		
-		y2Scale = d3.scaleLinear().domain([d3.min(debt_gdp,d=>d.debt_to_gdp),d3.max(debt_inc,d=>d.debt_to_inc)]).range([height,0]);
+		
+		//([d3.min(debt_gdp,d=>d.debt_to_gdp),d3.max(debt_inc,d=>d.debt_to_inc)]
+		y2Scale = d3.scaleLinear().domain([0,d3.max(csi,d=>d.indexvalue)]).range([height,0]);
 		
 		var line = d3.line()
 		.x(function(d, i) { return xScale(d.Date); }) // set the x values for the line generator
@@ -109,6 +118,11 @@ console.log(cm_debt);
 		.x(function(d, i) { return xScale(d.Year); }) // set the x values for the line generator
 		.y(function(d) { return y2Scale(d.debt_to_inc); }) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
+					
+						var line_csi =  d3.line()
+		.x(function(d, i) { return xScale(d.date); }) // set the x values for the line generator
+		.y(function(d) { return y2Scale(d.indexvalue); }) // set the y values for the line generator 
+		.curve(d3.curveMonotoneX) // apply smoothing to the line
 		
 		svg.append("path")
 		.attr("class","line")
@@ -119,24 +133,24 @@ console.log(cm_debt);
 		
 				var last_hhdebt = hh_debt[hh_debt.length-1];
 		
-		svg.append("text")
+		/*svg.append("text")
 		.attr("x",xScale(last_hhdebt.Date)-10)
-		.attr("y",yScale(last_hhdebt.HHDebt)+5)
+		.attr("y",yScale(last_hhdebt.HHDebt)+55)
 		.attr("stroke","black")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
-		.text("Household Debt")
+		.text("Household Debt")*/
 		
-			/*	svg.append("path")
+				svg.append("path")
 		.attr("class","line")
 		.attr("stroke","black")
 		.attr("fill","none")
 		.datum(cm_debt) // 10. Binds data to the line 
 		.attr("d", line_cm); // 11. Calls the line generator 
-		*/
+		
 
 		
-								svg.append("path")
+		/*						svg.append("path")
 		.attr("class","line")
 		.attr("stroke","blue")
 		.attr("fill","none")
@@ -169,6 +183,14 @@ console.log(cm_debt);
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Debt to Income")
+		*/
+		
+		svg.append("path")
+		.attr("class","line")
+		.attr("stroke","orange")
+		.attr("fill","none")
+		.datum(csi) // 10. Binds data to the line 
+		.attr("d", line_csi); // 11. Calls the line generator 
 		
 		svg.append("g").call(d3.axisLeft(yScale));
 	svg.append("g")
@@ -178,7 +200,7 @@ console.log(cm_debt);
 		svg.append("g")
 		.attr("transform",`translate(${width},0)`)
 		.attr("stroke","blue")
-		.call(d3.axisRight(y2Scale).ticks(8));
+		.call(d3.axisRight(y2Scale).ticks(5));
 		
 		svg.append("text")
 		.attr("x",5)

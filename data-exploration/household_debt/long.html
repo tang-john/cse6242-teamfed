@@ -1,0 +1,152 @@
+<html>
+<head>
+	<meta charset='utf-8' />
+	<title>Household Debt and Related Measures</title>
+	<script src="../lib/d3.v5.min.js"></script>
+	<script src="../lib/topojson.v2.min.js"></script>
+	<script src="../lib/d3-scale-chromatic.v1.min.js"></script>
+	<script src="../lib/d3-simple-slider.min.js"></script>
+	<script src="../lib/d3-tip.min.js"></script>
+	<style>
+	.states path {
+  stroke: #000;
+  stroke-linejoin: round;
+}
+		
+	
+		
+	</style>
+</head>
+<body>
+<script>
+
+
+	
+	var margin = {top: 50, right: 50, bottom: 100, left: 75};
+	var width = 1024 - margin.left - margin.right,
+    height = 700 - margin.top - margin.bottom;
+	
+	
+	
+	
+
+	
+	var dateParse = d3.timeParse("%m/%d/%Y");
+	var yearParse = d3.timeParse("%Y");
+	
+	
+	var cmdebtParse = function(d) {
+		d.DATE =  dateParse(d.DATE);
+		d.CMDEBT = parseFloat(d.CMDEBT)/1000;
+		return d;
+	}
+	
+
+	var homeParse = function(d) {
+		d.DATE =  dateParse(d.DATE);
+		d.MSPUS = parseFloat(d.MSPUS)/1000;
+		return d;
+	}
+	
+
+
+	
+
+	var promises = [d3.csv('data/MSPUS.csv',homeParse),d3.csv("data/CMDEBT.csv",cmdebtParse),];
+
+	
+	Promise.all(promises).then(function([med_home,cm_debt]) {
+
+		cm_debt = cm_debt.filter(d=>!isNaN(d.CMDEBT))
+		
+		var base = d3.select("body").insert("svg",".description")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+		
+		var svg = base.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+		
+	var xScale,yScale,y2Scale;
+		
+		xScale = d3.scaleTime().domain(d3.extent(cm_debt,d=>d.DATE)).range([0,width]);
+		yScale = d3.scaleLinear().domain([0,d3.max(cm_debt,d=>d.CMDEBT)]).range([height,0]);
+		
+	
+		y2Scale = d3.scaleLinear().domain([0,d3.max(med_home,d=>d.MSPUS)]).range([height,0]);
+		
+		var line_cm = d3.line()
+		.x(function(d, i) { return xScale(d.DATE); }) // set the x values for the line generator
+		.y(function(d) { return yScale(d.CMDEBT); }) // set the y values for the line generator 
+		.curve(d3.curveMonotoneX) // apply smoothing to the line
+		
+		var line_home = d3.line()
+		.x(function(d, i) { return xScale(d.DATE); }) // set the x values for the line generator
+		.y(function(d) { return y2Scale(d.MSPUS); }) // set the y values for the line generator 
+		.curve(d3.curveMonotoneX) // apply smoothing to the line
+		
+	
+		
+
+		
+	
+		
+				svg.append("path")
+		.attr("class","line")
+		.attr("stroke","black")
+		.attr("fill","none")
+		.datum(cm_debt) // 10. Binds data to the line 
+		.attr("d", line_cm); // 11. Calls the line generator 
+		
+
+		
+		
+		svg.append("path")
+		.attr("class","line")
+		.attr("stroke","orange")
+		.attr("fill","none")
+		.datum(med_home) // 10. Binds data to the line 
+		.attr("d", line_home); // 11. Calls the line generator 
+		
+		
+		svg.append("g").call(d3.axisLeft(yScale));
+	svg.append("g")
+		.attr("transform", "translate(0," + height + ")")
+		.call(d3.axisBottom(xScale));
+		
+		svg.append("g")
+		.attr("transform",`translate(${width},0)`)
+		.call(d3.axisRight(y2Scale));
+		
+		svg.append("text")
+		.attr("x",5)
+		.text("$(Trillions)")
+		
+		svg.append("text")
+		.attr("x",width)
+		.attr("text-anchor","end")
+		.text("$(Thousands)")
+		
+	/*	svg.append("text")
+		.attr("font-size","14pt")
+		.attr("text-anchor","middle")
+		.attr("x",width/2)
+		.attr("y",0)
+		.text("Debt Metrics in Trillions of $"); */
+
+		
+	
+	
+		
+		
+	});
+	
+	
+		
+	
+
+
+
+</script>
+</body>
+</html>
