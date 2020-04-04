@@ -16,12 +16,12 @@ res.sendFile(path.join(__dirname, 'src', 'index.html'))
 });
 
 app.post('/mlWebservice', function (req, res) {
-    console.log("Request Body: " +req.body)
+    console.log("Request Body: " +JSON.stringify(req.body))
     var options = {
         'method': 'POST',
-        'url': 'https://ussouthcentral.services.azureml.net/workspaces/62ecd3c0feeb40cd9081f5c943c0c815/services/977052dee060420381fabb468e9fb280/execute?api-version=2.0&details=true',
+        'url': 'https://ussouthcentral.services.azureml.net/workspaces/62ecd3c0feeb40cd9081f5c943c0c815/services/b8a0b8a6f66e477194880d34b7817178/execute?api-version=2.0&details=true',
         'headers': {
-          'Authorization': 'Bearer V3LxL5rdLW072KWXTA6060WVw7slqank1wWE6ZIE7NNbwB+XhC57rIwPwGHCuwLfO6DVoeQcwISAKTZ/npDeIg==',
+          'Authorization': 'Bearer D0GlhssiqSt3GhG6ajq7W0ynBHhaDFWiL2cARJuL32y2GKZ17beULa+f+TzO5C2T/HOlsE4JoYHOYFxSDZkVyg==',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(req.body)

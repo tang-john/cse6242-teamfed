@@ -85,8 +85,8 @@
         <div class="col-md-3 ">
             <div class="row well chart-button chart-button-prediction">
                 <div class="chart-button-row-body">
-                    <h2>Prediction</h2>
-                    <h2 ng-hide="result==''" ng-style="resStyle">{{(result*1000000000000) | currency}}</h2>
+                    <h2>Prediction ($Trillions)</h2>
+                    <h2 ng-hide="result==''" ng-style="resStyle">{{(result) | currency : "" : 3}}</h2>
                 </div>
             </div>
             <div class="row well chart-button chart-button-prediction">
@@ -97,20 +97,40 @@
 					<form ng-submit="LinReg()">
                     <div class="col-md-12">
                         <div class="form-group input-variable">
-                            <h2>GDP ($B)</h2>
-                            <input ng-change="dirty()" ng-model="gdp" type="number" min=0 step=0.001 max=100000 required class="form-control" placeholder="GDP *" value="" />
+                            <h2>Unemployment Rate (%)</h2>
+                            <input ng-change="dirty()" ng-model="unemp" type="number" min=0 step=0.1 max=100 required class="form-control" placeholder="Unemployment Rate *" value="" />
                         </div>
                         <div class="form-group input-variable">
-                            <h2>CPI (100=1984 dollars)</h2>
+                            <h2>Consumer Price Index (100=1984)</h2>
                             <input ng-change="dirty()" ng-model="cpi" type="number"  min=0 max=500 step=0.1 required class="form-control" placeholder="CPI *" value="" />
                         </div>
+						<div class="form-group input-variable">
+                            <h2>Producer Price Index (100=1982)</h2>
+                            <input ng-change="dirty()" ng-model="ppi" type="number"  min=0 max=500 step=0.1 required class="form-control" placeholder="PPI *" value="" />
+                        </div>
+						  <div class="form-group input-variable">
+                            <h2>Rent Price Index (100=Dec. 1982)</h2>
+                            <input ng-change="dirty()" ng-model="consumerRent" type="number"  min=0 max=1000 step=0.1 required class="form-control" placeholder="Rent Price Index *" value="" />
+                        </div>
                         <div class="form-group input-variable">
-                            <h2>Median Home Price ($)</h2>
-                            <input ng-change="dirty()" ng-model="medHome" type="number" min=0 max=1000000 required class="form-control" placeholder="Median Home Price *" value="" />
+                            <h2>Home Price Index (100=Jan. 2000)</h2>
+                            <input ng-change="dirty()" ng-model="caseShiller" type="number" min=0 max=1000 step=0.1 required class="form-control" placeholder="Case Shiller Index *" value="" />
                         </div>
                         <div class="form-group input-variable">
                             <h2>Fed 10 Year Yield (%)</h2>
                             <input ng-change="dirty()" ng-model="fed10Y" type="number" min=-10 max=15 step=0.01 required class="form-control" placeholder="Fed 10 Year Yield *" value="" />
+                        </div>
+						   <div class="form-group input-variable">
+                            <h2>Fed 30 Year Yield (%)</h2>
+                            <input ng-change="dirty()" ng-model="fed30Y" type="number" min=-10 max=15 step=0.01 required class="form-control" placeholder="Fed 30 Year Yield *" value="" />
+                        </div>
+						  <div class="form-group input-variable">
+                            <h2>Fed 3 Month Yield (%)</h2>
+                            <input ng-change="dirty()" ng-model="fed3M" type="number" min=-10 max=25 step=0.01 required class="form-control" placeholder="Fed 30 Year Yield *" value="" />
+                        </div>
+						  <div class="form-group input-variable">
+                            <h2>German 10 Year Yield (%)</h2>
+                            <input ng-change="dirty()" ng-model="ger10Y" type="number" min=-10 max=25 step=0.01 required class="form-control" placeholder="German 10 Year Yield *" value="" />
                         </div>
                         <input type="submit" class="btn btn-block btn-primary" value="Send">
                     </div>
