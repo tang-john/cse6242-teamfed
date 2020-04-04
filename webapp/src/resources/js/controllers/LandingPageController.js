@@ -31,7 +31,7 @@ angular.module('TeamFed.LandingPageController', []).
         $http({
           url: '/mlWebservice',
           method: "POST",
-          data: JSON.stringify({"Inputs":{"input1":{"ColumnNames":["caseShillerIndex","cpi","fed10YearYield","fed30YearYield","fed3MonthYield","ppi","consumerRent","unemploymentRate","german10Yr"],"Values":[[$scope.caseShiller,$scope.cpi,$scope.fed10Y,$scope.fed30Y,$scope.fed3M,$scope.ppi,$scope.consumerRent,$scope.unemp,$scope.ger10Y]]}},"GlobalParameters":{}})
+          data: JSON.stringify({"Inputs":{"input1":{"ColumnNames":["caseShillerIndex","cpi","fed10YearYield","fed30YearYield","ppi","consumerRent","unemploymentRate","german10Yr"],"Values":[[$scope.caseShiller,$scope.cpi,$scope.fed10Y,$scope.fed30Y,$scope.ppi,$scope.consumerRent,$scope.unemp,$scope.ger10Y]]}},"GlobalParameters":{}})
         })
         // $http.post('/mlWebservice', JSON.stringify({"Inputs":{"Data":{"ColumnNames":["cpi","gdp","medianHomePrice","fed10YearYield"],"Values":[["0","0","0","0"],["0","0","0","0"]]}},"GlobalParameters":{}}))
             .success(function (data, status) {

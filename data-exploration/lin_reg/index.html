@@ -23,9 +23,9 @@
 
 
 	
-	var margin = {top: 50, right: 50, bottom: 150, left: 75};
-	var width = 700 - margin.left - margin.right,
-    height = 850 - margin.top - margin.bottom;
+	var margin = {top: 50, right: 250, bottom: 50, left: 50};
+	var width = 950 - margin.left - margin.right,
+    height = 750 - margin.top - margin.bottom;
 	
 	
 	
@@ -64,7 +64,7 @@
 		
 		model = model[0];
 		
-		var colors = d3.schemePaired;
+		var colors = d3.schemeCategory10;
 	
 		
 			var predict = function(d) {
@@ -122,9 +122,20 @@ console.log(predictions);
 		.attr("d", line_pred); // 11. Calls the line generator
 		
 			
-		var i = 0;
+		var sorted = [];
 		for(var x in model) {
-			if(x=="Bias") {
+			var endVal = 0;
+			if(x=="Bias") endVal = model.Bias;
+			else endVal = data[data.length-1][x]*model[x];
+			var obj = {key:x,val:endVal};
+			sorted.push(obj);
+		}
+		sorted = sorted.sort((a,b)=>Math.sign(b.val-a.val)).map(x=>x.key);
+		
+
+		for(var i in sorted) {
+			var key = sorted[i];
+			if(key=="Bias") {
 		
 		svg.append("line")
 		.attr("class","line")
@@ -134,11 +145,13 @@ console.log(predictions);
 		.attr("x2",xScale(data.length-1))
 		.attr("y1",yScale(model.Bias))
 		.attr("y2",yScale(model.Bias));
+				
+	
 			}
 			else {
 			var line = d3.line()
 		.x(function(d, i) { return xScale(i); }) // set the x values for the line generator
-		.y(function(d) { return yScale(d[x]*model[x]); }) // set the y values for the line generator 
+		.y(function(d) { return yScale(d[key]*model[key]); }) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
 		
 		svg.append("path")
@@ -146,26 +159,30 @@ console.log(predictions);
 		.attr("stroke",colors[i])
 		.attr("fill","none")
 		.datum(data) // 10. Binds data to the line 
-		.attr("d", line); 
+		.attr("d", line);
+				
+		
+
 			}
 			
 			svg.append("rect")
 			.attr("fill",colors[i])
-			.attr("x",i*50)
-			.attr("y",height+25)
+			.attr("x",width+25)
+			.attr("y",i*25)
 			.attr("width",25)
 			.attr("height",10);
 			
 			svg.append("text")
-			.attr("text-anchor","end")
-			.attr("font-size","10pt")
-			.attr("transform",`rotate(-45,${i*50+12},${height+40})`)
-			.attr("x",i*50+12)
-			.attr("y",height+40)
-			.text(x);
+			.attr("x",width+50+12)
+			.attr("dominant-baseline","middle")
+			.attr("y",i*25+5)
+			.text(key);
 			
-			i++;
+	
 		}
+		
+
+		
 		
 
 		svg.append("g").call(d3.axisLeft(yScale));
