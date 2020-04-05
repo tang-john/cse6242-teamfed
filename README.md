@@ -4,8 +4,8 @@ Team Members
 --------------------
 Our awesome team memebers are listed in alphabetical order. Every one had an equal amount of work and contribution.
 
-| Name | Role
-|--------------------------|--------------------------------|-------------------------------------------------
+| Name                     | Role
+|--------------------------|---------------------------------------------------------------------------------
 | Abdulgader, Khwala | Data analyst, LaTeX report writer 
 | Adeosun, Oluwagbemiga | Full stack developer (Angular JS, Docker)
 | Chavez, Jason | Microsoft Azure Machine Learning Stud, LaTeX report writer 
