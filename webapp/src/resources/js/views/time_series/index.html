@@ -184,6 +184,7 @@
 		}
 		
 		document.body.onwheel = function(e) {
+			e.preventDefault();
 			if(minYear==startYear && e.deltaY > 0) return;
 			if(minYear==endYear && e.deltaY < 0) return;
 			wheelDelta += e.deltaY;

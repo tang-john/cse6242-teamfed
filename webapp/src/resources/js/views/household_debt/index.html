@@ -19,13 +19,14 @@
 	</style>
 </head>
 <body>
+<div class="description" style="color:white">Click to Toggle Tooltip</div>
 <script>
 
 
 	
-	var margin = {top: 50, right: 50, bottom: 100, left: 75};
+	var margin = {top: 50, right: 75, bottom: 50, left: 20};
 	var width = 700 - margin.left - margin.right,
-    height = 650 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 	
 	
 	
@@ -78,6 +79,8 @@
 
 	
 	Promise.all(promises).then(function([hh_debt,cm_debt,debt_gdp,debt_inc,sloas]) {
+		
+		var tip = false;
 
 		cm_debt = cm_debt.filter(d=>!isNaN(d.CMDEBT));
 		
@@ -224,7 +227,68 @@
 		.text("Debt Metrics in Trillions of $"); */
 
 		
-	
+	var info = base.append("g")
+		.attr("class","info").style("display","none");
+		
+			info.append("circle")
+		.attr("class","pointer")
+		.attr("fill","rgba(255,0,0,0.6)")
+		.attr("stroke","none")
+		.attr("r",4).attr("cx",0).attr("cy",0);
+		
+		info.append("rect").attr("x",4).attr("y",0).attr("width",200).attr("height",75).attr("fill","rgba(0,0,0,0.5)").attr("class","r");
+		info.append("text").attr("class","t1");
+		info.append("text").attr("class","t2");
+		info.append("text").attr("class","t3");
+		
+				var infoIndex = 0;
+		
+		var updateInfo = function() {
+			var point = hh_debt[infoIndex];
+			var prevPoint = hh_debt[infoIndex-1];
+		
+							var x = xScale(point.Date)+margin.left;
+							var y = yScale(point.HHDebt)+margin.top;
+
+			
+			var xPos = x <= width/2 ? x : x - 210;
+			var circX = x<=width/2 ? 0 : 210;
+			base.select(".pointer").attr("cx",circX);
+			base.select(".info").style("display","block").attr("transform",`translate(${xPos},${y})`)
+			base.select(".t1").attr("x",5).attr("y",20).text(
+				`Household Debt: $${point.HHDebt.toLocaleString()}T`);
+			base.select(".t2").attr("x",5).attr("y",35).text(
+			`Date: ${d3.timeFormat("%B %Y")(point.Date)}`);				
+			base.select(".t3").attr("x",5).attr("y",50).text("Qtr. Change: "+(prevPoint?
+			`${((point.HHDebt-prevPoint.HHDebt)/prevPoint.HHDebt*100).toFixed(2)}%`:"N/A"));
+		}
+		
+						var scanChart = function(e) {
+							if(!tip) return;
+			var date = xScale.invert(e.x-margin.left)
+			var minDate = d3.min(hh_debt,d=>d.Date);
+			if(date.valueOf() < minDate.valueOf()) date = minDate;
+			var yearData = hh_debt.filter(d=>Math.abs(d.Date.getFullYear()-date.getFullYear())<=1);
+			if(yearData.length==0) return;
+			var mDiff = yearData.map(d=>Math.abs(d.Date.valueOf()-date.valueOf()));
+			var minDiff = mDiff.reduce((a,b)=>Math.min(a,b));
+			var pointIndex = mDiff.indexOf(minDiff);
+			var point = yearData[pointIndex];
+			infoIndex = hh_debt.indexOf(point);
+			updateInfo();
+		}
+		
+			base.node().onmousemove = scanChart;
+			base.node().onclick = function(e) {
+				if(!tip) {
+					tip = true;
+					scanChart(e);
+				}
+				else {
+					tip = false;
+					base.select(".info").style("display","none");
+				}
+			};
 	
 		
 		

@@ -24,14 +24,15 @@
 	</style>
 </head>
 <body>
+	<div class="description" style="color:white">Use the scroll wheel to change the data.</div>
 <!-- Use scroll wheel to change maps. -->
 <script>
 
 
 	
-	var margin = {top: 20, right: 100, bottom: 30, left: 75};
+	var margin = {top: 20, right: 100, bottom: 30, left: 200};
 	var width = 700 - margin.left - margin.right,
-    height = 650 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 	
 	
 	
@@ -44,7 +45,7 @@
 	
 		var path = d3.geoPath().projection(projection);
 	
-	var base = d3.select("body").append("svg")
+	var base = d3.select("body").insert("svg",".description")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
  	var svg = base.append("g")
@@ -129,7 +130,7 @@
 	  .on('mouseover',tip.show)
 	  .on('mouseout',tip.hide);
 		
-		var legend = states.append("g").attr("transform",`translate(${width/2},${height-200})`);
+		var legend = states.append("g").attr("transform",`translate(${width/2},${height-150})`);
 		for(var i = 0;i<buckets;i++) {
 			legend.append("rect").attr("x",i*50).attr("y",50).attr("width",50).attr("height",10)
 			.attr("fill",hues[i]);
@@ -176,7 +177,7 @@
 	  .on('mouseover',tip2.show)
 	  .on('mouseout',tip2.hide);
 		
-		var legend2 = states2.append("g").attr("transform",`translate(${width/2},${height-200})`);
+		var legend2 = states2.append("g").attr("transform",`translate(${width/2},${height-150})`);
 		for(var i = 0;i<buckets2;i++) {
 			legend2.append("rect").attr("x",i*50).attr("y",50).attr("width",50).attr("height",10)
 			.attr("fill",hues2[i]);
@@ -187,7 +188,7 @@
 	
 		
 	svg.selectAll(".Alaska").attr("transform",`translate(${width*0.2},${height*0.85}),scale(0.5)`);
-	svg.selectAll(".Hawaii").attr("transform",`translate(${width*0.75},${height*0.35})`);
+	svg.selectAll(".Hawaii").attr("transform",`translate(${width},${height*0.35})`);
 		
 		svg.select("#states2").style("display","none");
 	
@@ -212,8 +213,12 @@
 		
 		var showMap = 0;
 		
-		
+		var wheelDelta = 0;
 		document.body.onwheel = function(e) {
+			e.preventDefault();
+			wheelDelta += e.deltaY;
+			if(Math.abs(wheelDelta)<3) return;
+			wheelDelta = 0;
 			showMap = (showMap+1) % 2;
 			var hide = showMap==0 ? "#states2" : "#states";
 			var show = showMap==0 ? "#states" : "#states2";

@@ -31,29 +31,29 @@
 	<br>
     <textarea style="margin: 0px; width: 589px; height: 108px;" ng-model="linRegResponse"></textarea>
 </div> -->
-
 <div class="container main-container">
+	<div>Market data last updated: {{parseDate(marketData.Date)}}</div>
     <div class="row col-md-12 chart-button-row">
         <div class="col-md-3 well chart-button chart-button-gdp" ng-click="chart='time_series'">
             <div class="chart-button-row-body">
-                <h2>GDP</h2>
-                <h2>5%</h2>
+                <h2>GDP ($ Trillions)</h2>
+                <h2>{{marketData.GDP.toFixed(1)}}</h2>
             </div>
         </div>
         <div class="col-md-3 well chart-button chart-button-student-debt" ng-click="chart='student_loans'">
             <div class="chart-button-row-body">
-                <h2>Student Debt</h2>
-                <h2>5%</h2>
+                <h2>Student Debt  ($ Trillions)</h2>
+                <h2>{{marketData.StudentDebt.toFixed(1)}}</h2>
             </div>
         </div>
         <div class="col-md-3 well chart-button chart-button-household-debt" ng-click="chart='household_debt'">
             <div class="chart-button-row-body">
-                <h2>Household Debt</h2>
-                <h2>5%</h2>
+                <h2>Household Debt ($ Trillions)</h2>
+                <h2>{{marketData.HouseholdDebt.toFixed(1)}}</h2>
             </div>
         </div>
-    </div>
-    <div class="row col-md-12 chart-button-row">
+	</div>
+	<div class="row col-md-12 chart-button-row">
         <div class="col-md-8 well chart-well">
             <div class="chart-well-header">
                 <div class="chart-well-head-row">
@@ -77,9 +77,9 @@
                 </div>
             </div>
             <div class="chart-button-row-body">
-                <iframe width="760" height="650" src="resources/js/views/time_series" ng-show="chart=='time_series'"></iframe>
-                <iframe width="760" height="650" src="resources/js/views/student_loans" ng-show="chart=='student_loans'" ></iframe>
-                <iframe width="760" height="650" src="resources/js/views/household_debt" ng-show="chart=='household_debt'"></iframe>
+                <iframe width="760" height="650" src="resources/js/views/time_series" ng-show="chart=='time_series'" scrolling="no"></iframe>
+                <iframe width="760" height="650" src="resources/js/views/student_loans" ng-show="chart=='student_loans'" scrolling="no" ></iframe>
+                <iframe width="760" height="650" src="resources/js/views/household_debt" ng-show="chart=='household_debt'" scrolling="no"></iframe>
             </div>
         </div>
         <div class="col-md-3 ">
@@ -136,4 +136,5 @@
         
     </div>
 
+</div>
 </div>
