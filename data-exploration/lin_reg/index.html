@@ -38,7 +38,8 @@
 
 	var dataParse = function(d) {
 		for(x in d) {
-			d[x] = parseFloat(d[x]);
+			if(x=="Date") d[x] = dateParse(d[x]);
+			else d[x] = parseFloat(d[x]);
 		}
 		return d;
 	}
@@ -64,16 +65,18 @@
 		
 		model = model[0];
 		
+		var niceNames = {"consumerRent":"Rent Price Index","caseShillerIndex":"Home Price Index","ppi":"Producer Price Index","unemploymentRate":"Unemployment Rate","fed30YearYield":"Fed 30 Year Yield","fed10YearYield":"Fed 10 Year Yield","german10Yr":"German 10 Year Yield","Bias":"Bias","cpi":"Consumer Price Index"}
+		
 		var colors = d3.schemeCategory10;
 	
 		
 			var predict = function(d) {
 		var sum = model.Bias;
 		for(x in d) {
-			if(x=="householdDebt") continue;
+			if(x=="householdDebt" || x=="Date") continue;
 			sum += d[x]*model[x];
 		}
-				return sum;
+				return {"Date":d.Date,"predict":sum};
 		}
 	
 		
@@ -88,14 +91,57 @@
 
 console.log(predictions);
 		
+		
+		svg.append("text")
+		.attr("x",width+25)
+		.attr("y",0)
+		.attr("font-weight","bold")
+		.text("Household Debt ($T)")
+		
+		svg.append("line")
+		.attr("x1",width+25)
+		.attr("x2",width+50)
+		.attr("y1",25)
+		.attr("y2",25)
+		.attr("stroke","black")
+		.attr("stroke-dasharray","3 3")
+		.attr("stroke-width",3)
+		
+		svg.append("text")
+		.attr("x",width+62)
+		.attr("y",25)
+		.attr("dominant-baseline","middle")
+		.text("Prediction")
+		
+		svg.append("line")
+		.attr("x1",width+25)
+		.attr("x2",width+50)
+		.attr("y1",50)
+		.attr("y2",50)
+		.attr("stroke","blue")
+		.attr("stroke-width",3)
+		
+		svg.append("text")
+		.attr("x",width+62)
+		.attr("y",50)
+		.attr("dominant-baseline","middle")
+		.text("Actual")
+		
+		svg.append("text")
+		.attr("x",width+25)
+		.attr("y",125)
+		.attr("font-weight","bold")
+		.text("Predictors")
+		
 	var xScale,yScale;
 		
-		xScale = d3.scaleLinear().domain([0,data.length-1]).range([0,width]);
-		yScale = d3.scaleLinear().domain([-25,25]).range([height,0]);
+		xScale = d3.scaleTime().domain(d3.extent(data,d=>d.Date)).range([0,width]);
+		yScale = d3.scaleLinear().domain([0,25]).range([height*3/4,0]);
+		y2Scale = d3.scaleLinear().domain([-25,0]).range([height,height*3/4])
 		
 			
 		var line_debt = d3.line()
-		.x(function(d, i) { return xScale(i); }) // set the x values for the line generator
+		.x(function(d, i) { return xScale(d.Date); }) // set the x values for the line generator
 		.y(function(d) { return yScale(d.householdDebt); }) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
 		
@@ -108,8 +154,8 @@ console.log(predictions);
 		.attr("d", line_debt); 
 		
 				var line_pred = d3.line()
-		.x(function(d, i) { return xScale(i); }) // set the x values for the line generator
-		.y(function(d) { return yScale(d); }) // set the y values for the line generator 
+		.x(function(d, i) { return xScale(d.Date); }) // set the x values for the line generator
+		.y(function(d) { return yScale(d.predict); }) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
 		
 		svg.append("path")
@@ -136,22 +182,28 @@ console.log(predictions);
 		for(var i in sorted) {
 			var key = sorted[i];
 			if(key=="Bias") {
+				
+				var scale = model.Bias >= 0 ? yScale : y2Scale;
 		
 		svg.append("line")
 		.attr("class","line")
 		.attr("stroke",colors[i])
 		.attr("fill","none")
-		.attr("x1", xScale(0))
-		.attr("x2",xScale(data.length-1))
-		.attr("y1",yScale(model.Bias))
-		.attr("y2",yScale(model.Bias));
+		.attr("x1", 0)
+		.attr("x2",width)
+		.attr("y1",scale(model.Bias))
+		.attr("y2",scale(model.Bias));
 				
 	
 			}
 			else {
 			var line = d3.line()
-		.x(function(d, i) { return xScale(i); }) // set the x values for the line generator
-		.y(function(d) { return yScale(d[key]*model[key]); }) // set the y values for the line generator 
+		.x(function(d, i) { return xScale(d.Date); }) // set the x values for the line generator
+		.y(function(d) {
+			var val = d[key]*model[key];
+			var scale = val >=0 ? yScale : y2Scale;
+			return scale(val);
+		}) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
 		
 		svg.append("path")
@@ -168,15 +220,15 @@ console.log(predictions);
 			svg.append("rect")
 			.attr("fill",colors[i])
 			.attr("x",width+25)
-			.attr("y",i*25)
+			.attr("y",i*25+150)
 			.attr("width",25)
 			.attr("height",10);
 			
 			svg.append("text")
 			.attr("x",width+50+12)
 			.attr("dominant-baseline","middle")
-			.attr("y",i*25+5)
-			.text(key);
+			.attr("y",i*25+5+150)
+			.text(niceNames[key]);
 			
 	
 		}
@@ -186,8 +238,9 @@ console.log(predictions);
 		
 
 		svg.append("g").call(d3.axisLeft(yScale));
+		svg.append("g").call(d3.axisLeft(y2Scale))
 	svg.append("g")
-		.attr("transform", "translate(0," + height + ")")
+		.attr("transform", "translate(0," + yScale(0) + ")")
 		.call(d3.axisBottom(xScale));
 		
 	

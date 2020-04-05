@@ -20,6 +20,16 @@ angular.module('TeamFed.LandingPageController', []).
 		$scope.resStyle = {'font-style':'italic'};
 	}
 	
+	$scope.parseDate = function(s) {
+		var parts = s.split("/");
+		var date = new Date(parts[2],parts[0]-1,parts[1]);
+		return date.toLocaleDateString();
+	}
+	
+	$http.get("resources/js/views/marketData.json").success(function(data) {
+		$scope.marketData = data;
+	});
+	
 
 
       // $scope.linRegResponse = "";
