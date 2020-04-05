@@ -8,7 +8,7 @@ These data files were imported into SQLite using the custom Scala Spark code und
 | Description              | FIle                           | Source
 |--------------------------|--------------------------------|-------------------------------------------------
 | 1 Month Treasury         | GS1M.csv                       | https://fred.stlouisfed.org/series/GS1M
-| 3 Month Treasury         | GS3M.csv                       | https://fred.stlouisfed.org/series/GS3
+| 3 Month Treasury         | GS3M.csv                       | https://fred.stlouisfed.org/series/GS3M
 | 1 Year Treasury          | GS1.CSV                        | https://fred.stlouisfed.org/series/GS10
 | 10 Year Treasury         | GS10.csv                       | https://fred.stlouisfed.org/series/GS10
 | 30 Year Treasury         | GS30.csv                       | https://fred.stlouisfed.org/series/GS30
