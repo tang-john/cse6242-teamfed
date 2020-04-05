@@ -1,7 +1,17 @@
 # CSE-6242 Team Fed Project Repository
 
+Team Members
+--------------------
+Our awesome team memebers are listed in alphabetical order. Every one had an equal amount of work and contribution.
 
-dataset
+| Name | Role
+| Abdulgader, Khwala | Data analyst, LaTeX report writer 
+| Adeosun, Oluwagbemiga | Full stack developer (Angular JS, Docker)
+| Chavez, Jason | Microsoft Azure Machine Learning Stud, LaTeX report writer 
+| Kaveladze, George | Chart expert, full stack developer
+| Tang, John | Data analyst (Scala Apache Spark enthusiast), LaTeX report writer, project lead
+
+Data Set
 --------------------
 These data files were imported into SQLite using the custom Scala Spark code under the spark_scala_importer folder
 
