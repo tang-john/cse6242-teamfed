@@ -1,0 +1,101 @@
+body{
+    background: #fff;
+    color: #777 !important;
+    fill: lightgrey;
+    stroke: grey;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.main-container{
+    padding-top: 90px;
+}
+
+.chart-button-row{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 15px;
+}
+
+.chart-button{
+    cursor: pointer;
+    padding: 1.25rem;
+    border: 1px solid #e7e7e7 !important;
+    border-radius: 10px;
+}
+
+
+
+h2, .h2 {
+    font-size: 1.35rem;
+}
+
+.chart-button-row-body{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5rem!important;
+}
+
+.chart-well{
+    background: #f8f8f8;
+    padding: 1.25rem;
+    border: 0px !important;
+}
+
+.chart-well-header{
+    border-color: rgba(181, 181, 181, 0.1) !important;
+    padding: 1rem 1.25rem;
+    background-color: transparent;
+    border-bottom: 1px solid #ebecec !important;
+}
+
+.chart-well-head-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.chart-well-title{
+    margin: 0;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.chart-tool{
+    cursor: pointer;
+    border-radius: 100px !important;
+    /*color: #48ABF7 !important;*/
+    /*border: 1px solid #48ABF7 !important;*/
+    background: transparent !important;
+    font-size: 11px;
+    padding: 7px 13px;
+}
+
+
+
+.input-variable-header{
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #ebecec !important;
+}
+
+.input-variable-header-title{
+    margin: 0;
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    line-height: 1.6 !important;
+}
+
+path {
+   stroke: black;
+}
+
+svg {
+    fill: black;
+
+    font-size: 11px;
+    font-family: Times
+}
+
+rect {
+  fill: #f8f8f8
+}
