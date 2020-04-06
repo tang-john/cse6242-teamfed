@@ -6,11 +6,11 @@ Our awesome team memebers are listed in alphabetical order. Every one had an equ
 
 | Name                     | Role
 |--------------------------|---------------------------------------------------------------------------------
-| Abdulgader, Khwala | Data analyst, LaTeX report writer 
-| Adeosun, Oluwagbemiga | Full stack developer (Angular JS, Docker)
-| Chavez, Jason | Microsoft Azure Machine Learning Stud, LaTeX report writer 
-| Kaveladze, George | Chart expert, full stack developer
-| Tang, John | Data analyst (Scala Apache Spark enthusiast), LaTeX report writer, project lead
+| Abdulgader, Khwala | Data analyst, LaTeX guru 
+| Adeosun, Oluwagbemiga | Full stack expert (Angular JS, Docker)
+| Chavez, Jason | Microsoft Azure Machine Learning pro, LaTeX guru 
+| Kaveladze, George | Visualization expert, full stack guru
+| Tang, John | Data analyst (Scala & Apache Spark fanboy), LaTeX newbie, project lead
 
 Data Set
 --------------------
