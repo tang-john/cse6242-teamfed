@@ -231,23 +231,71 @@ Additionally, users will have the ability to adjust the values associated with t
 
 \subsection{Predictions}
 
-In order to provide significant predictions, we will gather data from a variety of sources and evaluate variable importance for predicting household debt. As of 03/26/20, the team has collected ~25 various economic data variables and completed a correlation analysis using R.  While other models have been created using the random forest algorithm\cite{Nyman2018}, we will compare model scores from multiple models.\vspace{-0.5em}
+In order to provide significant predictions, we will gather data from a variety of sources and evaluate variable importance for predicting household debt. We have collected 27 economic data variables and completed a correlation analysis using R.  While other models have been created using the random forest algorithm\cite{Nyman2018}, we compared predictions from multiple machine learning models and found that linear regression produced the best overall predictions.\vspace{-0.5em}
 
 \subsection{Technologies}
 
-Our dashboard front end will be created using D3.js visualizations. The application's user interface is a responsive single page application (SPA) based on AngularJS and Bootstrap. We'll containerize our solution using Docker to allow users to use our cleaned data for their own exploration. Our website will be hosted on Heroku and has a Node.js back-end. We are utilizing SQLite for data storage locally, as we are not deploying this to our website. Machine Learning models will be created using Azure ML Studio, providing an API for the front end. \vspace{-0.5em}
+The application's user interface is a responsive single page application (SPA) based on AngularJS and Bootstrap. The graphs were generated using D3.js for visualization. We containerized our solution using Docker to allow users to run our cleaned data for their own exploration. We wrote extensive Scala and Apache Spark code to import our data into a SQLite database. We used the same technology to then aggregate the data and export it to a csv file which was then used to train and test our Azure ML Studio algorithms. Our website will be hosted on Heroku and has a Node.js back-end. The web appliction makes REST API calls to the Azure ML Studio for predictions. Our web application is hosted at https://teamfed-project.herokuapp.com/#/landingPage.  
+
+We have designed our application so that it can be executed locally or on the cloude.  The options to run our application is listed below.
+
+\textbf{Development server (Local Run without Docker)}\\
+\begin{itemize}
+\item Start a command shell
+\item Navigate to the webapp directory.
+\item Run the command "npm install" 
+\item Run the command "npm start"
+\item Start a browser and navigate to
+
+http://localhost:8080/\#/landingPage
+\end{itemize}
+
+
+\textbf{Docker server (Locally run latest code using Docker)}\\
+\begin{itemize}
+\item Launch a command shell
+\item Navigate to the webapp directory
+\item Run the command "docker build -t teamfed ."
+\item Run the command "docker run -p 8080:8080 teamfed" 
+\item  Launch a browser and navigate to 
+
+http://localhost:8080/#/landingPage
+\end{itemize}
+
+
+\textbf{Deploy to Heroku (Prod Run)}\\
+\begin{itemize}
+\item Install the HerokuCLI from
+
+https://devcenter.heroku.com/articles/heroku-cli
+\item Run heroku login to create a session to your heroku account.
+\item Now you can sign into Container Registry heroku container:login.
+\item Run heroku container:push web -a teamfed-project to create a docker image and push it to our Heroku repository.
+\item Run heroku container:release web -a teamfed-project to release the latest image and this will update the webapp.
+\item Run heroku logs --tail -a teamfed-project to see the logs and output from interacting with the webapp.
+\item Navigate to 
+
+https://teamfed-project.herokuapp.com/#/
+
+landingPage and watch the as the logs change and acknowledge the interaction with the webapp.
+\end{itemize}
+
+\vspace{-0.5em}
 
 
 \subsection{Innovations}
 
-Our dashboard includes the following innovative approaches; firstly, based on our extensive research, there is a limited amount of models focusing on predicting household debt only; even though it is a strong indicator to the economic health of the United States. Many financial institutions produce economic models using household debt as a primary variable, therefore we are going to focus on this specific variable rather than predict the larger economy. Secondly, we are trying to account for negative rates by researching whether we should include global negative rates into our model or negative real rates. This will all our model to include data that is typically not used in United States recession models as the data is unavailable, but provides a complete view to an economic downturn. Lastly, we are streamlining our dashboard by providing an API of our machine learning model to the front-end and having a Node.js back-end while containerizing our solution using Docker.\vspace{-0.5em}
+Our dashboard includes the following innovative approaches. Firstly, based on our extensive research, there is a limited amount of models focusing on predicting household debt only; even though it is a strong indicator to the economic health of the United States. Many financial institutions produce economic models using household debt as a primary variable, therefore we are going to focus on this specific variable rather than predict the larger economy. Secondly, we are trying to account for negative rates by using the German 10 year yield into our model. This will allow our model to include data that is typically not used in United States recession models as the data is unavailable, but provides a complete view to an economic downturn. Lastly, we are streamlining our dashboard by providing an API of our machine learning model to the front-end and having a Node.js back-end while containerizing our solution using Docker.\vspace{-0.5em}
 
 \section{Experiments and Evaluation}
-In order to validate our methodology when creating our household debt dashboard, we have complied a list of steps that we will be reviewing throughout our process. These steps are outlined as follows; firstly, we have collected a large amount of data sets to determine which input variables will provide the highest prediction power as we believe this will allow us to have the best prediction performance. The data sets and their source is listed in the Appendix under "Table 1 Data Sets". Secondly, we utilized multiple machine learning algorithms: Bayesian Linear Regression, Linear Regression, Boosted Decision Tree, Decision Forest Regression, and Neural Network Regression. This ensured that our study utilized the most suitable methodology when predicting household debt. Thirdly, we have included a user functionality feature as we believe allowing the user to select various data elements will provide a greater understanding of the factors that impact household debt. Fourthly, we have been researching various economic dashboard visualizations to ensure we compartmentalize the information in an intuitive manner for the user. Lastly, we believe our front-end and back-end methodology is stream-lined as stated in the innovations section above. 
+In order to validate our methodology when creating our household debt dashboard, we have complied a list of steps that we will be reviewing throughout our process. These steps are outlined as follows. Firstly, we have collected a large amount of data sets to determine which input variables will provide the highest predictive power as we believe this will allow us to have the best prediction performance. The data sets and their source is listed in the Appendix under "Table 1 Data Sets". Secondly, we utilized multiple machine learning algorithms: Bayesian Linear Regression, Linear Regression, Boosted Decision Tree, Decision Forest Regression, and Neural Network Regression. This ensured that our study utilized the most suitable methodology when predicting household debt. Thirdly, we have included a user functionality feature as we believe allowing the user to select various data elements will provide a greater understanding of the factors that impact household debt. Fourthly, we have been researching various economic dashboard visualizations to ensure we compartmentalize the information in an intuitive manner for the user. Lastly, we believe our front-end and back-end methodology is stream-lined as stated in the innovations section above. 
 
-We completed our correlation analysis in R. We initially ran the correlation analysis against all of our input variables.   We dropped dropped all variables who had less than 0.70 correlation to house hold debt. We reduced the number of input variables from over twenty five to just nine:  consumer price index, Treasury 3 month bond yield, Treasury 10 year bond yield, Treasury 30 year bond yield, consumer rent, German 10 year bond yield, S&P Case Shiller Index, Producer Price Index, and the unemployment rate. We were surprised that automobile loans, auto dealer sales, credit card rates, urban consumer rent, and student loans did not make the cut off list.
 
-We used a data split of 80 percent for training and 20 percent for testing. Our web application feeds the input variables to a Microsoft Azure Machine Learning algorithm using REST API calls. The calls are secured with a private key.  We were shocked as we got back the predictions.  We thought the more sophisticated machine learning algorithms such as Decision Forest Regression or Neural Network Regression would produce the superior predictions. It turned out that the Linear Regression model created as good or better predictions.  We committed to the Linear Regression model for our study as a result.
+We used R with the tidyverse, GGally, rpart, and caret libraries to help select the input variable with the highest correlation to the household debt. We initially ran the correlation analysis against all of our input variables.   We dropped dropped all variables which had less than 0.70 correlation to household debt. We reduced the number of input variables from over twenty nine to just nine. Our final list of input variables are the consumer price index, Treasury 3 month bond yield, Treasury 10 year bond yield, Treasury 30 year bond yield, consumer rent, German 10 year bond yield, S&P Case Shiller Index, Producer Price Index, and the unemployment rate. We were surprised that automobile loans, auto dealer sales, credit card rates, urban consumer rent, and student loans did not make the final list. Please see the appendix "Table 2. Correlation Report" for a larger correlation graph.
+
+\includegraphics[scale = 0.10]{teamfedcorrelation.png}
+
+We used a data split of 80 percent for training and 20 percent for testing. Our web application feeds the input variables to a Microsoft Azure Machine Learning algorithm using REST API calls. The calls are secured with a private key.  We were shocked as we got back the predictions.  We thought the more sophisticated machine learning algorithms such as Decision Forest Regression or Neural Network Regression would produce  superior predictions. It turned out that the Linear Regression model created as good or better predictions.  We committed to the Linear Regression model for our study as a result.
 
 \includegraphics[scale = 0.59]{teamfed2.PNG}
 Figure 5.1 displays our preliminary application using raw data as we are finalizing variable selection and our machine learning algorithm \vspace{-0.5em}
@@ -287,7 +335,7 @@ We plan on achieving success by following the plan below:\vspace{0.07em}
     ML Algorithm Developed & 04/03\\
     Front-end Setup & 04/03\\
     Back-end Setup & 03/31\\
-    Final Report & 04/05\\
+    Final Report & 04/13\\
     \hline
     \end{tabular}
 \end{center}
@@ -364,6 +412,31 @@ Num & Description & Source\\
 \hline
 \end{tabular}
 \end{table*}
+
+
+
+
+\begin{table*}[ht]
+\caption{Correlation Report}
+\centering
+\begin{tabular}{p{1.0\linewidth}}
+\hline
+\includegraphics[scale = 0.27]{teamfedcorrelation.png}\\
+\hline
+\end{tabular}
+\end{table*}
+
+
+\begin{table*}[ht]
+\caption{Microsoft Azure Machine Learning Experiment}
+\centering
+\begin{tabular}{p{1.0\linewidth}}
+\hline
+\includegraphics[scale = 0.46]{teamfed_azure_ml.png}\\
+\hline
+\end{tabular}
+\end{table*}
+
 
 \end{appendix}
 
