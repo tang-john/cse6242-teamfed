@@ -38,6 +38,10 @@ angular.module('TeamFed.LandingPageController', []).
 		f.submit();
 	};
 	
+	$scope.print = function() {
+		frames[$scope.chart].print();
+	}
+	
 
 
       // $scope.linRegResponse = "";
