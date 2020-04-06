@@ -1,5 +1,5 @@
 <div class="container main-container">
-	<div ng-if="marketData">Market data last updated: {{parseDate(marketData.Date)}}</div>
+	<div ng-if="marketData">Economic data last updated: {{parseDate(marketData.Date)}}</div>
     <div class="row col-md-12 chart-button-row">
         <div class="col-md-3 well chart-button chart-button-gdp" ng-click="chart=0">
             <div class="chart-button-row-body">
@@ -69,19 +69,23 @@
                         </div>
                         <div class="form-group input-variable">
                             <h2>Consumer Price Index (100=1984)</h2>
-                            <input ng-change="dirty()" ng-model="cpi" type="number"  min=0 max=500 step=0.1 required class="form-control" placeholder="CPI *" value="" />
+                            <input ng-change="dirty()" ng-model="cpi" type="number"  min=0 max=500 step=0.001 required class="form-control" placeholder="CPI *" value="" />
                         </div>
 						<div class="form-group input-variable">
                             <h2>Producer Price Index (100=1982)</h2>
-                            <input ng-change="dirty()" ng-model="ppi" type="number"  min=0 max=500 step=0.1 required class="form-control" placeholder="PPI *" value="" />
+                            <input ng-change="dirty()" ng-model="ppi" type="number"  min=0 max=500 step=0.001 required class="form-control" placeholder="PPI *" value="" />
                         </div>
 						  <div class="form-group input-variable">
                             <h2>Rent Price Index (100=Dec. 1982)</h2>
-                            <input ng-change="dirty()" ng-model="consumerRent" type="number"  min=0 max=1000 step=0.1 required class="form-control" placeholder="Rent Price Index *" value="" />
+                            <input ng-change="dirty()" ng-model="consumerRent" type="number"  min=0 max=1000 step=0.001 required class="form-control" placeholder="Rent Price Index *" value="" />
                         </div>
                         <div class="form-group input-variable">
                             <h2>Home Price Index (100=Jan. 2000)</h2>
-                            <input ng-change="dirty()" ng-model="caseShiller" type="number" min=0 max=1000 step=0.1 required class="form-control" placeholder="Case Shiller Index *" value="" />
+                            <input ng-change="dirty()" ng-model="caseShiller" type="number" min=0 max=1000 step=0.001 required class="form-control" placeholder="Case Shiller Index *" value="" />
+                        </div>
+						<div class="form-group input-variable">
+                            <h2>Fed 3 Month Yield (%)</h2>
+                            <input ng-change="dirty()" ng-model="fed3M" type="number" min=-10 max=15 step=0.01 required class="form-control" placeholder="Fed 3 Month Yield *" value="" />
                         </div>
                         <div class="form-group input-variable">
                             <h2>Fed 10 Year Yield (%)</h2>

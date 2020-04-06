@@ -7,15 +7,6 @@ angular.module('TeamFed.LandingPageController', []).
 	$scope.result = "";
 	$scope.resStyle = "";
 	
-	$scope.cpi = 150;
-	$scope.ppi = 200;
-	$scope.consumerRent = 150;
-	$scope.caseShiller = 100;
-	$scope.fed10Y = 5;
-	$scope.fed30Y = 5;
-	$scope.fed3M = 2;
-	$scope.ger10Y = 2;
-	$scope.unemp = 5;
 	
 	$scope.dirty = function() {
 		$scope.resStyle = {'font-style':'italic'};
@@ -29,6 +20,18 @@ angular.module('TeamFed.LandingPageController', []).
 	
 	$http.get("resources/js/views/marketData.json").success(function(data) {
 		$scope.marketData = data;
+		
+		
+	$scope.cpi = data.CPI;
+	$scope.ppi = data.PPI;
+	$scope.consumerRent = data.ConsumerRent;
+	$scope.caseShiller = data.CaseShiller;
+	$scope.fed10Y = data.Fed10Year;
+	$scope.fed30Y = data.Fed30Year;
+	$scope.fed3M = data.Fed3Month;
+	$scope.ger10Y = data.German10Y;
+	$scope.unemp = data.Unemployment;
+		
 	});
 	
 	$scope.exportSVG = function() {
@@ -53,7 +56,7 @@ angular.module('TeamFed.LandingPageController', []).
         $http({
           url: '/mlWebservice',
           method: "POST",
-          data: JSON.stringify({"Inputs":{"input1":{"ColumnNames":["caseShillerIndex","cpi","fed10YearYield","fed30YearYield","ppi","consumerRent","unemploymentRate","german10Yr"],"Values":[[$scope.caseShiller,$scope.cpi,$scope.fed10Y,$scope.fed30Y,$scope.ppi,$scope.consumerRent,$scope.unemp,$scope.ger10Y]]}},"GlobalParameters":{}})
+          data: JSON.stringify({"Inputs":{"input1":{"ColumnNames":["caseShillerIndex","cpi","fed10YearYield","fed30YearYield","fed3MonthYield","ppi","consumerRent","unemploymentRate","german10Yr"],"Values":[[$scope.caseShiller,$scope.cpi,$scope.fed10Y,$scope.fed30Y,$scope.fed3M,$scope.ppi,$scope.consumerRent,$scope.unemp,$scope.ger10Y]]}},"GlobalParameters":{}})
         })
         // $http.post('/mlWebservice', JSON.stringify({"Inputs":{"Data":{"ColumnNames":["cpi","gdp","medianHomePrice","fed10YearYield"],"Values":[["0","0","0","0"],["0","0","0","0"]]}},"GlobalParameters":{}}))
             .success(function (data, status) {

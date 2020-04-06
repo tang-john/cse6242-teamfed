@@ -7,5 +7,10 @@
 	"CPI": 258.444,
 	"PPI": 199.2,
 	"ConsumerRent": 335.958,
-	"CaseShiller": 213.789
+	"CaseShiller": 213.789,
+	"Fed3Month" : 1.57,
+	"Fed10Year" : 1.55,
+	"Fed30Year" : 2.3,
+	"Unemployment" : 3.5
+	
 }
