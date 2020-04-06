@@ -7,7 +7,7 @@
 	<script src="../lib/d3-scale-chromatic.v1.min.js"></script>
 	<script src="../lib/d3-simple-slider.min.js"></script>
 	<script src="../lib/d3-tip.min.js"></script>
-	<link rel='stylesheet' href='../../../css/styles.css'>
+	<!--<link rel='stylesheet' href='../../../css/styles.css'> -->
 	<style>
 	.states path {
   stroke: #ffffff;
@@ -86,7 +86,12 @@
 		
 		var base = d3.select("body").insert("svg",".description")
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom);
+    .attr("height", height + margin.top + margin.bottom)
+	.attr("fill","white").attr("color","white").attr("xmlns","http://www.w3.org/2000/svg");
+		
+		base.append('rect').attr('width','100%').attr('height','100%').attr('fill','#1a2035');
+		
+		
 		
 		var svg = base.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -139,7 +144,7 @@
 		svg.append("text")
 		.attr("x",xScale(last_hhdebt.Date)-10)
 		.attr("y",yScale(last_hhdebt.HHDebt)+5)
-		.attr("stroke","white")
+		.attr("fill","white")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Household Debt")
@@ -156,7 +161,7 @@
 		svg.append("text")
 		.attr("x",xScale(last_sloas.DATE)-10)
 		.attr("y",yScale(last_sloas.SLOAS)-5)
-		.attr("stroke","white")
+		.attr("fill","white")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Student Loan Debt")
@@ -183,7 +188,7 @@
 		svg.append("text")
 		.attr("x",xScale(last_debt_gdp.DATE))
 		.attr("y",y2Scale(last_debt_gdp.debt_to_gdp)-20)
-		.attr("stroke","tan")
+		.attr("fill","tan")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Debt to GDP")
@@ -200,7 +205,7 @@
 		svg.append("text")
 		.attr("x",xScale(last_debt_inc.Year)-10)
 		.attr("y",y2Scale(last_debt_inc.debt_to_inc)+5)
-		.attr("stroke","tan")
+		.attr("fill","tan")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Debt to Income")
@@ -210,10 +215,13 @@
 		.attr("transform", "translate(0," + height + ")")
 		.call(d3.axisBottom(xScale));
 		
-		svg.append("g")
+		var y2 = svg.append("g")
 		.attr("transform",`translate(${width},0)`)
-		.attr("stroke","tan")
-		.call(d3.axisRight(y2Scale).ticks(8));
+		.call(d3.axisRight(y2Scale).ticks(8))
+		
+		y2.selectAll("text").attr('fill','tan');
+		
+		
 		
 		svg.append("text")
 		.attr("x",5)

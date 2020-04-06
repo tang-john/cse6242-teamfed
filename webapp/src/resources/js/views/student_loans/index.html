@@ -9,10 +9,6 @@
 	<script src="../lib/d3-tip.min.js"></script>
 	<link rel='stylesheet' href='../../../css/styles.css'>
 	<style>
-	.states path {
-  stroke: #000;
-  stroke-linejoin: round;
-}
 		
 		.tip {
 			background-color: aliceblue;
@@ -48,8 +44,20 @@
 	var base = d3.select("body").insert("svg",".description")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
- 	var svg = base.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	.attr("fill","white").attr("color","white").attr("xmlns","http://www.w3.org/2000/svg");
+	
+ 	
+	base.append('rect').attr('width','100%').attr('height','100%').attr('fill','#1a2035');
+	
+	base.append("style").html(".states path { \
+  stroke: #000; \
+  stroke-linejoin: round; \
+}");
+	
+	var svg = base.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+	
+		
 	
 	var eqMap = {};
 	

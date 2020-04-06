@@ -32,21 +32,21 @@
     <textarea style="margin: 0px; width: 589px; height: 108px;" ng-model="linRegResponse"></textarea>
 </div> -->
 <div class="container main-container">
-	<div>Market data last updated: {{parseDate(marketData.Date)}}</div>
+	<div ng-if="marketData">Market data last updated: {{parseDate(marketData.Date)}}</div>
     <div class="row col-md-12 chart-button-row">
-        <div class="col-md-3 well chart-button chart-button-gdp" ng-click="chart='time_series'">
+        <div class="col-md-3 well chart-button chart-button-gdp" ng-click="chart=0">
             <div class="chart-button-row-body">
                 <h2>GDP ($ Trillions)</h2>
                 <h2>{{marketData.GDP.toFixed(1)}}</h2>
             </div>
         </div>
-        <div class="col-md-3 well chart-button chart-button-student-debt" ng-click="chart='student_loans'">
+        <div class="col-md-3 well chart-button chart-button-student-debt" ng-click="chart=1">
             <div class="chart-button-row-body">
                 <h2>Student Debt  ($ Trillions)</h2>
                 <h2>{{marketData.StudentDebt.toFixed(1)}}</h2>
             </div>
         </div>
-        <div class="col-md-3 well chart-button chart-button-household-debt" ng-click="chart='household_debt'">
+        <div class="col-md-3 well chart-button chart-button-household-debt" ng-click="chart=2">
             <div class="chart-button-row-body">
                 <h2>Household Debt ($ Trillions)</h2>
                 <h2>{{marketData.HouseholdDebt.toFixed(1)}}</h2>
@@ -57,17 +57,17 @@
         <div class="col-md-8 well chart-well">
             <div class="chart-well-header">
                 <div class="chart-well-head-row">
-                    <div class="chart-well-title"><span ng-show="chart=='time_series'">Gross Domestic Product</span>
-						<span ng-show="chart=='student_loans'">Student Loans</span>
-						<span ng-show="chart=='household_debt'">Household Debt</span> | Chart</div>
+                    <div class="chart-well-title"><span ng-show="chart==0">Gross Domestic Product</span>
+						<span ng-show="chart==1">Student Loans</span>
+						<span ng-show="chart==2">Household Debt</span> | Chart</div>
                     <div class="chart-well-tools">
-                        <a href="#" class="btn chart-tool">
+                        <a href="#/landingPage" ng-click="exportSVG()" class="btn chart-tool">
                             <span class="btn-label">
                                 <i class="fa fa-pencil"></i>
                             </span>
                             Export
                         </a>
-                        <a href="#" class="btn chart-tool">
+                        <a href="#/landingPage" class="btn chart-tool">
                             <span class="btn-label">
                                 <i class="fa fa-print"></i>
                             </span>
@@ -77,9 +77,9 @@
                 </div>
             </div>
             <div class="chart-button-row-body">
-                <iframe width="760" height="650" src="resources/js/views/time_series" ng-show="chart=='time_series'" scrolling="no"></iframe>
-                <iframe width="760" height="650" src="resources/js/views/student_loans" ng-show="chart=='student_loans'" scrolling="no" ></iframe>
-                <iframe width="760" height="650" src="resources/js/views/household_debt" ng-show="chart=='household_debt'" scrolling="no"></iframe>
+                <iframe width="760" height="650" src="resources/js/views/time_series" ng-show="chart==0" scrolling="no"></iframe>
+                <iframe width="760" height="650" src="resources/js/views/student_loans" ng-show="chart==1" scrolling="no" ></iframe>
+                <iframe width="760" height="650" src="resources/js/views/household_debt" ng-show="chart==2" scrolling="no"></iframe>
             </div>
         </div>
         <div class="col-md-3 ">
@@ -138,3 +138,7 @@
 
 </div>
 </div>
+<form name="export" action="/export" method="post">
+<input type="hidden" name="fname" />
+<input type="hidden" name="data" />
+</form>

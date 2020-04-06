@@ -1,6 +1,7 @@
 angular.module('TeamFed.LandingPageController', []).
     controller("LandingPageController", function ($scope, $state, $http) {
-      $scope.chart = "time_series";
+      $scope.chart = 0;
+	var fNames = ["GDP","Student_Debt","Household_Debt"];
 
 	$scope.respSuccess = false;
 	$scope.result = "";
@@ -29,6 +30,13 @@ angular.module('TeamFed.LandingPageController', []).
 	$http.get("resources/js/views/marketData.json").success(function(data) {
 		$scope.marketData = data;
 	});
+	
+	$scope.exportSVG = function() {
+		var f = document.forms.export;
+		f.fname.value = fNames[$scope.chart];
+		f.data.value = frames[$scope.chart].document.querySelector("svg").outerHTML;
+		f.submit();
+	};
 	
 
 
