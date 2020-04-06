@@ -65,7 +65,7 @@
 		
 		model = model[0];
 		
-		var niceNames = {"consumerRent":"Rent Price Index","caseShillerIndex":"Home Price Index","ppi":"Producer Price Index","unemploymentRate":"Unemployment Rate","fed30YearYield":"Fed 30 Year Yield","fed10YearYield":"Fed 10 Year Yield","german10Yr":"German 10 Year Yield","Bias":"Bias","cpi":"Consumer Price Index"}
+		var niceNames = {"consumerRent":"Rent Price Index","caseShillerIndex":"Home Price Index","ppi":"Producer Price Index","unemploymentRate":"Unemployment Rate","fed3MonthYield":"Fed 3 Month Yield","fed30YearYield":"Fed 30 Year Yield","fed10YearYield":"Fed 10 Year Yield","german10Yr":"German 10 Year Yield","Bias":"Bias","cpi":"Consumer Price Index"}
 		
 		var colors = d3.schemeCategory10;
 	
@@ -85,7 +85,8 @@
 		
 		var base = d3.select("body").insert("svg",".description")
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom);
+    .attr("height", height + margin.top + margin.bottom)
+	.attr("xmlns","http://www.w3.org/2000/svg");
 		
 		var svg = base.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -136,13 +137,19 @@ console.log(predictions);
 	var xScale,yScale;
 		
 		xScale = d3.scaleTime().domain(d3.extent(data,d=>d.Date)).range([0,width]);
-		yScale = d3.scaleLinear().domain([0,25]).range([height*3/4,0]);
+		yScale = d3.scaleLinear().domain([0,15]).range([height*3/4,height/8]);
 		y2Scale = d3.scaleLinear().domain([-25,0]).range([height,height*3/4])
+		y3Scale = d3.scaleLinear().domain([15,25]).range([height/8,0])
 		
+		var Y = function(y) {
+			if(y < 0) return y2Scale(y);
+			if(y < 15) return yScale(y);
+			return y3Scale(y);
+		}
 			
 		var line_debt = d3.line()
 		.x(function(d, i) { return xScale(d.Date); }) // set the x values for the line generator
-		.y(function(d) { return yScale(d.householdDebt); }) // set the y values for the line generator 
+		.y(function(d) { return Y(d.householdDebt); }) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
 		
 		svg.append("path")
@@ -155,7 +162,7 @@ console.log(predictions);
 		
 				var line_pred = d3.line()
 		.x(function(d, i) { return xScale(d.Date); }) // set the x values for the line generator
-		.y(function(d) { return yScale(d.predict); }) // set the y values for the line generator 
+		.y(function(d) { return Y(d.predict); }) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
 		
 		svg.append("path")
@@ -183,7 +190,7 @@ console.log(predictions);
 			var key = sorted[i];
 			if(key=="Bias") {
 				
-				var scale = model.Bias >= 0 ? yScale : y2Scale;
+				
 		
 		svg.append("line")
 		.attr("class","line")
@@ -191,8 +198,9 @@ console.log(predictions);
 		.attr("fill","none")
 		.attr("x1", 0)
 		.attr("x2",width)
-		.attr("y1",scale(model.Bias))
-		.attr("y2",scale(model.Bias));
+		.attr("stroke-width",1.5)
+		.attr("y1",Y(model.Bias))
+		.attr("y2",Y(model.Bias));
 				
 	
 			}
@@ -201,14 +209,14 @@ console.log(predictions);
 		.x(function(d, i) { return xScale(d.Date); }) // set the x values for the line generator
 		.y(function(d) {
 			var val = d[key]*model[key];
-			var scale = val >=0 ? yScale : y2Scale;
-			return scale(val);
+			return Y(val);
 		}) // set the y values for the line generator 
 		.curve(d3.curveMonotoneX) // apply smoothing to the line
 		
 		svg.append("path")
 		.attr("class","line")
 		.attr("stroke",colors[i])
+		.attr("stroke-width",1.5)
 		.attr("fill","none")
 		.datum(data) // 10. Binds data to the line 
 		.attr("d", line);
@@ -239,12 +247,19 @@ console.log(predictions);
 
 		svg.append("g").call(d3.axisLeft(yScale));
 		svg.append("g").call(d3.axisLeft(y2Scale))
+		svg.append("g").call(d3.axisLeft(y3Scale))
 	svg.append("g")
 		.attr("transform", "translate(0," + yScale(0) + ")")
 		.call(d3.axisBottom(xScale));
 		
 	
-	
+	svg.append("text")
+	.attr("x",width/2)
+	.attr("y",-15)
+	.attr("text-anchor","middle")
+	.attr("font-size","12pt")
+	.attr("font-weight","bold")
+	.html("LinReg &ndash; Componentwise Breakdown")
 		
 		
 	});
