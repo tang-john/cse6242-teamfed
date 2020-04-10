@@ -317,7 +317,7 @@ We used R with the tidyverse, GGally, rpart, and caret libraries to help select 
 Figure 5.1 Correlation For All Input Variables
 \vspace{0.75em}
 
-We dropped input variables which had less than 0.75 correlation to household debt or if the ML model showed that an interaction of variables was highly predictive. As shown in the Figure 5.2, both the Fed 3 Month Yield and Unemployment Rate had low correlations, but the interaction they had with other variables improved the overall model score. Using this graph as a guide, we reduced the number of input variables from eighteen to just nine. Our final list of input variables are the consumer price index, Treasury 3 month bond yield, Treasury 10 year bond yield, Treasury 30 year bond yield, consumer rent, German 10 year bond yield, S&P Case Shiller Index, Producer Price Index, and the unemployment rate. We were surprised that automobile loans, auto dealer sales, consumer rent, and student loans did not make the final list. Please see the appendix "Table 3. Correlation For Final Input Variables" for a larger correlation graph.
+We dropped input variables which had less than 0.75 correlation to household debt or if the ML model showed that an interaction of variables was highly predictive. As shown in the Figure 5.2, both the Fed 3 Month Yield and Unemployment Rate had low correlations, but the interaction they had with other variables improved the overall model score. Using this graph as a guide, we reduced the number of input variables from eighteen to just nine. Our final list of input variables are the consumer price index, Treasury 3 month bond yield, Treasury 10 year bond yield, Treasury 30 year bond yield, consumer rent, German 10 year bond yield, S&P Case Shiller Index, Producer Price Index, and the unemployment rate. Please see the appendix "Table 3. Correlation For Final Input Variables" for a larger correlation graph.
 
 
 \vspace{0.5em}
@@ -424,6 +424,16 @@ We achieved success by following the plan below:\vspace{0.07em}
 \end{center}
 
 \textbf{All group members have continued to contribute a similar amount of effort.} The following activities were completed by the following teammates: Data Collection: John and Khwala; Variable Exploration: George; Data Cleansing: John and Jason; Variable Selection: Jason and Khwala; ML Algorithm: Jason; Front-end Set Up: Bemi and George; Back-end Set Up: Bemi; Progress Report: Khwala; Final Report: Khwala, Jason, and John. 
+
+
+
+\section{Conclusions and Discussion}
+
+
+We intially started with 28 input variables. We knew that some of the variables were going to be eliminated during our variable selection phase. We were surprised that automobile loans, auto dealer sales, consumer rent, and student loans did not make the final list of input variables. 
+
+Graphing and analyzing exisisting data provided a clear near term trend of household debt. We were not suprised when our model predicted ever increasing household debt for 2020. We were very worried about what this meant for the econonmy. The model predicted a household debt value that was far greater than the value from the last recession of 2008.  While we didn't know that the coronavirus would be the spark that would deflate the economy, our model clearly alerted us that the economy was going to tank.
+
 
 %\section{Related Work}
 
