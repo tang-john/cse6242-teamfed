@@ -1,19 +1,19 @@
 <div class="container main-container">
 	<div ng-if="marketData">Economic data last updated: {{parseDate(marketData.Date)}}</div>
     <div class="row col-md-12 chart-button-row">
-        <div class="col-md-3 well chart-button chart-button-gdp" ng-click="chart=0">
+        <div class="col-md-3 well chart-button chart-button-top chart-button-gdp" ng-click="chart=0" ng-class="{'activeChart':chart==0}">
             <div class="chart-button-row-body">
                 <h2>GDP ($ Trillions)</h2>
                 <h2>{{marketData.GDP.toFixed(1)}}</h2>
             </div>
         </div>
-        <div class="col-md-3 well chart-button chart-button-student-debt" ng-click="chart=1">
+        <div class="col-md-3 well chart-button chart-button-top chart-button-student-debt" ng-click="chart=1" ng-class="{'activeChart':chart==1}">
             <div class="chart-button-row-body">
                 <h2>Student Debt  ($ Trillions)</h2>
                 <h2>{{marketData.StudentDebt.toFixed(1)}}</h2>
             </div>
         </div>
-        <div class="col-md-3 well chart-button chart-button-household-debt" ng-click="chart=2">
+        <div class="col-md-3 well chart-button chart-button-top chart-button-household-debt" ng-click="chart=2" ng-class="{'activeChart':chart==2}">
             <div class="chart-button-row-body">
                 <h2>Household Debt ($ Trillions)</h2>
                 <h2>{{marketData.HouseholdDebt.toFixed(1)}}</h2>

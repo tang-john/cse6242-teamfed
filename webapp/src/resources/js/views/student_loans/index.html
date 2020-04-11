@@ -141,7 +141,7 @@
 		var legend = states.append("g").attr("transform",`translate(${width/2},${height-150})`);
 		for(var i = 0;i<buckets;i++) {
 			legend.append("rect").attr("x",i*50).attr("y",50).attr("width",50).attr("height",10)
-			.attr("fill",hues[i]);
+			.style("fill",hues[i]);
 			legend.append("text").attr("x",i*50).attr("y",70).attr("font-size","10pt").attr("text-anchor","middle")
 			.text((i==0?"$":"")+scaleLoans.invert(i).toFixed(0));
 		}
@@ -188,7 +188,7 @@
 		var legend2 = states2.append("g").attr("transform",`translate(${width/2},${height-150})`);
 		for(var i = 0;i<buckets2;i++) {
 			legend2.append("rect").attr("x",i*50).attr("y",50).attr("width",50).attr("height",10)
-			.attr("fill",hues2[i]);
+			.style("fill",hues2[i]);
 			legend2.append("text").attr("x",i*50).attr("y",70).attr("font-size","10pt").attr("text-anchor","middle")
 			.text(scaleDelinq.invert(i).toFixed(2)+(i==0?"%":""));
 		}

@@ -19,7 +19,7 @@
 	</style>
 </head>
 <body>
-<div class="description" style="color:white">Click to Toggle Tooltip</div>
+<div class="description">Click to Toggle Tooltip</div>
 <script>
 
 
@@ -87,10 +87,9 @@
 		var base = d3.select("body").insert("svg",".description")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-	.attr("fill","white").attr("color","white").attr("xmlns","http://www.w3.org/2000/svg");
+	.attr("fill","black").attr("color","black").attr("xmlns","http://www.w3.org/2000/svg");
 		
-		base.append('rect').attr('width','100%').attr('height','100%').attr('fill','#1a2035');
-		
+	
 		
 		
 		var svg = base.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -134,7 +133,7 @@
 		
 		svg.append("path")
 		.attr("class","line")
-		.attr("stroke","white")
+		.attr("stroke","black")
 		.attr("fill","none")
 		.datum(hh_debt) // 10. Binds data to the line 
 		.attr("d", line); // 11. Calls the line generator
@@ -144,14 +143,14 @@
 		svg.append("text")
 		.attr("x",xScale(last_hhdebt.Date)-10)
 		.attr("y",yScale(last_hhdebt.HHDebt)+5)
-		.attr("fill","white")
+		.attr("fill","black")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Household Debt")
 		
 		svg.append("path")
 		.attr("class","line")
-		.attr("stroke","white")
+		.attr("stroke","black")
 		.attr("fill","none")
 		.datum(sloas) // 10. Binds data to the line 
 		.attr("d", line_sloas); // 11
@@ -161,7 +160,7 @@
 		svg.append("text")
 		.attr("x",xScale(last_sloas.DATE)-10)
 		.attr("y",yScale(last_sloas.SLOAS)-5)
-		.attr("fill","white")
+		.attr("fill","black")
 		.attr("font-size","10pt")
 		.attr("text-anchor","end")
 		.text("Student Loan Debt")
@@ -244,7 +243,7 @@
 		.attr("stroke","none")
 		.attr("r",4).attr("cx",0).attr("cy",0);
 		
-		info.append("rect").attr("x",4).attr("y",0).attr("width",200).attr("height",75).attr("fill","rgba(0,0,0,0.5)").attr("class","r");
+		info.append("rect").attr("x",4).attr("y",0).attr("width",200).attr("height",75).attr("fill","rgba(255,255,255,0.5)").attr("class","r");
 		info.append("text").attr("class","t1");
 		info.append("text").attr("class","t2");
 		info.append("text").attr("class","t3");

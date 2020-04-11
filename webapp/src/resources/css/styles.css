@@ -1,8 +1,8 @@
 body{
-    background: #1a2035;
-    color: white !important;
-    fill: white;
-    stroke: "white";
+    background: #fff;
+    color: #777 !important;
+    fill: lightgrey;
+    stroke: grey;
     font-family: 'Lato', sans-serif !important;
 }
 
@@ -17,28 +17,21 @@ body{
 }
 
 .chart-button{
-    cursor: pointer;
     padding: 1.25rem;
-    color: #ffffff;
-    border: 0px !important;
+    border: 1px solid #e7e7e7 !important;
+    border-radius: 10px;
 }
 
-.chart-button-gdp{
-    background: linear-gradient(-45deg, #06418E, #1572E8) !important;
+.chart-button-top {
+	cursor: pointer;
 }
 
-.chart-button-student-debt{
-    background: linear-gradient(-45deg, #2A20AC, #6861CE) !important;
-    
+.activeChart {
+	background-color: navy;
+	color: white;
 }
 
-.chart-button-prediction{
-    background-color: #2BB930 !important;
-}
 
-.chart-button-household-debt{
-    background: linear-gradient(-45deg, #A8676A, rgba(0,212,255,1)) !important;
-}
 
 h2, .h2 {
     font-size: 1.35rem;
@@ -51,9 +44,8 @@ h2, .h2 {
 }
 
 .chart-well{
-    background: #202940 !important;
+    background: #f8f8f8;
     padding: 1.25rem;
-    color: #ffffff;
     border: 0px !important;
 }
 
@@ -78,18 +70,15 @@ h2, .h2 {
 }
 
 .chart-tool{
-    cursor: pointer;
     border-radius: 100px !important;
-    color: #48ABF7 !important;
-    border: 1px solid #48ABF7 !important;
+    /*color: #48ABF7 !important;*/
+    /*border: 1px solid #48ABF7 !important;*/
     background: transparent !important;
     font-size: 11px;
     padding: 7px 13px;
 }
 
-.y-header{
-    fill: white;
-}
+
 
 .input-variable-header{
     padding: 1rem 1.25rem;
@@ -101,4 +90,19 @@ h2, .h2 {
     font-size: 20px !important;
     font-weight: 400 !important;
     line-height: 1.6 !important;
+}
+
+path {
+   stroke: black;
+}
+
+svg {
+    fill: black;
+
+    font-size: 11px;
+    font-family: Times
+}
+
+rect {
+  fill: #f8f8f8
 }
