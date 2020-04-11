@@ -6,10 +6,12 @@ angular.module('TeamFed.LandingPageController', []).
 	$scope.respSuccess = false;
 	$scope.result = "";
 	$scope.resStyle = "";
+
 	
 	
 	$scope.dirty = function() {
 		$scope.resStyle = {'font-style':'italic'};
+		$scope.respSuccess = false;
 	}
 	
 	$scope.parseDate = function(s) {
@@ -31,6 +33,8 @@ angular.module('TeamFed.LandingPageController', []).
 	$scope.fed3M = data.Fed3Month;
 	$scope.ger10Y = data.German10Y;
 	$scope.unemp = data.Unemployment;
+		
+		
 		
 	});
 	
@@ -67,6 +71,7 @@ angular.module('TeamFed.LandingPageController', []).
 					var res = JSON.parse(data).Results.output1.value.Values[0];
 					$scope.resStyle = {color:'blue','font-weight':'bold','font-size':'12pt'};
 					$scope.result = parseFloat(res[res.length-1]);
+					scrollTo(0,0);
                 }
             })
             .error(function (error) {

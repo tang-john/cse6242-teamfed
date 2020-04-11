@@ -31,6 +31,12 @@ body{
 	color: white;
 }
 
+div.predictSuccess {
+	background-color:limegreen;
+	color:white;
+}
+
+
 
 
 h2, .h2 {

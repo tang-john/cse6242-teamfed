@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="col-md-3 ">
-            <div class="row well chart-button chart-button-prediction">
+            <div class="row well chart-button chart-button-prediction" ng-class="{'predictSuccess':respSuccess}">
                 <div class="chart-button-row-body">
                     <h2>Prediction ($Trillions)</h2>
                     <h2 ng-hide="result==''" ng-style="resStyle">{{(result) | currency : "" : 3}}</h2>
