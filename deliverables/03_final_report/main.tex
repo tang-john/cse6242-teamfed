@@ -243,7 +243,7 @@ In order to provide significant predictions, we will gather data from a variety 
 
 \subsection{Technologies}
 
-The application's user interface is a responsive single page application (SPA) based on AngularJS and Bootstrap. The graphs were generated using D3.js for visualization. We wrote extensive Scala and Apache Spark code to clean, transform, and insert our data into a SQLite database. We used the same technology to then aggregate the data and export it to a csv file which was then used to train and test our Azure ML Studio algorithms. We containerized our solution using Docker to allow users to run our cleaned data for their own exploration. Our website will be hosted on Heroku and has a Node.js back-end. The web application makes REST API calls to the Azure ML Studio for predictions. Our web application is hosted at https://teamfed-project.herokuapp.com/#/landingPage.  
+The application's user interface is a responsive single page application (SPA) based on AngularJS and Bootstrap. The graphs were generated using D3.js for visualization. We wrote extensive Scala and Apache Spark code to clean, transform, and insert our data into a SQLite database. We then used Scala and Apache Spark to aggregate the data and export it to a csv file which was then used to train and test our Azure ML Studio algorithms. We containerized our solution using Docker to allow users to run our cleaned data for their own exploration. Our website will be hosted on Heroku and has a Node.js back-end. The web application makes REST API calls to the Azure ML Studio for predictions. Our web application is hosted at https://teamfed-project.herokuapp.com/\#/landingPage.  
 
 We have designed our application so that it can be executed a local PC or on the cloud.  The options to run our application are listed below.
 \vspace{0.5em}
@@ -268,7 +268,7 @@ http://localhost:8080/\#/landingPage
 \item Run the command "docker run -p 8080:8080 teamfed" 
 \item  Launch a browser and navigate to 
 
-http://localhost:8080/#/landingPage
+http://localhost:8080/\#/landingPage
 \end{itemize}
 
 \vspace{0.5em}
@@ -284,7 +284,7 @@ https://devcenter.heroku.com/articles/heroku-cli
 \item Run heroku logs --tail -a teamfed-project to see the logs and output from interacting with the webapp.
 \item Navigate to 
 
-https://teamfed-project.herokuapp.com/#/
+https://teamfed-project.herokuapp.com/\#/
 
 landingPage and watch the as the logs change and acknowledge the interaction with the webapp.
 \end{itemize}
@@ -294,13 +294,22 @@ landingPage and watch the as the logs change and acknowledge the interaction wit
 
 \subsection{Innovations}
 
-Our dashboard includes the following innovative approaches. Firstly, based on our extensive research, there is a limited amount of models focusing on predicting household debt only, even though it is a strong indicator to the economic health of the United States. Many financial institutions produce economic models using household debt as a primary variable, therefore we are going to focus on this specific variable rather than predict the larger economy. Secondly, we are trying to account for negative rates by using the German 10 year yield in our model. This will allow our model to include data that is typically not used in United States recession models as the data is unavailable, but provides a complete view to an economic downturn. Lastly, we are streamlining our dashboard by providing an API of our machine learning model to the front-end and having a Node.js back-end while containerizing our solution using Docker.\vspace{-0.5em}
+Our dashboard includes the following innovative approaches. Firstly, based on our extensive research, there is a limited amount of models focusing on predicting household debt only, even though it is a strong indicator to the economic health of the United States. Many financial institutions produce economic models using household debt as a primary variable, therefore we are going to focus on this specific variable rather than predict the larger economy. Secondly, we are trying to account for negative rates by using the German 10 year yield in our model. This will allow our model to include data that is typically not used in United States recession models as the data is unavailable, but provides a complete view to an economic downturn. Lastly, we are streamlining our dashboard by providing an API of our machine learning model to the front-end and having a Node.js back-end while containerizing our solution using Docker.\vspace{0.5em}
+
+
+\includegraphics[scale = 0.32]{dashboard.png}
+Figure 4.1 Responsive Web Application
+\vspace{0.5em}
+
+The top of our web application contains three buttons. The first two buttons are major components of household debt: GDP and student loan. They were eliminated as independent input variables during variable selection. They are major dependent parts of household debt. The user can click on the first two buttons to view visualizations of GDP and student loans, respectively. Clicking the last button will display the household debt along with debt to income, student loan, and debt to GDP.  
+
+On the right side of the screen are text entry boxes for the Azure ML Studio's independent input variables. They default to data from the fourth quarter of 2019. The user can change the values as needed. Clicking on the Send button at the bottom of the screen will submit the form values, via a REST API call, to our model hosted at Microsoft Azure ML Studio. Our model will make a prediction and send it back to the web page.  The prediction will be displayed in the top text box.
 
 \section{Experiments and Evaluation}
-In order to validate our methodology when creating our household debt dashboard, we have compiled a list of steps that we have reviewed throughout our process. These steps are outlined as follows. Firstly, we have collected a large amount of data sets to determine which input variables will provide the highest predictive power as we believe this will allow us to have the best prediction performance. The data sets and their sources are listed in the Appendix under "Table 1 Data Sets". Secondly, we utilized multiple machine learning algorithms: Bayesian Linear Regression, Linear Regression, Boosted Decision Tree, Decision Forest Regression, and Neural Network Regression. This ensured that our study utilized the most suitable methodology when predicting household debt. Thirdly, we have included a user functionality feature as we believe allowing the user to enter various data elements will provide a greater understanding of the factors that impact household debt. Fourthly, we have been researching various economic dashboard visualizations to ensure we compartmentalize the information in an intuitive manner for the user. Lastly, we believe our front-end and back-end methodology is stream-lined as stated in the innovations section above. 
+In order to validate our methodology when creating our household debt dashboard, we have compiled a list of steps that we have reviewed throughout our process. These steps are outlined as follows. Firstly, we have collected a large amount of data sets to determine which input variables will provide the highest predictive power. The data sets and their sources are listed in the Appendix under "Table 1 Data Sets". Secondly, we evaluated multiple machine learning algorithms: Bayesian Linear Regression, Linear Regression, Boosted Decision Tree, Decision Forest Regression, and Neural Network Regression. This ensured that our study utilized the most suitable methodology when predicting household debt. Thirdly, we have included a user interactivity feature as we believe allowing the user to enter various data elements will provide a greater understanding of the factors that impact household debt. Fourthly, we have researched various economic dashboard visualizations to ensure we compartmentalize the information in an intuitive manner for the user. Lastly, we believe our front-end and back-end methodology is stream-lined as stated in the innovations section above. 
 
 
-We used R with the tidyverse, GGally, rpart, and caret libraries to help select the input variable with the highest correlation to household debt. We initially ran the correlation analysis against all of our input variables. See figure 5.1 below and "Table 2 Correlation For All Input Variables" in the appendix. This plot is the correlation matrix of all the variables we evaluated for this project.  The major aspects of this plot that we evaluate are:
+We used R with the tidyverse, GGally, rpart, and caret libraries to help select the input variable with the highest prediction power for household debt. Our initial step in variable reduction was to evaluate variable correlation (both with the response variable and the predictor variables with one another).  To do so, we created a correlation matrix that was evaluated in the following ways:
 
 
 \begin{itemize}
@@ -331,7 +340,7 @@ Figure 5.3 Prediction vs Final Input Variables and Actual Household Debt
 \vspace{1.0em}
 
 
-We also had to determine that time scale our study should use. We had to decide if our model predicted household debt on a yearly, quarterly, or monthly basis. We were inspired by Nyman et al.'s Machine Learning approach to understanding the great recession\cite{Nyman2018} use of a quarterly time scale.  Their Rain Forest model did a poor job on a daily and yearly scale but it worked quite well on a quarterly basis. We also created a violin plot to see how each quarter's household debt distribution stacked up against each other. This plot allowed us to see if a quarter time scale should be a variable used for prediction.  As shown in the plot, each quarter's distribution closely matched that of the other quarters.
+We also had to determine what time scale our study should use. We had to decide if our model should predict household debt on a yearly, quarterly, or monthly basis. We were inspired by Nyman et al.'s Machine Learning approach to understanding the great recession\cite{Nyman2018} use of a quarterly time scale.  Their Random Forest model did a poor job on a daily and yearly scale but it worked quite well on a quarterly basis. Once we chose the proper time scale, we evaluated the scale to determine if there's enough of a difference in Household Debt per quarter to see if we should include the quarter as a variable.  As shown in the plot, each quarter's distribution closely matched that of the other quarters, meaning there would be negligible improvement in predictions.
  
  
 \vspace{0.5em}
@@ -340,7 +349,7 @@ We also had to determine that time scale our study should use. We had to decide 
 Figure 5.4 Violin Plot of Debt On Quarterly Time Scale
 \vspace{0.75em}
 
-Another assessment we had to perform was the effectiveness of the number of input variables our study used. Did we used too many or too few?  Did the study degrade as we added more input variables?  To address these concerns we created a Lasso Regression plot of the mean squared error as input variables were added to the model. It was clear that adding variables did not degrade the performance of our model.
+Another assessment we had to perform was the effectiveness of the number of input variables our study used. What number of variables would reduce the amount of reduction in Mean Squared Error (MSE)?  Figure 5.5 shows that there isn't much of a gain in LASSO regression once the model had more than 7 variables.  We ran two Linear Regression models with both 9 and 7 variables (removing the two lowest correlative variables) and found that 9 variables yielded the best statistics.
 
 
 \vspace{0.5em}
@@ -349,7 +358,7 @@ Another assessment we had to perform was the effectiveness of the number of inpu
 Figure 5.5 Lasso Regression Plot of Mean Squared Error vs Num of Input Variables
 \vspace{0.75em}
 
-JASON TO-DO: Please explain Household Debt Auto Corr plot
+One concern the group with the model was not accounting for the autocorrelation of Household Debt.  As shown in Figure 5.6, the autocorrelation of Household Debt is high in the first 3 quarters of a year.  However, attempting to split the data to allow this information to be incorporated in the model led to an overfitting of the model to the training dataset, so we decided not to account for this response variable characteristic.
 
 \vspace{0.5em}
 \includegraphics[scale = 0.18]{HouseholdDebtAutoCor.png}
@@ -357,10 +366,7 @@ JASON TO-DO: Please explain Household Debt Auto Corr plot
 Figure 5.6 Household Debt Auto Correlation
 \vspace{0.75em}
 
-We used a data split of 80 percent for training and 20 percent for testing. Our web application feeds the input variables to a Microsoft Azure Machine Learning algorithm using REST API calls. The calls are secured with a private key.  We were shocked as we got back the predictions.  We thought the more sophisticated machine learning algorithms such as Decision Forest Regression or Neural Network Regression would produce  superior predictions. It turned out that the Linear Regression model created as good or better predictions.  We committed to the Linear Regression model for our study.
-
-\vspace{0.5em}
-
+We used a data split of 80 percent for training and 20 percent for testing. Our web application feeds the input variables to a Microsoft Azure Machine Learning algorithm using REST API calls. The calls are secured with a private key.  We were shocked as we got back the predictions.  We thought the more sophisticated machine learning algorithms such as Decision Forest Regression or Neural Network Regression would produce superior predictions. The two best models were the Neural Network Regression and the Linear Regression, with the difference between them being negligible.  As such, we decided to use the Linear model for our project as it's easiest to explain/understand.
 
 \begin{center}
     \begin{tabular}{||c|c||}
@@ -381,26 +387,17 @@ We used a data split of 80 percent for training and 20 percent for testing. Our 
     \end{tabular}
 \end{center}
 
-\vspace{0.5em}
-
-Figure 5.7 Model Coefficients
-
-\vspace{0.5em}
+\begin{center} Figure 5.7 Model Coefficients \end{center}
 
 
-Finally, we used the model to make a prediction for the four quarters of 2020.Please see Figure 5.8 for a plot of the Holt -Winters Exponential Smoothing model.
+Observing the model predictions in Figure 5.8, we see that the Linear Regression model using the variables displayed above closely predicts the Household Debt.
 
-\includegraphics[scale = 0.18]{ExpoSmoothForecast.png}
-Figure 5.8 Holt-Winters Smooth Forecast
+\includegraphics[scale = 0.34]{Final Predictions.png}
+\begin{center}Figure 5.8 Final Prediction Comparison \end{center}
 
-
-\vspace{0.75em}
 TO-DO: Need Final Web UI and write up
 
 Please see the Appendix for information about the project's source code.
-
-
-
 
 \section{Plan of Activities}
 
@@ -477,7 +474,7 @@ Num & Description & Source\\
 7 & Automobile Loans & https://fred.stlouisfed.org/series/CARACBW027SBOG\\
 8 & Auto Dealer Sales & https://fred.stlouisfed.org/series/MRTSSM4411USN\\
 9 & Consumer Price Index & https://fred.stlouisfed.org/series/CPIAUCSL\\
-10 & County Codes & https://data.bls.gov/cew/doc/titles/area/area_titles.htm\\
+10 & County Codes & https://data.bls.gov/cew/doc/titles/area/area\_titles.htm\\
 11 & Credit Card Rate & https://fred.stlouisfed.org/series/TERMCBCCINTNS\\
 12 & Employee Cost Index & https://data.bls.gov/cgi-bin/surveymost?bls\\
 13 & Fed Effective Funds Rate  & https://fred.stlouisfed.org/series/DFF\\
@@ -485,8 +482,8 @@ Num & Description & Source\\
 15 & Household Debt & https://www.newyorkfed.org/medialibrary/media/research/\\
  & & national\_economy/householdcredit/pre2003\_data.xlsx\\ 
  & & and\\
- & & https://www.newyorkfed.org/medialibrary/media/research/\\
- & & national\_economy/householdcredit/pre2003\_data.xlsx\\
+ & & https://www.newyorkfed.org/medialibrary/interactives/householdcredit/\\
+ & & data/xls/hhd\_c\_report\_2019q4.xlsx\\
 16 & Household Debt to Income By County & https://www.federalreserve.gov/releases/z1/dataviz/household\_debt/\\
 17 & Household Debt to Income By State  & https://www.federalreserve.gov/releases/z1/dataviz/household\_debt/\\
 18 & Household Debt to GDP & https://fred.stlouisfed.org/series/HDTGPDUSQ163N\\
@@ -654,4 +651,3 @@ webapp                 & Angular and Bootstrap source code for web application. 
 \endinput
 %%
 %% End of file `sample-sigconf.tex'.
-
