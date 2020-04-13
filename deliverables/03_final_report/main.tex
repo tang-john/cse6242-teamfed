@@ -234,7 +234,7 @@ A major push to produce our dashboard has come from research that reveal househo
 The following sections outline the methodology we have taken to produce our application:.\vspace{-0.5em}
 
 \subsection{Dashboard}
-The Household Debt dashboard will provide a multi-faceted approach to understanding the effects that various factors have on how citizen's borrowing practices.  This will be accomplished by, first, allowing users to observe visualizations that convey the relations between a subset of factors and household debt.  A household debt increases have been shown to be directly correlated with economic health\cite{Mian2015}, these visualizations will allow users to better understand the contributions that this debt has on a macroeconomic level and help curb the significant growth in household debt\cite{Alter2018}.\\
+The Household Debt dashboard will provide a multi-faceted approach to understanding the effects that various factors have on how citizen's borrowing practices.  This will be accomplished by, first, allowing users to observe visualizations that convey the relations between a subset of factors and household debt.  Household debt increases have been shown to be directly correlated with economic health\cite{Mian2015}, these visualizations will allow users to better understand the contributions that this value has on a macroeconomic level and help curb the significant growth in household debt\cite{Alter2018}.\\
 Additionally, users will have the ability to adjust the values associated with these highly correlative factors and observe the resulting household debt predictions.  Our predictions will be presented both textually and graphically as we explore visualizations that demonstrate the prediction's relation to GDP.\vspace{-0.5em}
 
 \subsection{Predictions}
@@ -243,58 +243,60 @@ In order to provide significant predictions, we will gather data from a variety 
 
 \subsection{Technologies}
 
-The application's user interface is a responsive single page application (SPA) based on AngularJS and Bootstrap. The graphs were generated using D3.js for visualization. We wrote extensive Scala and Apache Spark code to clean, transform, and insert our data into a SQLite database. We then used Scala and Apache Spark to aggregate the data and export it to a csv file which was then used to train and test our Azure ML Studio algorithms. We containerized our solution using Docker to allow users to run our cleaned data for their own exploration. Our website will be hosted on Heroku and has a Node.js back-end. The web application makes REST API calls to the Azure ML Studio for predictions. Our web application is hosted at https://teamfed-project.herokuapp.com/\#/landingPage.  
+The application's user interface is a responsive single page application (SPA) based on AngularJS and Bootstrap. The graphs were generated using D3.js for visualization. We wrote extensive Scala and Apache Spark code to clean, transform, and insert our data into a SQLite database. We then used Scala and Apache Spark to aggregate the data and export it to a csv file which was then used to train and test our Azure ML Studio algorithms. We containerized our solution using Docker to allow users to run our cleaned data for their own exploration. Our web application has been deployed to Heroku and has a Node.js back-end. The web application makes REST API calls to the Azure ML Studio for predictions. Our web application is hosted at https://teamfed-project.herokuapp.com/\#/landingPage.  
 
-We have designed our application so that it can be executed a local PC or on the cloud.  The options to run our application are listed below.
-\vspace{0.5em}
+We have designed our application so that it can be executed a local PC or on the cloud.  
 
-\textbf{Development server (Local Run without Docker)}
-\begin{itemize}
-\item Start a command shell
-\item Navigate to the webapp directory.
-\item Run the command "npm install" 
-\item Run the command "npm start"
-\item Start a browser and navigate to
+%The options to run our application are listed below.
+%\vspace{0.5em}
 
-http://localhost:8080/\#/landingPage
-\end{itemize}
+%\textbf{Development server (Local Run without Docker)}
+%\begin{itemize}
+%\item Start a command shell
+%\item Navigate to the webapp directory.
+%\item Run the command "npm install" 
+%\item Run the command "npm start"
+%\item Start a browser and navigate to
+
+%http://localhost:8080/\#/landingPage
+%\end{itemize}
 
 
-\textbf{Docker server (Locally run latest code using Docker)}
-\begin{itemize}
-\item Launch a command shell
-\item Navigate to the webapp directory
-\item Run the command "docker build -t teamfed ."
-\item Run the command "docker run -p 8080:8080 teamfed" 
-\item  Launch a browser and navigate to 
+%\textbf{Docker server (Locally run latest code using Docker)}
+%\begin{itemize}
+%\item Launch a command shell
+%\item Navigate to the webapp directory
+%\item Run the command "docker build -t teamfed ."
+%\item Run the command "docker run -p 8080:8080 teamfed" 
+%\item  Launch a browser and navigate to 
 
-http://localhost:8080/\#/landingPage
-\end{itemize}
+%http://localhost:8080/\#/landingPage
+%\end{itemize}
 
-\vspace{0.5em}
-\textbf{Deploy to Heroku (Prod Run)}
-\begin{itemize}
-\item Install the HerokuCLI from
+%\vspace{0.5em}
+%\textbf{Deploy to Heroku (Prod Run)}
+%\begin{itemize}
+%\item Install the HerokuCLI from
 
-https://devcenter.heroku.com/articles/heroku-cli
-\item Run heroku login to create a session to your heroku account.
-\item Now you can sign into Container Registry heroku container:login.
-\item Run heroku container:push web -a teamfed-project to create a docker image and push it to our Heroku repository.
-\item Run heroku container:release web -a teamfed-project to release the latest image and this will update the webapp.
-\item Run heroku logs --tail -a teamfed-project to see the logs and output from interacting with the webapp.
-\item Navigate to 
+%https://devcenter.heroku.com/articles/heroku-cli
+%\item Run heroku login to create a session to your heroku account.
+%\item Now you can sign into Container Registry heroku container:login.
+%\item Run heroku container:push web -a teamfed-project to create a docker image and push it to our Heroku repository.
+%\item Run heroku container:release web -a teamfed-project to release the latest image and this will update the webapp.
+%\item Run heroku logs --tail -a teamfed-project to see the logs and output from interacting with the webapp.
+%\item Navigate to 
 
-https://teamfed-project.herokuapp.com/\#/
+%https://teamfed-project.herokuapp.com/\#/
 
-landingPage and watch the as the logs change and acknowledge the interaction with the webapp.
-\end{itemize}
+%landingPage and watch the as the logs change and acknowledge the interaction with the webapp.
+%\end{itemize}
 
 \vspace{-0.5em}
 
 
 \subsection{Innovations}
 
-Our dashboard includes the following innovative approaches. Firstly, based on our extensive research, there is a limited amount of models focusing on predicting household debt only, even though it is a strong indicator to the economic health of the United States. Many financial institutions produce economic models using household debt as a primary variable, therefore we are going to focus on this specific variable rather than predict the larger economy. Secondly, we are trying to account for negative rates by using the German 10 year yield in our model. This will allow our model to include data that is typically not used in United States recession models as the data is unavailable, but provides a complete view to an economic downturn. Lastly, we are streamlining our dashboard by providing an API of our machine learning model to the front-end and having a Node.js back-end while containerizing our solution using Docker.\vspace{0.5em}
+Our dashboard includes the following innovative approaches. Firstly, based on our extensive research, there is a limited amount of models focusing on predicting household debt only, even though it is a strong indicator to the economic health of the United States. Many financial institutions produce economic models using household debt as a primary variable, therefore we are going to focus on this specific variable rather than predict the larger economy. Secondly, we are going to determine whether we should account for negative rates by using the German 10 year yield in our analysis. If this variable is determined to be significant, we can include it in our model and dashboard to provide a complete view of an economic downturn. This variable is typically not analyzed or used in United States Recession models as the data is not available for this geographic area.  Lastly, we are streamlining our dashboard by providing an API of our machine learning model to the front-end and having a Node.js back-end while containerizing our solution using Docker (figure 4.1 depicts our web application).\vspace{0.5em}
 
 
 \includegraphics[scale = 0.32]{dashboard.png}
@@ -358,7 +360,7 @@ Another assessment we had to perform was the effectiveness of the number of inpu
 Figure 5.5 Lasso Regression Plot of Mean Squared Error vs Num of Input Variables
 \vspace{0.75em}
 
-One concern the group with the model was not accounting for the autocorrelation of Household Debt.  As shown in Figure 5.6, the autocorrelation of Household Debt is high in the first 3 quarters of a year.  However, attempting to split the data to allow this information to be incorporated in the model led to an overfitting of the model to the training dataset, so we decided not to account for this response variable characteristic.
+One concern our team had with the model was not accounting for the autocorrelation of Household Debt.  As shown in Figure 5.6, the autocorrelation of Household Debt is high in the first 3 quarters of a year.  However, attempting to split the data to allow this information to be incorporated in the model led to an overfitting of the model to the training dataset, so we decided not to account for this response variable characteristic.
 
 \vspace{0.5em}
 \includegraphics[scale = 0.18]{HouseholdDebtAutoCor.png}
@@ -389,13 +391,13 @@ We used a data split of 80 percent for training and 20 percent for testing. Our 
 
 \begin{center} Figure 5.7 Model Coefficients \end{center}
 
-
 Observing the model predictions in Figure 5.8, we see that the Linear Regression model using the variables displayed above closely predicts the Household Debt.
 
 \includegraphics[scale = 0.34]{Final Predictions.png}
 \begin{center}Figure 5.8 Final Prediction Comparison \end{center}
+The linear model we used, as shown above, yielded a Root Mean Squared Error of 0.285 (Trillion Dollars), a Relative Squared Error of 0.0153, and an R\textsuperscript{2} value of 0.985.  While we would have liked to reduce the RMSE further, we were encouraged by the model's performance and simplicity, along with the high Coefficient of Determination (R\textsuperscript{2}).
 
-TO-DO: Need Final Web UI and write up
+%TO-DO: Need Final Web UI and write up// KA we have this write up already in the innovation section
 
 Please see the Appendix for information about the project's source code.
 
@@ -427,9 +429,13 @@ We achieved success by following the plan below:\vspace{0.07em}
 \section{Conclusions and Discussion}
 
 
-We intially started with 28 input variables. We knew that some of the variables were going to be eliminated during our variable selection phase. We were surprised that automobile loans, auto dealer sales, consumer rent, and student loans did not make the final list of input variables. 
+The team initially collected 29 input variables and we hypothesized that some of the variables were going to be eliminated during the variable selection phase. But, we were ultimately surprised that the variables automobile loans, auto dealer sales, and consumer rent did not make the final list of input variables due to their predictive power.
 
-Graphing and analyzing exisisting data provided a clear near term trend of household debt. We were not suprised when our model predicted ever increasing household debt for 2020. We were very worried about what this meant for the econonmy. The model predicted a household debt value that was far greater than the value from the last recession of 2008.  While we didn't know that the coronavirus would be the spark that would deflate the economy, our model clearly alerted us that the economy was going to tank.
+Additionally, after evaluating which machine learning algorithm to use we were surprised that Linear Regression was the most suitable algorithm to utilize when predicting household debt. As the top two ML algorithms had a negligible variance, we did determine that utilizing a ML algorithm that was easiest to explain would create comfort to the users.
+
+Although, when analyzing our model's output we were not surprised when it predicted ever increasing household debt for 2020. We were ultimately concerned about what this meant for the economy. The model predicted a household debt value that was far greater than the value from the last recession of 2008.  While we didn't know that the COVID-19 would be the spark that would deflate the economy, our model clearly alerted us that the economy was going to destabilize. 
+
+As displayed in our web application, we have successfully been able to graph and analyze existing data to depict a near term trend of household debt. This can be used by consumers, policy makers, researchers in order to understand and adjust specific variables that are related to an economic downturn.
 
 
 %\section{Related Work}
@@ -454,9 +460,6 @@ Graphing and analyzing exisisting data provided a clear near term trend of house
 
 \section{Appendix}
 \label{appendix:datasets}
-
-
-
 
 \begin{table*}[ht]
 \caption{Data Sets}
@@ -570,15 +573,26 @@ Num & Description & Source\\
 
 
 \begin{table*}[ht]
-\caption{Microsoft Azure Machine Learning Experiment}
+\caption{Microsoft Azure Machine Learning Model Comparison}
 \centering
 \begin{tabular}{p{1.0\linewidth}}
 \hline
-\includegraphics[scale = 0.46]{teamfed_azure_ml.png}\\
-\hline
+\includegraphics[scale = 0.46]{Full_Model_Comparison.jpg}\\
+\hline\\
 \end{tabular}
 \end{table*}
 
+\begin{table*}[ht]
+\caption{Microsoft Azure Machine Learning Final Model}
+\centering
+\begin{tabular}{p{1.0\linewidth}}
+\hline
+\begin{center}
+    \includegraphics[scale = 0.5]{Final_Model.jpg}\\
+\end{center}
+\hline
+\end{tabular}
+\end{table*}
 
 \begin{table*}[ht]
 \caption{Model Performance}
