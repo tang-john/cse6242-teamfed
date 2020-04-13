@@ -245,7 +245,7 @@ In order to provide significant predictions, we will gather data from a variety 
 
 The application's user interface is a responsive single page application (SPA) based on AngularJS and Bootstrap. The graphs were generated using D3.js for visualization. We wrote extensive Scala and Apache Spark code to clean, transform, and insert our data into a SQLite database. We then used Scala and Apache Spark to aggregate the data and export it to a csv file which was then used to train and test our Azure ML Studio algorithms. We containerized our solution using Docker to allow users to run our cleaned data for their own exploration. Our web application has been deployed to Heroku and has a Node.js back-end. The web application makes REST API calls to the Azure ML Studio for predictions. Our web application is hosted at https://teamfed-project.herokuapp.com/\#/landingPage.  
 
-We have designed our application so that it can be executed a local PC or on the cloud.  
+We have designed our application so that it can be executed on a local PC or on the cloud.  
 
 %The options to run our application are listed below.
 %\vspace{0.5em}
@@ -291,7 +291,7 @@ We have designed our application so that it can be executed a local PC or on the
 %landingPage and watch the as the logs change and acknowledge the interaction with the webapp.
 %\end{itemize}
 
-\vspace{-0.5em}
+
 
 
 \subsection{Innovations}
@@ -303,7 +303,7 @@ Our dashboard includes the following innovative approaches. Firstly, based on ou
 Figure 4.1 Responsive Web Application
 \vspace{0.5em}
 
-The top of our web application contains three buttons. The first two buttons are major components of household debt: GDP and student loan. They were eliminated as independent input variables during variable selection. They are major dependent parts of household debt. The user can click on the first two buttons to view visualizations of GDP and student loans, respectively. Clicking the last button will display the household debt along with debt to income, student loan, and debt to GDP.  
+The top of our web application contains three buttons. The first two buttons are major components of household debt: GDP and student loan. Students loans are a component of household debt, so it can't be an input variable. GDP wasn't selected because it is highly correlated with consumer rent (0.996) and rent performed slightly better.  The user can click on the first two buttons to view visualizations of GDP and student loans, respectively. Clicking the last button will display the household debt along with debt to income, student loan, and debt to GDP.  
 
 On the right side of the screen are text entry boxes for the Azure ML Studio's independent input variables. They default to data from the fourth quarter of 2019. The user can change the values as needed. Clicking on the Send button at the bottom of the screen will submit the form values, via a REST API call, to our model hosted at Microsoft Azure ML Studio. Our model will make a prediction and send it back to the web page.  The prediction will be displayed in the top text box.
 
@@ -429,7 +429,7 @@ We achieved success by following the plan below:\vspace{0.07em}
 \section{Conclusions and Discussion}
 
 
-The team initially collected 29 input variables and we hypothesized that some of the variables were going to be eliminated during the variable selection phase. But, we were ultimately surprised that the variables automobile loans, auto dealer sales, and consumer rent did not make the final list of input variables due to their predictive power.
+The team initially collected 29 input variables and we hypothesized that some of the variables were going to be eliminated during the variable selection phase. However, we were ultimately surprised that the variables automobile loans and auto dealer sales did not make the final list of input variables. We eliminated some variables that had high predictive power because they were highly correlated to another variable that performed  slightly better.
 
 Additionally, after evaluating which machine learning algorithm to use we were surprised that Linear Regression was the most suitable algorithm to utilize when predicting household debt. As the top two ML algorithms had a negligible variance, we did determine that utilizing a ML algorithm that was easiest to explain would create comfort to the users.
 
@@ -545,7 +545,7 @@ Num & Description & Source\\
 \centering
 \begin{tabular}{p{1.0\linewidth}}
 \hline
-\includegraphics[scale = 0.26]{QtrVSHouseholdDebt_violinPlot.png}\\
+\includegraphics[scale = 0.24]{QtrVSHouseholdDebt_violinPlot.png}\\
 \hline
 \end{tabular}
 \end{table*}
