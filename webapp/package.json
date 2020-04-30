@@ -20,7 +20,7 @@
     "request": "^2.81.0"
   },
   "devDependencies": {
-    "angular": "1.5.8",
+    "angular": "1.7.9",
     "angular-animate": "1.5.8",
     "angular-bootstrap-calendar": "^0.28.3",
     "angular-bootstrap-colorpicker": "^3.0.26",
